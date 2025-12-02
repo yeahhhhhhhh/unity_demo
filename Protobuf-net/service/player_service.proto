@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package service.player;
+
+import "attributes/player.proto";
+
+message GetPlayerBaseInfoRequest {
+  int64 uid = 1;
+
+  message Response {
+    int32 error_code = 1;
+    attributes.player.PlayerBaseInfo player_base_info = 2;
+  }
+}

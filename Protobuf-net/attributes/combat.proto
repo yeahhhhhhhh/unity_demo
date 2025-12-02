@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package attributes.combat;
+
+// 战斗属性
+message FightInfo {
+  int32 atk = 1;
+  int32 def = 2;
+  int32 max_hp = 3;
+  int32 cur_hp = 4;
+  int32 max_mp = 5;
+  int32 cur_mp = 6;
+  int32 speed = 7;
+  int32 critical_rate = 8;
+  int32 critical_damage = 9;
+  int32 evasion_rate = 10;
+  int32 hit_rate = 11;
+}

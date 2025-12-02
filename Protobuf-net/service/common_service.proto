@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package service.common;
+
+message CommonResponse {
+  int32 error_code = 1;
+  uint32 cmd = 2;
+  string msg = 3;
+}

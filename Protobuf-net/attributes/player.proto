@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package attributes.player;
+
+message PlayerBaseInfo {
+  int64 uid = 1;
+  string username = 2;
+  string nickname = 3;
+  int64 exp = 4;
+  int64 gold = 5;
+  int64 diamond = 6;
+}
+
+// 技能
+
+// 任务
+
+// 背包

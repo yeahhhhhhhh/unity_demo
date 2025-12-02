@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package attributes.scene;
+
+// 位置
+message Position {
+  int32 x = 1;
+  int32 y = 2;
+  int32 direction = 3;
+}
+
+// 场景
+message SceneInfo {
+  int32 scene_id = 1;
+  int32 scene_gid = 2;
+  Position position = 3;
+  int32 scene_node = 4;
+}
