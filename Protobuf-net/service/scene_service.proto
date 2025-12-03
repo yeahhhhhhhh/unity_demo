@@ -7,7 +7,8 @@ import "attributes/scene.proto";
 message RequestEnterDefaultScene {
   message Response {
     int32 error_code = 1;
-    attributes.scene.SceneInfo scene_info = 2;
+    int64 uid = 2;
+    attributes.scene.SceneInfo scene_info = 3;
   }
 }
 
@@ -17,7 +18,8 @@ message RequestEnterScene {
 
   message Response {
     int32 error_code = 1;
-    attributes.scene.SceneInfo scene_info = 2;
+    int64 uid = 2;
+    attributes.scene.SceneInfo scene_info = 3;
   }
 }
 
@@ -31,6 +33,16 @@ message RequestMove {
   }
 }
 
+message RequestUpdatePos{
+  int32 x = 1;
+  int32 y = 2;
+  int32 z = 3;
+  message Response{
+    attributes.scene.SceneInfo scene_info = 1;
+    int64 uid = 2;
+  }
+}
+
 message RequestUseSkill {
   int32 skill_id = 1;
   message Response {
@@ -39,5 +51,14 @@ message RequestUseSkill {
     int64 target_uid = 3;
     int32 skill_id = 4;
     string json_data = 5;
+  }
+}
+
+message RequestGetScenePlayers{
+  message Response{
+    int32 scene_id = 1;
+    int32 scene_gid = 2;
+    int32 player_count = 3;
+    repeated attributes.scene.PlayerSceneInfo players = 4;
   }
 }

@@ -26,7 +26,10 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(1, Name = @"error_code")]
             public int ErrorCode { get; set; }
 
-            [global::ProtoBuf.ProtoMember(2, Name = @"scene_info")]
+            [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
+            public long Uid { get; set; }
+
+            [global::ProtoBuf.ProtoMember(3, Name = @"scene_info")]
             public global::attributes.scene.SceneInfo SceneInfo { get; set; }
 
         }
@@ -56,7 +59,10 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(1, Name = @"error_code")]
             public int ErrorCode { get; set; }
 
-            [global::ProtoBuf.ProtoMember(2, Name = @"scene_info")]
+            [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
+            public long Uid { get; set; }
+
+            [global::ProtoBuf.ProtoMember(3, Name = @"scene_info")]
             public global::attributes.scene.SceneInfo SceneInfo { get; set; }
 
         }
@@ -78,6 +84,39 @@ namespace service.scene
 
         [global::ProtoBuf.ProtoMember(3, Name = @"stop_move")]
         public bool StopMove { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public partial class Response : global::ProtoBuf.IExtensible
+        {
+            private global::ProtoBuf.IExtension __pbn__extensionData;
+            global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+                => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+            [global::ProtoBuf.ProtoMember(1, Name = @"scene_info")]
+            public global::attributes.scene.SceneInfo SceneInfo { get; set; }
+
+            [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
+            public long Uid { get; set; }
+
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RequestUpdatePos : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"x")]
+        public int X { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"y")]
+        public int Y { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"z")]
+        public int Z { get; set; }
 
         [global::ProtoBuf.ProtoContract()]
         public partial class Response : global::ProtoBuf.IExtensible
@@ -128,6 +167,36 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(5, Name = @"json_data")]
             [global::System.ComponentModel.DefaultValue("")]
             public string JsonData { get; set; } = "";
+
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RequestGetScenePlayers : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoContract()]
+        public partial class Response : global::ProtoBuf.IExtensible
+        {
+            private global::ProtoBuf.IExtension __pbn__extensionData;
+            global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+                => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+            [global::ProtoBuf.ProtoMember(1, Name = @"scene_id")]
+            public int SceneId { get; set; }
+
+            [global::ProtoBuf.ProtoMember(2, Name = @"scene_gid")]
+            public int SceneGid { get; set; }
+
+            [global::ProtoBuf.ProtoMember(3, Name = @"player_count")]
+            public int PlayerCount { get; set; }
+
+            [global::ProtoBuf.ProtoMember(4, Name = @"players")]
+            public global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo> Players { get; } = new global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo>();
 
         }
 

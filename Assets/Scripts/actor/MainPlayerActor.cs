@@ -13,11 +13,11 @@ public class MainPlayerActor : CtrlActor
     public int cur_bullet_count_ = 0;
 
     // Start is called before the first frame update
-    new void Start()
+    public override void Start()
     {
         base.Start();
         body_ = transform.Find("Body");
-        mouth_ = transform.Find("Mouth");
+        mouth_ = transform.Find("Mouth"); 
         fire_point_ = transform.Find("FirePoint");
         if (body_ == null)
         {

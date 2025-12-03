@@ -6,7 +6,8 @@ package attributes.scene;
 message Position {
   int32 x = 1;
   int32 y = 2;
-  int32 direction = 3;
+  int32 z = 3;
+  int32 direction = 4;
 }
 
 // 场景
@@ -15,4 +16,11 @@ message SceneInfo {
   int32 scene_gid = 2;
   Position position = 3;
   int32 scene_node = 4;
+}
+
+message PlayerSceneInfo{
+  int64 uid = 1;
+  string username = 2;
+  string nickname = 3;
+  Position position = 4;
 }

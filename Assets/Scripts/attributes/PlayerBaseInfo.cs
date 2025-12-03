@@ -9,6 +9,4 @@ public class PlayerBaseInfo
     public Int64 exp = 0;
     public Int64 gold = 0;
     public Int64 diamond = 0;
-
-
 }

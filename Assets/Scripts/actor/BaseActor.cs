@@ -11,7 +11,7 @@ public class BaseActor : MonoBehaviour
     public float speed_ = 3f;
 
     // Start is called before the first frame update
-    public void Start()
+    public virtual void Start()
     {
         
     }
@@ -29,5 +29,6 @@ public class BaseActor : MonoBehaviour
         skin_.transform.parent = this.transform;
         skin_.transform.localPosition = Vector3.zero;
         skin_.transform.localEulerAngles = Vector3.zero;
+        skin_.SetActive(true);
     }
 }

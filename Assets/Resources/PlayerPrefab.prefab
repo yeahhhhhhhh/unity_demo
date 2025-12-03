@@ -9,14 +9,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4700619326419557400}
-  - component: {fileID: 8460222612757289591}
+  - component: {fileID: 1695794345731255057}
   m_Layer: 0
-  m_Name: MainPlayer
-  m_TagString: Untagged
+  m_Name: PlayerPrefab
+  m_TagString: MainPlayer
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4700619326419557400
 Transform:
   m_ObjectHideFlags: 0
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 2599476307230356666}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8460222612757289591
+--- !u!114 &1695794345731255057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

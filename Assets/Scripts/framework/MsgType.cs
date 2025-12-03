@@ -12,28 +12,56 @@ public enum MsgType{
 
 public enum MsgPbType
 {
-    Login = 1,
-    LoginRet = 2,
+    LOGIN = 1,
+    LOGOUT = 2,
+    REGIST = 3,
+    GET_PLAYER_BASE_INFO = 4,
+    ENTER_DEFAULT_SCENE = 5,
+    MOVE = 6,
+    USE_SKILL = 7,
+    MOVE_UPDATE_POS = 8,
+    GET_SCENE_PLAYERS = 9,
+}
+
+public enum MsgRespPbType
+{
+    COMMON = 1,
+    LOGIN_RESPONSE = 2,
+    PLAYER_BASE_INFO = 3,
+    REGIST_RESPONSE = 4,
+    ENTER_DEFAULT_SCENE_RESPONSE = 5,
+    MOVE = 6,
+    USE_SKILL_RESPONSE = 7,
+    MOVE_UPDATE_POS = 8,
+    GET_SCENE_PLAYERS = 9,
 }
 
 public static class MsgTypeRegister
 {
-    static Dictionary<short, string> msg_id2string_ = new Dictionary<short, string>();
-    static Dictionary<short, Type> msgpb_id2MsgPbType_ = new Dictionary<short, Type>();
-    static Dictionary<short, Type> msgpb_id2MsgClassType_ = new Dictionary<short, Type>();
+    static Dictionary<short, string> msg_id2string_ = new();
+
+    static Dictionary<short, Type> msg_req_pb_id2msg_pb_type_ = new();
+    static Dictionary<short, Type> msg_req_pb_id2msg_class_type_ = new();
+
+    static Dictionary<short, Type> msg_resp_pb_id2msg_pb_type_ = new();
+    static Dictionary<short, Type> msg_resp_pb_id2msg_class_type_ = new();
 
 
     static public void InitRegister()
     {
         Debug.Log("InitRegister");
-        RegisterMsg((short)MsgType.Move, "MsgMove");
     }
 
     static public void InitPbRegister()
     {
         Debug.Log("InitPbRegister");
-        RegisterPbMsg((short)MsgPbType.Login, "service.account.LoginRequest", "MsgLogin");
-        RegisterPbMsg((short)MsgPbType.LoginRet, "service.account.LoginRequest+Response", "MsgLogin+Response");
+        RegisterRequestPbMsg((short)MsgPbType.LOGIN, "service.account.LoginRequest", "MsgLogin");
+        RegisterRequestPbMsg((short)MsgPbType.ENTER_DEFAULT_SCENE, "service.scene.RequestEnterDefaultScene", "MsgEnterScene");
+        RegisterRequestPbMsg((short)MsgPbType.GET_SCENE_PLAYERS, "service.scene.RequestGetScenePlayers", "MsgGetScenePlayers");
+
+        RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, "service.scene.RequestEnterDefaultScene+Response", "MsgEnterScene+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.GET_SCENE_PLAYERS, "service.scene.RequestGetScenePlayers+Response", "MsgGetScenePlayers+Response");
     }
 
     static public string GetStringTypeByID(short id)
@@ -58,9 +86,9 @@ public static class MsgTypeRegister
         return true;
     }
 
-    static public bool RegisterPbMsg(short cmd_id, string type, string class_type)
+    static public bool RegisterRequestPbMsg(short cmd_id, string type, string class_type)
     {
-        if (msgpb_id2MsgPbType_.ContainsKey(cmd_id))
+        if (msg_req_pb_id2msg_pb_type_.ContainsKey(cmd_id))
         {
             Debug.Log("pb cmd id already register:" + cmd_id.ToString());
             return false;
@@ -69,11 +97,11 @@ public static class MsgTypeRegister
         Type t = Type.GetType(type);
         if (t == null)
         {
-            Debug.Log("RegisterPbMsg type is null");
+            Debug.Log("RegisterRequestPbMsg type is null");
             return false;
         }
 
-        if (msgpb_id2MsgClassType_.ContainsKey(cmd_id))
+        if (msg_req_pb_id2msg_class_type_.ContainsKey(cmd_id))
         {
             Debug.Log("pb cmd id already register:" + cmd_id.ToString());
             return false;
@@ -82,20 +110,64 @@ public static class MsgTypeRegister
         Type ct = Type.GetType(class_type);
         if (t == null)
         {
-            Debug.Log("RegisterPbMsg class_type is null");
+            Debug.Log("RegisterRequestPbMsg class_type is null");
             return false;
         }
 
-        msgpb_id2MsgPbType_[cmd_id] = t;
-        msgpb_id2MsgClassType_[cmd_id] = ct;
+        msg_req_pb_id2msg_pb_type_[cmd_id] = t;
+        msg_req_pb_id2msg_class_type_[cmd_id] = ct;
         return true;
     }
 
+    static public bool RegisterResponsePbMsg(short cmd_id, string type, string class_type)
+    {
+        if (msg_resp_pb_id2msg_pb_type_.ContainsKey(cmd_id))
+        {
+            Debug.Log("pb cmd id already register:" + cmd_id.ToString());
+            return false;
+        }
+
+        Type t = Type.GetType(type);
+        if (t == null)
+        {
+            Debug.Log("RegisterResponsePbMsg type is null");
+            return false;
+        }
+
+        if (msg_resp_pb_id2msg_class_type_.ContainsKey(cmd_id))
+        {
+            Debug.Log("pb cmd id already register:" + cmd_id.ToString());
+            return false;
+        }
+
+        Type ct = Type.GetType(class_type);
+        if (t == null)
+        {
+            Debug.Log("RegisterResponsePbMsg class_type is null");
+            return false;
+        }
+
+        msg_resp_pb_id2msg_pb_type_[cmd_id] = t;
+        msg_resp_pb_id2msg_class_type_[cmd_id] = ct;
+        return true;
+    }
+    
+
     static public Type GetMsgClassTypeByID(short id)
     {
-        if (msgpb_id2MsgClassType_.ContainsKey(id))
+        if (msg_req_pb_id2msg_class_type_.ContainsKey(id))
         {
-            return msgpb_id2MsgClassType_[id];
+            return msg_req_pb_id2msg_class_type_[id];
+        }
+
+        return null;
+    }
+
+    static public Type GetRespMsgClassTypeByID(short id)
+    {
+        if (msg_resp_pb_id2msg_class_type_.ContainsKey(id))
+        {
+            return msg_resp_pb_id2msg_class_type_[id];
         }
 
         return null;
@@ -103,9 +175,19 @@ public static class MsgTypeRegister
 
     static public Type GetPbTypeByID(short id)
     {
-        if (msgpb_id2MsgPbType_.ContainsKey(id))
+        if (msg_req_pb_id2msg_pb_type_.ContainsKey(id))
         {
-            return msgpb_id2MsgPbType_[id];
+            return msg_req_pb_id2msg_pb_type_[id];
+        }
+
+        return null;
+    }
+
+    static public Type GetRespPbTypeByID(short id)
+    {
+        if (msg_resp_pb_id2msg_pb_type_.ContainsKey(id))
+        {
+            return msg_resp_pb_id2msg_pb_type_[id];
         }
 
         return null;

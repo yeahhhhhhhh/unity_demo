@@ -51,7 +51,7 @@ public class MsgBase{
         {
             using (MemoryStream memory = new MemoryStream(bytes, offset, count))
             {
-                Type t = MsgTypeRegister.GetPbTypeByID(cmd_id);
+                Type t = MsgTypeRegister.GetRespPbTypeByID(cmd_id);
                 if (t == null)
                 {
                     Debug.Log("type is null");
@@ -59,7 +59,7 @@ public class MsgBase{
                 }
                 IExtensible resp = (IExtensible)ProtoBuf.Serializer.Deserialize(t, memory);
 
-                Type ct = MsgTypeRegister.GetMsgClassTypeByID(cmd_id);
+                Type ct = MsgTypeRegister.GetRespMsgClassTypeByID(cmd_id);
                 if (ct == null)
                 {
                     Debug.Log("class type is null");

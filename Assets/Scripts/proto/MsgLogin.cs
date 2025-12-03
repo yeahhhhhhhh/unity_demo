@@ -7,14 +7,14 @@ using ProtoBuf;
 
 public class MsgLogin: MsgBase
 {
-    public service.account.LoginRequest req = new service.account.LoginRequest();
+    public service.account.LoginRequest req = new();
 
     public class Response: MsgBase
     {
-        public service.account.LoginRequest.Response resp = new service.account.LoginRequest.Response();
+        public service.account.LoginRequest.Response resp;
         public Response()
         {
-            base.cmd_id_ = (short)MsgPbType.LoginRet;
+            base.cmd_id_ = (short)MsgRespPbType.LOGIN_RESPONSE;
         }
         public override void SetResponseData(IExtensible data)
         {
@@ -23,7 +23,7 @@ public class MsgLogin: MsgBase
     }
 
     public MsgLogin() {
-        base.cmd_id_ = (short)MsgPbType.Login;
+        base.cmd_id_ = (short)MsgPbType.LOGIN;
     }
     public void SetSendData(string username, string password)
     {
