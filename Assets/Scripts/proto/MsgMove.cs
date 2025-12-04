@@ -8,20 +8,29 @@ public class MsgMove: MsgBase
 {
     public service.scene.RequestUpdatePos req = new();
 
-    public class MsgMoveResp: MsgBase
+    public class Response: MsgBase
     {
-        public service.scene.RequestUpdatePos.Response resp = new();
+        public service.scene.RequestUpdatePos.Response resp;
+        public Response()
+        {
+            base.cmd_id_ = (short)MsgRespPbType.MOVE_UPDATE_POS;
+        }
+        public override void SetResponseData(IExtensible data)
+        {
+            resp = (service.scene.RequestUpdatePos.Response)data;
+        }
     }
 
     public MsgMove() {
-        cmd_id_ = (short)MsgType.Move;
+        cmd_id_ = (short)MsgPbType.MOVE_UPDATE_POS;
     }
 
-    public void SetSendData(int x, int y, int z)
+    public void SetSendData(Vector3 pos)
     {
-        req.X = x;
-        req.Y = y;
-        req.Z = z;
+        req.X = pos.x;
+        req.Y = pos.y;
+        req.Z = pos.z;
+        Debug.Log("move, x:" + req.X + " y:" + req.Y + " z:" + req.Z);
     }
     public override IExtensible GetSendData()
     {

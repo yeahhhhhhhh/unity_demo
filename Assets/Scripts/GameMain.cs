@@ -14,7 +14,6 @@ public static class App {
 public static class MainPlayer
 {
     public static PlayerInfo player_ = new();
-    public static GameObject player_skin_ = null;
 
     public static void SetPlayerBaseInfo(Int64 uid, string username, string nickname)
     {
@@ -41,6 +40,8 @@ public class GameMain : MonoBehaviour
     {
         Debug.Log("main start");
         MsgTypeRegister.InitPbRegister();
+        MoveManager.Instance.Init();
+        SkillManager.Instance.Init();
 
         main_canvas_ = GameObject.Find("Canvas");
 

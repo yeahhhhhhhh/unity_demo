@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4700619326419557400}
-  - component: {fileID: 1695794345731255057}
   m_Layer: 0
   m_Name: PlayerPrefab
   m_TagString: MainPlayer
@@ -35,26 +34,6 @@ Transform:
   - {fileID: 2599476307230356666}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1695794345731255057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1897052366831441697}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5c21a5db3cc5fbe45bbdb83e70a5e98d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  steer_: 20
-  speed_: 3
-  body_: {fileID: 0}
-  mouth_: {fileID: 0}
-  fire_point_: {fileID: 0}
-  bullet_prefab_: {fileID: 7807110336415882508, guid: ef27bd35e71a737429e9f924523ff96f, type: 3}
-  max_bullet_count_: 5
-  cur_bullet_count_: 0
 --- !u!1 &2904558421033595667
 GameObject:
   m_ObjectHideFlags: 0

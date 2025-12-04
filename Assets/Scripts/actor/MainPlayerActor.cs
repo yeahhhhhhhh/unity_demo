@@ -15,10 +15,16 @@ public class MainPlayerActor : CtrlActor
     // Start is called before the first frame update
     public override void Start()
     {
+        Debug.Log("MainPlayerActor start");
         base.Start();
         body_ = transform.Find("Body");
         mouth_ = transform.Find("Mouth"); 
         fire_point_ = transform.Find("FirePoint");
+        bullet_prefab_ = ResManager.LoadPrefab("BulletPrefab");
+        if (bullet_prefab_ == null)
+        {
+            Debug.Log("bullet_prefab_ is null");
+        }
         if (body_ == null)
         {
             Debug.Log("body is null");
@@ -31,6 +37,7 @@ public class MainPlayerActor : CtrlActor
         {
             Debug.Log("fire_point is null");
         }
+
     }
 
     // Update is called once per frame
@@ -38,6 +45,7 @@ public class MainPlayerActor : CtrlActor
     {
         base.Update();
         Fire();
+
     }
 
     public void Fire()

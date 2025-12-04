@@ -21,6 +21,7 @@ public enum MsgPbType
     USE_SKILL = 7,
     MOVE_UPDATE_POS = 8,
     GET_SCENE_PLAYERS = 9,
+    LEAVE_SCENE = 10,
 }
 
 public enum MsgRespPbType
@@ -34,6 +35,7 @@ public enum MsgRespPbType
     USE_SKILL_RESPONSE = 7,
     MOVE_UPDATE_POS = 8,
     GET_SCENE_PLAYERS = 9,
+    LEAVE_SCENE = 10,
 }
 
 public static class MsgTypeRegister
@@ -58,10 +60,16 @@ public static class MsgTypeRegister
         RegisterRequestPbMsg((short)MsgPbType.LOGIN, "service.account.LoginRequest", "MsgLogin");
         RegisterRequestPbMsg((short)MsgPbType.ENTER_DEFAULT_SCENE, "service.scene.RequestEnterDefaultScene", "MsgEnterScene");
         RegisterRequestPbMsg((short)MsgPbType.GET_SCENE_PLAYERS, "service.scene.RequestGetScenePlayers", "MsgGetScenePlayers");
+        RegisterRequestPbMsg((short)MsgPbType.LEAVE_SCENE, "service.scene.RequestLeaveScene", "MsgLeaveScene");
+        RegisterRequestPbMsg((short)MsgPbType.MOVE_UPDATE_POS, "service.scene.RequestUpdatePos", "MsgMove");
+        RegisterRequestPbMsg((short)MsgPbType.USE_SKILL, "service.scene.RequestUseSkill", "MsgUseSkill");
 
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, "service.scene.RequestEnterDefaultScene+Response", "MsgEnterScene+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.GET_SCENE_PLAYERS, "service.scene.RequestGetScenePlayers+Response", "MsgGetScenePlayers+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.LEAVE_SCENE, "service.scene.RequestLeaveScene+Response", "MsgLeaveScene+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.MOVE_UPDATE_POS, "service.scene.RequestUpdatePos+Response", "MsgMove+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.USE_SKILL_RESPONSE, "service.scene.RequestUseSkill+Response", "MsgUseSkill+Response");
     }
 
     static public string GetStringTypeByID(short id)

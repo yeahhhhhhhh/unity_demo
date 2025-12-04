@@ -34,9 +34,9 @@ message RequestMove {
 }
 
 message RequestUpdatePos{
-  int32 x = 1;
-  int32 y = 2;
-  int32 z = 3;
+  float x = 1;
+  float y = 2;
+  float z = 3;
   message Response{
     attributes.scene.SceneInfo scene_info = 1;
     int64 uid = 2;
@@ -60,5 +60,14 @@ message RequestGetScenePlayers{
     int32 scene_gid = 2;
     int32 player_count = 3;
     repeated attributes.scene.PlayerSceneInfo players = 4;
+  }
+}
+
+message RequestLeaveScene{
+  message Response{
+    int32 scene_id = 1;
+    int32 scene_gid = 2;
+    int64 uid = 3;
+    string nickname = 4;
   }
 }

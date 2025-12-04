@@ -17,13 +17,13 @@ namespace attributes.scene
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
         [global::ProtoBuf.ProtoMember(1, Name = @"x")]
-        public int X { get; set; }
+        public float X { get; set; }
 
         [global::ProtoBuf.ProtoMember(2, Name = @"y")]
-        public int Y { get; set; }
+        public float Y { get; set; }
 
         [global::ProtoBuf.ProtoMember(3, Name = @"z")]
-        public int Z { get; set; }
+        public float Z { get; set; }
 
         [global::ProtoBuf.ProtoMember(4, Name = @"direction")]
         public int Direction { get; set; }

@@ -24,7 +24,7 @@ public class BulletActor : BaseActor
         if (life_time > max_life_time_)
         {
             Destroy(gameObject);
-            if (!owner_.IsDestroyed())
+            if (owner_ != null && !owner_.IsDestroyed())
             {
                 MainPlayerActor actor = owner_.GetComponent<MainPlayerActor>();
                 if (actor)
@@ -40,5 +40,13 @@ public class BulletActor : BaseActor
         owner_ = owner;
         Rigidbody rb = transform.GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed_;
+
+        if (owner != null)
+        {
+            // Í¬²½×Óµ¯
+            MsgUseSkill msg = new();
+            msg.SetSendData((int)SkillDef.Bullet);
+            NetManager.Send(msg);
+        }
     }
 }

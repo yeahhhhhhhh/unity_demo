@@ -110,13 +110,13 @@ namespace service.scene
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
         [global::ProtoBuf.ProtoMember(1, Name = @"x")]
-        public int X { get; set; }
+        public float X { get; set; }
 
         [global::ProtoBuf.ProtoMember(2, Name = @"y")]
-        public int Y { get; set; }
+        public float Y { get; set; }
 
         [global::ProtoBuf.ProtoMember(3, Name = @"z")]
-        public int Z { get; set; }
+        public float Z { get; set; }
 
         [global::ProtoBuf.ProtoContract()]
         public partial class Response : global::ProtoBuf.IExtensible
@@ -197,6 +197,37 @@ namespace service.scene
 
             [global::ProtoBuf.ProtoMember(4, Name = @"players")]
             public global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo> Players { get; } = new global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo>();
+
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RequestLeaveScene : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoContract()]
+        public partial class Response : global::ProtoBuf.IExtensible
+        {
+            private global::ProtoBuf.IExtension __pbn__extensionData;
+            global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+                => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+            [global::ProtoBuf.ProtoMember(1, Name = @"scene_id")]
+            public int SceneId { get; set; }
+
+            [global::ProtoBuf.ProtoMember(2, Name = @"scene_gid")]
+            public int SceneGid { get; set; }
+
+            [global::ProtoBuf.ProtoMember(3, Name = @"uid")]
+            public long Uid { get; set; }
+
+            [global::ProtoBuf.ProtoMember(4, Name = @"nickname")]
+            [global::System.ComponentModel.DefaultValue("")]
+            public string Nickname { get; set; } = "";
 
         }
 
