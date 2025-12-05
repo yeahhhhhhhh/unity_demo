@@ -8,7 +8,7 @@ public class GetScenePlayersReq : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        NetManager.AddMsgListener((short)MsgRespPbType.GET_SCENE_PLAYERS, OnGetScenePlayers);
+        //NetManager.AddMsgListener((short)MsgRespPbType.GET_SCENE_PLAYERS, OnGetScenePlayers);
     }
 
     // Update is called once per frame

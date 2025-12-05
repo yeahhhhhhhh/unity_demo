@@ -79,10 +79,7 @@ namespace service.scene
         [global::ProtoBuf.ProtoMember(1, Name = @"direction")]
         public int Direction { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"auto_move")]
-        public bool AutoMove { get; set; }
-
-        [global::ProtoBuf.ProtoMember(3, Name = @"stop_move")]
+        [global::ProtoBuf.ProtoMember(2, Name = @"stop_move")]
         public bool StopMove { get; set; }
 
         [global::ProtoBuf.ProtoContract()]
@@ -109,14 +106,8 @@ namespace service.scene
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name = @"x")]
-        public float X { get; set; }
-
-        [global::ProtoBuf.ProtoMember(2, Name = @"y")]
-        public float Y { get; set; }
-
-        [global::ProtoBuf.ProtoMember(3, Name = @"z")]
-        public float Z { get; set; }
+        [global::ProtoBuf.ProtoMember(1, Name = @"pos")]
+        public global::attributes.scene.Position Pos { get; set; }
 
         [global::ProtoBuf.ProtoContract()]
         public partial class Response : global::ProtoBuf.IExtensible

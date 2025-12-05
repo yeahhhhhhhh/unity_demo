@@ -11,7 +11,6 @@ public class SyncPlayerActor : SyncActor
     public GameObject bullet_prefab_;
     public override void Start()
     {
-        base.Start();
         Debug.Log("SyncPlayerActor start");
         base.Start();
         body_ = transform.Find("Body");

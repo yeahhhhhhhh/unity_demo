@@ -38,6 +38,7 @@ public class EnterSceneReq : MonoBehaviour
             y = resp_msg.resp.SceneInfo.Position.Y,
             z = resp_msg.resp.SceneInfo.Position.Z
         };
+        Vector3 rotation = MoveManager.GetRotaionByDirection(resp_msg.resp.SceneInfo.Position.Direction);
         Int64 uid = resp_msg.resp.Uid;
 
         // 生成主玩家
@@ -49,7 +50,8 @@ public class EnterSceneReq : MonoBehaviour
                 SceneManager.Init(scene_id, scene_gid);
             }
 
-            var new_player = CreatePlayer(pos, uid, scene_id, scene_gid);
+            
+            var new_player = CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
             if (new_player != null)
             {
                 Debug.Log("create main player success, uid:" + uid.ToString());
@@ -62,7 +64,7 @@ public class EnterSceneReq : MonoBehaviour
         else
         {
             Debug.Log("玩家进入场景,uid:" + uid.ToString());
-            CreatePlayer(pos, uid, scene_id, scene_gid);
+            CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
         }
     }
 
@@ -85,11 +87,12 @@ public class EnterSceneReq : MonoBehaviour
                 y = player_info.Position.Y,
                 z = player_info.Position.Z
             };
-            CreatePlayer(pos, uid, scene_id, scene_gid);
+            Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
+            CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
         }
     }
 
-    public PlayerInfo CreatePlayer(Vector3 pos, Int64 uid, Int32 scene_id, Int32 scene_gid)
+    public PlayerInfo CreatePlayer(Vector3 pos, Vector3 rotation, Int64 uid, Int32 scene_id, Int32 scene_gid)
     {
         if (SceneManager.scene_id_ != scene_id || SceneManager.scene_gid_ != scene_gid)
         {
@@ -114,25 +117,24 @@ public class EnterSceneReq : MonoBehaviour
         bool is_main_player = MainPlayer.GetUid() == uid;
 
         Debug.Log("create player, uid:" + uid.ToString() + ", x:" + pos.x + " y:" + pos.y + " z:" + pos.z);
-        GameObject instance = Instantiate(prefab, pos, Quaternion.identity);
+        GameObject instance = Instantiate(prefab, pos, Quaternion.Euler(rotation));
+        //instance.transform.eulerAngles = rotation;
+        //instance.transform.position = pos;
         PlayerInfo player;
         if (is_main_player)
         {
             instance.name = "MainPlayer" + uid.ToString();
             player = MainPlayer.player_;
             // 挂上控制脚本
-            var actor = instance.AddComponent<MainPlayerActor>();
+            instance.AddComponent<MainPlayerActor>();
         }
         else
         {
             instance.name = "OtherPlayer" + uid.ToString();
             player = new();
-            // 挂上同步脚本
-            var actor = instance.AddComponent<SyncPlayerActor>();
-            actor.Init();
         }
-
-        //instance.transform.position = pos;
+        // 挂上同步脚本
+        instance.AddComponent<SyncPlayerActor>();
         instance.SetActive(true);
 
         player.base_info_.uid = uid;

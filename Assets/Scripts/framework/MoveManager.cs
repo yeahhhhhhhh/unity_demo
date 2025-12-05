@@ -3,6 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum DirectionType
+{
+    START = 0,
+    UP = 1,
+    DOWN = 2,
+    LEFT = 3,
+    RIGHT = 4,
+    WA = 5,  // 左上
+    WD = 6,  // 右上
+    SA = 7,  // 左下
+    SD = 8, // 右下
+    END = 9,
+}
 public class MoveManager
 {
     private static MoveManager instance;
@@ -29,6 +42,7 @@ public class MoveManager
         Debug.Log("MoveManager init");
         // 注册位置同步
         NetManager.AddMsgListener((short)MsgRespPbType.MOVE_UPDATE_POS, OnPlayerPosUpdate);
+        NetManager.AddMsgListener((short)MsgRespPbType.MOVE, OnPlayerMove);
         //NetManager.RemoveMsgListener((short)MsgRespPbType.GET_SCENE_PLAYERS, OnGetScenePlayers);
     }
 
@@ -41,6 +55,7 @@ public class MoveManager
         float x = resp_msg.resp.SceneInfo.Position.X;
         float y = resp_msg.resp.SceneInfo.Position.Y;
         float z = resp_msg.resp.SceneInfo.Position.Z;
+        Int32 direction = resp_msg.resp.SceneInfo.Position.Direction;
         Vector3 pos = new Vector3(x, y, z);
         // 判断是否在场景
         if (scene_id != SceneManager.scene_id_ || scene_gid != SceneManager.scene_gid_)
@@ -66,8 +81,49 @@ public class MoveManager
             SyncPlayerActor actor = player_info.skin_.GetComponent<SyncPlayerActor>();
             if (actor != null)
             {
-                actor.SyncPos(pos);
+                actor.SyncPos(pos, direction);
             }
+        }
+    }
+
+    public void OnPlayerMove(MsgBase msg)
+    {
+        MsgNewMove.Response resp_msg = (MsgNewMove.Response)msg;
+        Int64 uid = resp_msg.resp.Uid;
+        Vector3 pos = new(
+            resp_msg.resp.SceneInfo.Position.X, 
+            resp_msg.resp.SceneInfo.Position.Y, 
+            resp_msg.resp.SceneInfo.Position.Z);
+        Int32 direction = resp_msg.resp.SceneInfo.Position.Direction;
+
+        PlayerInfo player = SceneManager.FindPlayer(uid);
+        if (player == null)
+        {
+            Debug.Log("OnPlayerMove player is null, uid:" + uid.ToString());
+            return;
+        }
+
+        SyncPlayerActor actor = player.skin_.GetComponent<SyncPlayerActor>();
+        if (actor != null)
+        {
+            actor.SyncPos(pos, direction);
+        }
+    }
+
+    public static Vector3 GetRotaionByDirection(Int32 direction)
+    {
+        switch (direction)
+        {
+            case (Int32)DirectionType.UP:
+                return new Vector3(0, 0, 0);
+            case (Int32)DirectionType.DOWN:
+                return new Vector3(0, 180, 0);
+            case (Int32)DirectionType.LEFT:
+                return new Vector3(0, -90, 0);
+            case (Int32)DirectionType.RIGHT:
+                return new Vector3(0, 90, 0);;
+            default:
+                return new Vector3(0, 0, 0);
         }
     }
 }

@@ -63,6 +63,7 @@ public static class MsgTypeRegister
         RegisterRequestPbMsg((short)MsgPbType.LEAVE_SCENE, "service.scene.RequestLeaveScene", "MsgLeaveScene");
         RegisterRequestPbMsg((short)MsgPbType.MOVE_UPDATE_POS, "service.scene.RequestUpdatePos", "MsgMove");
         RegisterRequestPbMsg((short)MsgPbType.USE_SKILL, "service.scene.RequestUseSkill", "MsgUseSkill");
+        RegisterRequestPbMsg((short)MsgPbType.MOVE, "service.scene.RequestMove", "MsgNewMove");
 
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, "service.scene.RequestEnterDefaultScene+Response", "MsgEnterScene+Response");
@@ -70,6 +71,7 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.LEAVE_SCENE, "service.scene.RequestLeaveScene+Response", "MsgLeaveScene+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.MOVE_UPDATE_POS, "service.scene.RequestUpdatePos+Response", "MsgMove+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.USE_SKILL_RESPONSE, "service.scene.RequestUseSkill+Response", "MsgUseSkill+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.MOVE, "service.scene.RequestMove+Response", "MsgNewMove+Response");
     }
 
     static public string GetStringTypeByID(short id)

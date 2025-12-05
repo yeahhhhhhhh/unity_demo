@@ -25,8 +25,7 @@ message RequestEnterScene {
 
 message RequestMove {
   int32 direction = 1;
-  bool auto_move = 2;
-  bool stop_move = 3;
+  bool stop_move = 2;
   message Response {
     attributes.scene.SceneInfo scene_info = 1;
     int64 uid = 2;
@@ -34,9 +33,7 @@ message RequestMove {
 }
 
 message RequestUpdatePos{
-  float x = 1;
-  float y = 2;
-  float z = 3;
+  attributes.scene.Position pos = 1;
   message Response{
     attributes.scene.SceneInfo scene_info = 1;
     int64 uid = 2;
