@@ -68,3 +68,20 @@ message RequestLeaveScene{
     string nickname = 4;
   }
 }
+
+message ResponseUpdateView{
+  int64 uid = 1;
+  attributes.scene.SceneInfo scene_info = 2;
+  repeated attributes.scene.PlayerSceneInfo leave_players = 3;
+  repeated attributes.scene.PlayerSceneInfo enter_players = 4;
+}
+
+message ResponseLeaveView{
+  int64 uid = 1;
+  attributes.scene.SceneInfo scene_info = 2;
+}
+
+message ResponseEnterView{
+  int64 uid = 1;
+  attributes.scene.SceneInfo scene_info = 2;
+}

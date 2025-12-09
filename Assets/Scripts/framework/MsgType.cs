@@ -36,6 +36,9 @@ public enum MsgRespPbType
     MOVE_UPDATE_POS = 8,
     GET_SCENE_PLAYERS = 9,
     LEAVE_SCENE = 10,
+    UPDATE_VIEW = 11,
+    LEAVE_VIEW = 12,
+    ENTER_VIEW = 13,
 }
 
 public static class MsgTypeRegister
@@ -72,6 +75,10 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.MOVE_UPDATE_POS, "service.scene.RequestUpdatePos+Response", "MsgMove+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.USE_SKILL_RESPONSE, "service.scene.RequestUseSkill+Response", "MsgUseSkill+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.MOVE, "service.scene.RequestMove+Response", "MsgNewMove+Response");
+
+        RegisterResponsePbMsg((short)MsgRespPbType.UPDATE_VIEW, "service.scene.ResponseUpdateView", "MsgResponseUpdateView");
+        RegisterResponsePbMsg((short)MsgRespPbType.LEAVE_VIEW, "service.scene.ResponseLeaveView", "MsgResponseLeaveView");
+        RegisterResponsePbMsg((short)MsgRespPbType.ENTER_VIEW, "service.scene.ResponseEnterView", "MsgResponseEnterView");
     }
 
     static public string GetStringTypeByID(short id)

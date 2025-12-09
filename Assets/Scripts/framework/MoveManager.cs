@@ -43,7 +43,73 @@ public class MoveManager
         // 注册位置同步
         NetManager.AddMsgListener((short)MsgRespPbType.MOVE_UPDATE_POS, OnPlayerPosUpdate);
         NetManager.AddMsgListener((short)MsgRespPbType.MOVE, OnPlayerMove);
+
+        // 视野更新
+        NetManager.AddMsgListener((short)MsgRespPbType.UPDATE_VIEW, OnUpdateView);
+        NetManager.AddMsgListener((short)MsgRespPbType.LEAVE_VIEW, OnLeaveView);
+        NetManager.AddMsgListener((short)MsgRespPbType.ENTER_VIEW, OnEnterView);
         //NetManager.RemoveMsgListener((short)MsgRespPbType.GET_SCENE_PLAYERS, OnGetScenePlayers);
+    }
+
+    public void OnLeaveView(MsgBase msg)
+    {
+        MsgResponseLeaveView resp_msg = (MsgResponseLeaveView)msg;
+        Int64 uid = resp_msg.resp.Uid;
+        SceneManager.DeletePlayer(uid);
+    }
+
+    public void OnEnterView(MsgBase msg)
+    {
+        MsgResponseEnterView resp_msg = (MsgResponseEnterView)msg;
+        Int64 uid = resp_msg.resp.Uid;
+        attributes.scene.SceneInfo scene_info = resp_msg.resp.SceneInfo;
+        Int32 scene_id = scene_info.SceneId;
+        Int32 scene_gid = scene_info.SceneGid;
+        Vector3 pos = new()
+        {
+            x = scene_info.Position.X,
+            y = scene_info.Position.Y,
+            z = scene_info.Position.Z
+        };
+        Vector3 rotation = MoveManager.GetRotaionByDirection(scene_info.Position.Direction);
+        SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
+    }
+
+    public void OnUpdateView(MsgBase msg)
+    {
+        MsgResponseUpdateView resp_msg = (MsgResponseUpdateView)msg;
+        Int64 uid = resp_msg.resp.Uid;
+        Int32 scene_id = resp_msg.resp.SceneInfo.SceneId;
+        Int32 scene_gid = resp_msg.resp.SceneInfo.SceneGid;
+        if (scene_id != SceneManager.scene_id_ || scene_gid != SceneManager.scene_gid_)
+        {
+            Debug.Log("OnUpdateView, scene id or scene gid is not same, scene id:" + scene_id + " scene id:" + SceneManager.scene_id_);
+            return;
+        }
+        List <attributes.scene.PlayerSceneInfo> leave_view_player_list = resp_msg.resp.LeavePlayers;
+        List<attributes.scene.PlayerSceneInfo> enter_view_player_list = resp_msg.resp.EnterPlayers;
+
+        for (int i = 0; i < leave_view_player_list.Count; ++i)
+        {
+            attributes.scene.PlayerSceneInfo player_info = leave_view_player_list[i];
+            Int64 leave_uid = player_info.Uid;
+            SceneManager.DeletePlayer(leave_uid);
+        }
+
+        
+        for (int i = 0; i < enter_view_player_list.Count; ++i)
+        {
+            attributes.scene.PlayerSceneInfo player_info = enter_view_player_list[i];
+            Int64 enter_uid = player_info.Uid;
+            Vector3 pos = new()
+            {
+                x = player_info.Position.X,
+                y = player_info.Position.Y,
+                z = player_info.Position.Z
+            };
+            Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
+            SceneManager.CreatePlayer(pos, rotation, enter_uid, scene_id, scene_gid);
+        }
     }
 
     public void OnPlayerPosUpdate(MsgBase msg)
