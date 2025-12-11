@@ -64,6 +64,9 @@ namespace attributes.combat
         [global::ProtoBuf.ProtoMember(2, Name = @"damage")]
         public int Damage { get; set; }
 
+        [global::ProtoBuf.ProtoMember(3, Name = @"cur_hp")]
+        public int CurHp { get; set; }
+
     }
 
 }

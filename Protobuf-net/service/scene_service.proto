@@ -77,6 +77,16 @@ message RequestLeaveScene{
   }
 }
 
+message RequestFightInfo{
+  int64 uid = 1;
+  message Response{
+    int64 uid = 1;
+    attributes.combat.FightInfo fight_info = 2;
+  }
+}
+
+
+
 message ResponseUpdateView{
   int64 uid = 1;
   attributes.scene.SceneInfo scene_info = 2;

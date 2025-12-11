@@ -59,6 +59,10 @@ public class EnterSceneReq : MonoBehaviour
                 // 第一次进入获取场景玩家
                 MsgGetScenePlayers get_scene_players_msg = new();
                 NetManager.Send(get_scene_players_msg);
+                // 第一次进入获取战斗信息
+                MsgGetFightInfo get_fight_info_msg = new();
+                get_fight_info_msg.SetSendData(uid);
+                NetManager.Send(get_fight_info_msg);
 
                 // 设置摄像头
                 CameraFollower follower = Camera.main.AddComponent<CameraFollower>();

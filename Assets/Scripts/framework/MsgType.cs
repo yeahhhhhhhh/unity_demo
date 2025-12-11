@@ -22,6 +22,7 @@ public enum MsgPbType
     MOVE_UPDATE_POS = 8,
     GET_SCENE_PLAYERS = 9,
     LEAVE_SCENE = 10,
+    GET_FIGHT_INFO = 11,
 }
 
 public enum MsgRespPbType
@@ -40,6 +41,7 @@ public enum MsgRespPbType
     LEAVE_VIEW = 12,
     ENTER_VIEW = 13,
     SKILL_RESPONSE_POS = 14,
+    GET_FIGHT_INFO = 15,
 }
 
 public static class MsgTypeRegister
@@ -68,6 +70,8 @@ public static class MsgTypeRegister
         RegisterRequestPbMsg((short)MsgPbType.MOVE_UPDATE_POS, "service.scene.RequestUpdatePos", "MsgMove");
         RegisterRequestPbMsg((short)MsgPbType.USE_SKILL, "service.scene.RequestUseSkill", "MsgUseSkill");
         RegisterRequestPbMsg((short)MsgPbType.MOVE, "service.scene.RequestMove", "MsgNewMove");
+        RegisterRequestPbMsg((short)MsgPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo", "MsgGetFightInfo");
+
 
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, "service.scene.RequestEnterDefaultScene+Response", "MsgEnterScene+Response");
@@ -82,6 +86,7 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_VIEW, "service.scene.ResponseEnterView", "MsgResponseEnterView");
 
         RegisterResponsePbMsg((short)MsgRespPbType.SKILL_RESPONSE_POS, "service.scene.RequestUseSkill+ResponsePos", "MsgUseSkill+ResponsePos");
+        RegisterResponsePbMsg((short)MsgRespPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo+Response", "MsgGetFightInfo+Response");
     }
 
     static public string GetStringTypeByID(short id)

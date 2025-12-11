@@ -14,6 +14,7 @@ public static class App {
 public static class MainPlayer
 {
     public static PlayerInfo player_ = new();
+    public static FightInfo fight_info_ = new();
 
     public static void SetPlayerBaseInfo(Int64 uid, string username, string nickname)
     {
@@ -27,6 +28,11 @@ public static class MainPlayer
         player_.scene_info_.scene_id_ = scene_id;
         player_.scene_info_.scene_gid_ = scene_gid;
         player_.scene_info_.pos_ = pos;
+    }
+
+    public static void SetPlayerFightInfo(attributes.combat.FightInfo fight_info)
+    {
+        fight_info_.Copy(fight_info);
     }
 
     public static Int64 GetUid() {  return player_.base_info_.uid; }
@@ -44,6 +50,7 @@ public class GameMain : MonoBehaviour
 
         SkillConfig.Init();
         SkillManager.Instance.Init();
+        FightManager.Instance.Init();
 
         main_canvas_ = GameObject.Find("Canvas");
 
