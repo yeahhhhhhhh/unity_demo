@@ -40,13 +40,5 @@ public class BulletActor : BaseActor
         owner_ = owner;
         Rigidbody rb = transform.GetComponent<Rigidbody>();
         rb.velocity = transform.forward * speed_;
-
-        if (owner != null)
-        {
-            // Í¬²½×Óµ¯
-            MsgUseSkill msg = new();
-            msg.SetSendData((int)SkillDef.Bullet);
-            NetManager.Send(msg);
-        }
     }
 }

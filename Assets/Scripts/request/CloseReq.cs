@@ -22,5 +22,10 @@ public class CloseReq : MonoBehaviour
         NetManager.Close();
         SceneManager.Init(0, 0);
         GameMain.SetMainCanvasActive(true);
+        CameraFollower actor = Camera.main.GetComponent<CameraFollower>();
+        if (actor != null)
+        {
+            Destroy(actor);
+        }
     }
 }

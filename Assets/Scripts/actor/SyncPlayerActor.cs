@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -40,12 +41,23 @@ public class SyncPlayerActor : SyncActor
         base.Update();
     }
 
-    public void Fire()
+    public override bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
     {
-        Debug.Log("fire!!!!");
-        GameObject bullet = Instantiate(bullet_prefab_, fire_point_.position, fire_point_.rotation);
-        Debug.Log("fire position:" + fire_point_.position.ToString());
-        BulletActor bullet_actor = bullet.GetComponent<BulletActor>();
-        bullet_actor.Fire(null);
+        bool is_success = base.OnUsedSkill(skill_id, skill_gid, position, direction);
+        if (!is_success)
+        {
+            return false;
+        }
+
+        if (skill_id == (Int32)SkillDef.Bullet)
+        {
+            Debug.Log("fire!!!!");
+            GameObject bullet = Instantiate(bullet_prefab_, fire_point_.position, fire_point_.rotation);
+            Debug.Log("fire position:" + fire_point_.position.ToString());
+            BulletActor bullet_actor = bullet.GetComponent<BulletActor>();
+            bullet_actor.Fire(null);
+        }
+
+        return true;
     }
 }

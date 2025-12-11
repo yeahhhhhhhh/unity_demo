@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -30,5 +31,29 @@ public class BaseActor : MonoBehaviour
         skin_.transform.localPosition = Vector3.zero;
         skin_.transform.localEulerAngles = Vector3.zero;
         skin_.SetActive(true);
+    }
+
+    public virtual bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
+    {
+        if (skill_id == (Int32)SkillDef.Bullet)
+        {
+            return true;
+        }
+
+        SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
+        if (skill == null)
+        {
+            return false;
+        }
+
+        GameObject skill_obj = SkillManager.Instance.CreateSkill(skill_id, skill_gid, position, direction);
+        if (skill_obj == null)
+        {
+            return false;
+        }
+        ActiveSkillActor actor = skill_obj.AddComponent<ActiveSkillActor>();
+        actor.Init(skill.skill_id_, skill_gid, gameObject);
+
+        return true;
     }
 }

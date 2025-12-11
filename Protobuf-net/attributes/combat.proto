@@ -16,3 +16,8 @@ message FightInfo {
   int32 evasion_rate = 10;
   int32 hit_rate = 11;
 }
+
+message FightResult{
+  int64 uid = 1;
+  int32 damage = 2;
+}

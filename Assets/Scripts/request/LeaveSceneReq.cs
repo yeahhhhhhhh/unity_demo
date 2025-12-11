@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LeaveSceneReq : MonoBehaviour
@@ -52,6 +53,11 @@ public class LeaveSceneReq : MonoBehaviour
             // 重置玩家场景数据
             MainPlayer.player_.scene_info_ = new();
             GameMain.SetMainCanvasActive(true);
+            CameraFollower actor = Camera.main.GetComponent<CameraFollower>();
+            if (actor != null)
+            {
+                Destroy(actor);
+            }
         }
         else
         {

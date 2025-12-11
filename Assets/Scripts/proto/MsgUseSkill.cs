@@ -19,6 +19,19 @@ public class MsgUseSkill: MsgBase
         }
     }
 
+    public class ResponsePos : MsgBase
+    {
+        public service.scene.RequestUseSkill.ResponsePos resp;
+        public ResponsePos()
+        {
+            cmd_id_ = (short)MsgRespPbType.SKILL_RESPONSE_POS;
+        }
+        public override void SetResponseData(IExtensible data)
+        {
+            resp = (service.scene.RequestUseSkill.ResponsePos)data;
+        }
+    }
+
     public MsgUseSkill() {
         cmd_id_ = (short)MsgPbType.USE_SKILL;
     }

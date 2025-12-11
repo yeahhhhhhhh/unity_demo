@@ -39,6 +39,7 @@ public enum MsgRespPbType
     UPDATE_VIEW = 11,
     LEAVE_VIEW = 12,
     ENTER_VIEW = 13,
+    SKILL_RESPONSE_POS = 14,
 }
 
 public static class MsgTypeRegister
@@ -79,6 +80,8 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.UPDATE_VIEW, "service.scene.ResponseUpdateView", "MsgResponseUpdateView");
         RegisterResponsePbMsg((short)MsgRespPbType.LEAVE_VIEW, "service.scene.ResponseLeaveView", "MsgResponseLeaveView");
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_VIEW, "service.scene.ResponseEnterView", "MsgResponseEnterView");
+
+        RegisterResponsePbMsg((short)MsgRespPbType.SKILL_RESPONSE_POS, "service.scene.RequestUseSkill+ResponsePos", "MsgUseSkill+ResponsePos");
     }
 
     static public string GetStringTypeByID(short id)

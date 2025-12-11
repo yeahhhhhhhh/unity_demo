@@ -149,15 +149,35 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
             public long Uid { get; set; }
 
-            [global::ProtoBuf.ProtoMember(3, Name = @"target_uid")]
-            public long TargetUid { get; set; }
-
-            [global::ProtoBuf.ProtoMember(4, Name = @"skill_id")]
+            [global::ProtoBuf.ProtoMember(3, Name = @"skill_id")]
             public int SkillId { get; set; }
 
-            [global::ProtoBuf.ProtoMember(5, Name = @"json_data")]
-            [global::System.ComponentModel.DefaultValue("")]
-            public string JsonData { get; set; } = "";
+            [global::ProtoBuf.ProtoMember(4, Name = @"result")]
+            public global::System.Collections.Generic.List<global::attributes.combat.FightResult> Results { get; } = new global::System.Collections.Generic.List<global::attributes.combat.FightResult>();
+
+        }
+
+        [global::ProtoBuf.ProtoContract()]
+        public partial class ResponsePos : global::ProtoBuf.IExtensible
+        {
+            private global::ProtoBuf.IExtension __pbn__extensionData;
+            global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+                => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+            [global::ProtoBuf.ProtoMember(1, Name = @"error_code")]
+            public int ErrorCode { get; set; }
+
+            [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
+            public long Uid { get; set; }
+
+            [global::ProtoBuf.ProtoMember(3, Name = @"skill_id")]
+            public int SkillId { get; set; }
+
+            [global::ProtoBuf.ProtoMember(4, Name = @"global_skill_id")]
+            public long GlobalSkillId { get; set; }
+
+            [global::ProtoBuf.ProtoMember(5, Name = @"pos")]
+            public global::attributes.scene.Position Pos { get; set; }
 
         }
 

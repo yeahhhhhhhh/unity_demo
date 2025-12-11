@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.UI.GridLayoutGroup;
 
 public class MainPlayerActor : CtrlActor
 {
@@ -37,8 +39,8 @@ public class MainPlayerActor : CtrlActor
         {
             Debug.Log("fire_point is null");
         }
-
     }
+
 
     // Update is called once per frame
     public override void Update()
@@ -58,15 +60,55 @@ public class MainPlayerActor : CtrlActor
                 return;
             }
             Debug.Log("fire!!!!");
+            SendSkillMsg(SkillDef.Bullet);
+        }
 
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SendSkillMsg(SkillDef.Skill1);
+        }
+    }
+
+    public void SendSkillMsg(SkillDef skill_id)
+    {
+        Debug.Log("use skill:" + skill_id.ToString());
+        // 使用技能请求
+        MsgUseSkill msg = new();
+        msg.SetSendData((Int32)skill_id);
+        NetManager.Send(msg);
+    }
+
+    public override bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
+    {
+        bool is_success = base.OnUsedSkill(skill_id, skill_gid, position, direction);
+        if (!is_success)
+        {
+            return false;
+        }
+
+        //SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
+        //if (skill == null)
+        //{
+        //    return false;
+        //}
+
+        if (skill_id == (Int32)SkillDef.Bullet)
+        {
+            NotifiedBulletCreate();
             GameObject bullet = Instantiate(bullet_prefab_, fire_point_.position, fire_point_.rotation);
             Debug.Log("fire position:" + fire_point_.position.ToString());
             BulletActor bullet_actor = bullet.GetComponent<BulletActor>();
             bullet_actor.Fire(gameObject);
-            cur_bullet_count_++;
         }
+
+        return true;
     }
 
+    public void NotifiedBulletCreate()
+    {
+        cur_bullet_count_++;
+
+    }
     public void NotifiedBulletDestroy()
     {
         cur_bullet_count_--;

@@ -41,6 +41,8 @@ public class GameMain : MonoBehaviour
         Debug.Log("main start");
         MsgTypeRegister.InitPbRegister();
         MoveManager.Instance.Init();
+
+        SkillConfig.Init();
         SkillManager.Instance.Init();
 
         main_canvas_ = GameObject.Find("Canvas");
