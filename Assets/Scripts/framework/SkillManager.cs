@@ -117,7 +117,37 @@ public class SkillManager
     public void OnUseSkill(MsgBase msg)
     {
         MsgUseSkill.Response resp_msg = (MsgUseSkill.Response)msg;
+        Int64 uid = resp_msg.resp.Uid;
 
+        List<attributes.combat.FightResult> result_list = resp_msg.resp.Results;
+        for (int i = 0; i < result_list.Count; ++i)
+        {
+            attributes.combat.FightResult one_res = result_list[i];
+            Int64 target_uid = one_res.Uid;
+            PlayerInfo player = SceneManager.FindPlayer(target_uid);
+            if (player != null)
+            {
+                CreateBlood(player.skin_);
+            }
+        }
+
+    }
+
+    public void CreateBlood(GameObject player_obj)
+    {
+        // TODO: 击中特效
+        GameObject blood_prefab = ResManager.LoadPrefab("BloodPrefab");
+
+        float random_float = UnityEngine.Random.Range(-0.5f, 0.5f);
+        Vector3 position = player_obj.transform.position + Vector3.up * 2 + Vector3.left * random_float;
+        Vector3 direction = Vector3.zero;
+
+        GameObject skill_obj = GameObject.Instantiate(blood_prefab, position, Quaternion.Euler(direction));
+        skill_obj.name = "Blood";
+
+        // 给一个向上的力
+        Rigidbody rb = skill_obj.transform.GetComponent<Rigidbody>();
+        rb.velocity = skill_obj.transform.up * 1;
     }
 
     public void HandleSkills()
