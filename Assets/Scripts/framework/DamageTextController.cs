@@ -30,7 +30,7 @@ public class DamageTextController : MonoBehaviour
         // 设置文本和样式
         if (damage < 0)
         {
-            tmpComponent.text = "+" + damage.ToString();
+            tmpComponent.text = "+" + (-damage).ToString();
             tmpComponent.color = Color.green;
         }
         else if (damage > 0)
