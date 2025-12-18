@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public enum SkillDef
 {
     Skill1 = 1,
     Bullet = 2,
+    Skill3 = 3,
+    Skill4 = 4,
+    Skill5 = 5,
 }
 
 public class SkillManager
@@ -44,11 +48,13 @@ public class SkillManager
             return null;
         }
         GameObject skill_obj = GameObject.Instantiate(skill.skill_prefab_, position, Quaternion.Euler(direction));
-        skill_obj.transform.localScale = new Vector3(skill.range_x_, skill.range_y_, skill.range_z_);
-        skill_obj.name = skill.skill_name_;
-
-        gid2skill_obj[skill_gid] = skill_obj;
-        Debug.Log("CreateSkill当前技能对象数量：" + gid2skill_obj.Count);
+        if (skill_obj != null)
+        {
+            skill_obj.transform.localScale = new Vector3(skill.range_x_, skill.range_y_, skill.range_z_);
+            skill_obj.name = skill.skill_name_;
+            gid2skill_obj[skill_gid] = skill_obj;
+            Debug.Log("CreateSkill当前技能对象数量：" + gid2skill_obj.Count);
+        }
 
         return skill_obj;
     }
@@ -58,7 +64,10 @@ public class SkillManager
         if (gid2skill_obj.ContainsKey(skill_gid))
         {
             GameObject obj = gid2skill_obj[skill_gid];
-            GameObject.Destroy(obj);
+            if (!obj.IsDestroyed())
+            {
+                GameObject.Destroy(obj);
+            }
             gid2skill_obj.Remove(skill_gid);
         }
 
@@ -120,34 +129,69 @@ public class SkillManager
         Int64 uid = resp_msg.resp.Uid;
 
         List<attributes.combat.FightResult> result_list = resp_msg.resp.Results;
+        Debug.Log("OnUseSkill, uid:" + uid);
         for (int i = 0; i < result_list.Count; ++i)
         {
             attributes.combat.FightResult one_res = result_list[i];
             Int64 target_uid = one_res.Uid;
+            Int32 damage = one_res.Damage;
+            Int32 cur_hp = one_res.CurHp;
+            Int32 max_hp = one_res.MaxHp;
+            Debug.Log("OnUseSkill, target_uid:" + target_uid);
             PlayerInfo player = SceneManager.FindPlayer(target_uid);
             if (player != null)
             {
-                CreateBlood(player.skin_);
+                if (damage > 0)
+                {
+                    CreateBlood(player.skin_);
+                }
+                CreateHurtText(player.skin_, damage);
+                player.fight_info_.cur_hp_ = cur_hp;
+                player.fight_info_.max_hp_ = max_hp;
+                UpdateHpUI(player.skin_, cur_hp, max_hp);
+            }
+            else
+            {
+                Debug.Log("Player not fount, target_uid:" + target_uid);
             }
         }
+    }
 
+    public void UpdateHpUI(GameObject player_obj, Int32 cur_hp, Int32 max_hp)
+    {
+        Debug.Log("UpdateHpUI cur hp:" + cur_hp.ToString() + " max hp:" + max_hp.ToString());
+        HUDManager hud_manager = player_obj.transform.GetComponentInChildren<HUDManager>();
+        if (hud_manager == null)
+        {
+            Debug.LogError("hud_manager is null");
+            return;
+        }
+
+        hud_manager.UpdateHealth(cur_hp, max_hp);
     }
 
     public void CreateBlood(GameObject player_obj)
     {
         // TODO: 击中特效
         GameObject blood_prefab = ResManager.LoadPrefab("BloodPrefab");
+        if (blood_prefab)
+        {
+            float random_float = UnityEngine.Random.Range(-0.5f, 0.5f);
+            Vector3 position = player_obj.transform.position + Vector3.up * 2 + Vector3.left * random_float;
+            Vector3 direction = Vector3.zero;
+            GameObject skill_obj = GameObject.Instantiate(blood_prefab, position, Quaternion.Euler(direction));
+            skill_obj.name = "Blood";
+        }
+        else
+        {
+            Debug.Log("blood_prefab not fount");
+        }
+    }
 
-        float random_float = UnityEngine.Random.Range(-0.5f, 0.5f);
-        Vector3 position = player_obj.transform.position + Vector3.up * 2 + Vector3.left * random_float;
-        Vector3 direction = Vector3.zero;
-
-        GameObject skill_obj = GameObject.Instantiate(blood_prefab, position, Quaternion.Euler(direction));
-        skill_obj.name = "Blood";
-
-        // 给一个向上的力
-        Rigidbody rb = skill_obj.transform.GetComponent<Rigidbody>();
-        rb.velocity = skill_obj.transform.up * 1;
+    public void CreateHurtText(GameObject player_obj, Int32 damage)
+    {
+        DamageTextController damage_text = player_obj.transform.GetComponentInChildren<DamageTextController>();
+        damage_text.CreateDamageText(damage);
     }
 
     public void HandleSkills()

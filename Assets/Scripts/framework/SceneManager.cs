@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public static class SceneManager
@@ -15,7 +16,7 @@ public static class SceneManager
         foreach (var item in scene_players)
         {
             PlayerInfo info = item.Value;
-            if(info.skin_ != null)
+            if(info.skin_ != null && !info.skin_.IsDestroyed())
             {
                 GameObject.Destroy(info.skin_);
             }

@@ -40,7 +40,7 @@ public static class MainPlayer
 
 public class GameMain : MonoBehaviour
 {
-    public static GameObject main_canvas_;
+    public static GameObject main_ctl_canvas_;
     // Start is called before the first frame update
     void Start()
     {
@@ -52,7 +52,7 @@ public class GameMain : MonoBehaviour
         SkillManager.Instance.Init();
         FightManager.Instance.Init();
 
-        main_canvas_ = GameObject.Find("Canvas");
+        main_ctl_canvas_ = GameObject.Find("CtlText");
 
         // ≤‚ ‘ResManager
         //GameObject skinRes = ResManager.LoadPrefab("RobotPrefab");
@@ -67,6 +67,6 @@ public class GameMain : MonoBehaviour
 
     public static void SetMainCanvasActive(bool active)
     {
-        main_canvas_.SetActive(active);
+        main_ctl_canvas_.SetActive(active);
     }
 }

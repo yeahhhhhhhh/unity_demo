@@ -67,6 +67,9 @@ namespace attributes.combat
         [global::ProtoBuf.ProtoMember(3, Name = @"cur_hp")]
         public int CurHp { get; set; }
 
+        [global::ProtoBuf.ProtoMember(4, Name = @"max_hp")]
+        public int MaxHp { get; set; }
+
     }
 
 }

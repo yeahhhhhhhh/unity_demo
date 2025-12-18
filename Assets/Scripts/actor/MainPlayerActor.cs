@@ -67,6 +67,21 @@ public class MainPlayerActor : CtrlActor
         {
             SendSkillMsg(SkillDef.Skill1);
         }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            SendSkillMsg(SkillDef.Skill3);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            SendSkillMsg(SkillDef.Skill4);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            SendSkillMsg(SkillDef.Skill5);
+        }
     }
 
     public void SendSkillMsg(SkillDef skill_id)

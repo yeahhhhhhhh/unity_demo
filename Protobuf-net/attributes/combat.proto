@@ -21,4 +21,5 @@ message FightResult{
   int64 uid = 1;
   int32 damage = 2;
   int32 cur_hp = 3;
+  int32 max_hp = 4;
 }
