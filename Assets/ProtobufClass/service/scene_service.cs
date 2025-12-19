@@ -29,7 +29,11 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
             public long Uid { get; set; }
 
-            [global::ProtoBuf.ProtoMember(3, Name = @"scene_info")]
+            [global::ProtoBuf.ProtoMember(3, Name = @"nickname")]
+            [global::System.ComponentModel.DefaultValue("")]
+            public string Nickname { get; set; } = "";
+
+            [global::ProtoBuf.ProtoMember(4, Name = @"scene_info")]
             public global::attributes.scene.SceneInfo SceneInfo { get; set; }
 
         }
@@ -317,7 +321,11 @@ namespace service.scene
         [global::ProtoBuf.ProtoMember(1, Name = @"uid")]
         public long Uid { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"scene_info")]
+        [global::ProtoBuf.ProtoMember(2, Name = @"nickname")]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string Nickname { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"scene_info")]
         public global::attributes.scene.SceneInfo SceneInfo { get; set; }
 
     }

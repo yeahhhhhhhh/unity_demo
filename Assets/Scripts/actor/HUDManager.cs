@@ -1,3 +1,5 @@
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 //using UnityEngine.UIElements;
@@ -6,6 +8,8 @@ public class HUDManager : MonoBehaviour
 {
     public GameObject hp_bar_prefab_; // 在Inspector中拖入创建好的血条预制体
     private GameObject hp_bar_instance_;
+
+    public TextMeshProUGUI nickname_;
 
     //public GameObject damage_text_prefab_;
     //public GameObject damage_text_pos_;
@@ -37,6 +41,11 @@ public class HUDManager : MonoBehaviour
                 slider.value = current_health / max_health; // 计算血量百分比
             }
         }
+    }
+
+    public void UpdateNickname(String nickname)
+    {
+        nickname_.text = nickname;
     }
 
     // 当血量改变时调用的方法

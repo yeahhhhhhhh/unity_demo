@@ -62,6 +62,7 @@ public class MoveManager
     {
         MsgResponseEnterView resp_msg = (MsgResponseEnterView)msg;
         Int64 uid = resp_msg.resp.Uid;
+        String nickname = resp_msg.resp.Nickname;
         attributes.scene.SceneInfo scene_info = resp_msg.resp.SceneInfo;
         Int32 scene_id = scene_info.SceneId;
         Int32 scene_gid = scene_info.SceneGid;
@@ -72,7 +73,7 @@ public class MoveManager
             z = scene_info.Position.Z
         };
         Vector3 rotation = MoveManager.GetRotaionByDirection(scene_info.Position.Direction);
-        SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
+        SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
     }
 
     public void OnUpdateView(MsgBase msg)
@@ -101,6 +102,7 @@ public class MoveManager
         {
             attributes.scene.PlayerSceneInfo player_info = enter_view_player_list[i];
             Int64 enter_uid = player_info.Uid;
+            String nickname = player_info.Nickname;
             Vector3 pos = new()
             {
                 x = player_info.Position.X,
@@ -108,7 +110,7 @@ public class MoveManager
                 z = player_info.Position.Z
             };
             Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
-            SceneManager.CreatePlayer(pos, rotation, enter_uid, scene_id, scene_gid);
+            SceneManager.CreatePlayer(pos, rotation, enter_uid, scene_id, scene_gid, nickname);
         }
     }
 

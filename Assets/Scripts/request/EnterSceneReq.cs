@@ -33,6 +33,7 @@ public class EnterSceneReq : MonoBehaviour
         Debug.Log("OnEnterScene, error_code:" + resp_msg.resp.ErrorCode + " scene info:" + resp_msg.resp.SceneInfo.SceneId);
         Int32 scene_id = resp_msg.resp.SceneInfo.SceneId;
         Int32 scene_gid = resp_msg.resp.SceneInfo.SceneGid;
+        String nickname = resp_msg.resp.Nickname;
         Vector3 pos = new()
         {
             x = resp_msg.resp.SceneInfo.Position.X,
@@ -51,7 +52,7 @@ public class EnterSceneReq : MonoBehaviour
                 SceneManager.Init(scene_id, scene_gid);
             }
 
-            var new_player = SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
+            PlayerInfo new_player = SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
             if (new_player != null)
             {
                 Debug.Log("create main player success, uid:" + uid.ToString());
@@ -77,7 +78,7 @@ public class EnterSceneReq : MonoBehaviour
         else
         {
             Debug.Log("玩家进入场景,uid:" + uid.ToString());
-            SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
+            SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
         }
     }
 
@@ -94,6 +95,7 @@ public class EnterSceneReq : MonoBehaviour
         {
             attributes.scene.PlayerSceneInfo player_info = player_list[i];
             Int64 uid = player_info.Uid;
+            String nickname = player_info.Nickname;
             Vector3 pos = new()
             {
                 x = player_info.Position.X,
@@ -101,7 +103,7 @@ public class EnterSceneReq : MonoBehaviour
                 z = player_info.Position.Z
             };
             Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
-            SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid);
+            SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
         }
     }
 }

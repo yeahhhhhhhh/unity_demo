@@ -61,7 +61,7 @@ public static class SceneManager
         return null;
     }
 
-    public static PlayerInfo CreatePlayer(Vector3 pos, Vector3 rotation, Int64 uid, Int32 scene_id, Int32 scene_gid)
+    public static PlayerInfo CreatePlayer(Vector3 pos, Vector3 rotation, Int64 uid, Int32 scene_id, Int32 scene_gid, String nickname)
     {
         if (SceneManager.scene_id_ != scene_id || SceneManager.scene_gid_ != scene_gid)
         {
@@ -105,6 +105,13 @@ public static class SceneManager
         // 挂上同步脚本
         instance.AddComponent<SyncPlayerActor>();
         instance.SetActive(true);
+
+        // 显示昵称UI
+        HUDManager hud_manager = instance.transform.GetComponentInChildren<HUDManager>();
+        if (hud_manager != null)
+        {
+            hud_manager.UpdateNickname(nickname);
+        }
 
         player.base_info_.uid = uid;
         player.scene_info_.pos_ = pos;

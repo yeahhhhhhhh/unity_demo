@@ -9,7 +9,8 @@ message RequestEnterDefaultScene {
   message Response {
     int32 error_code = 1;
     int64 uid = 2;
-    attributes.scene.SceneInfo scene_info = 3;
+    string nickname = 3;
+    attributes.scene.SceneInfo scene_info = 4;
   }
 }
 
@@ -101,5 +102,6 @@ message ResponseLeaveView{
 
 message ResponseEnterView{
   int64 uid = 1;
-  attributes.scene.SceneInfo scene_info = 2;
+  string nickname = 2;
+  attributes.scene.SceneInfo scene_info = 3;
 }
