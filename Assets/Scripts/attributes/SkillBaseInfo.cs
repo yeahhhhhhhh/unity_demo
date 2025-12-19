@@ -12,6 +12,7 @@ public class SkillBaseInfo
     public float range_x_ = 1;
     public float range_y_ = 1;
     public float range_z_ = 1;
+    public float speed_ = 0f;
 }
 
 public class SkillDynamicInfo
@@ -32,5 +33,6 @@ public class SkillDynamicInfo
         base_info_.radius_ = base_info.radius_;
         base_info_.range_x_ = base_info.range_x_;
         base_info_.range_z_ = base_info.range_z_;
+        base_info_.speed_ = base_info.speed_;
     }
 }

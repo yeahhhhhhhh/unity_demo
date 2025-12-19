@@ -63,7 +63,7 @@ public class MainPlayerActor : CtrlActor
             SendSkillMsg(SkillDef.Bullet);
         }
 
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             SendSkillMsg(SkillDef.Skill1);
         }
@@ -82,6 +82,10 @@ public class MainPlayerActor : CtrlActor
         {
             SendSkillMsg(SkillDef.Skill5);
         }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            SendSkillMsg(SkillDef.Skill6);
+        }
     }
 
     public void SendSkillMsg(SkillDef skill_id)
@@ -95,28 +99,7 @@ public class MainPlayerActor : CtrlActor
 
     public override bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
     {
-        bool is_success = base.OnUsedSkill(skill_id, skill_gid, position, direction);
-        if (!is_success)
-        {
-            return false;
-        }
-
-        //SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
-        //if (skill == null)
-        //{
-        //    return false;
-        //}
-
-        if (skill_id == (Int32)SkillDef.Bullet)
-        {
-            NotifiedBulletCreate();
-            GameObject bullet = Instantiate(bullet_prefab_, fire_point_.position, fire_point_.rotation);
-            Debug.Log("fire position:" + fire_point_.position.ToString());
-            BulletActor bullet_actor = bullet.GetComponent<BulletActor>();
-            bullet_actor.Fire(gameObject);
-        }
-
-        return true;
+        return base.OnUsedSkill(skill_id, skill_gid, position, direction);
     }
 
     public void NotifiedBulletCreate()

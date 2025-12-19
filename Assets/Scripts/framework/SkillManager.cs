@@ -10,6 +10,7 @@ public enum SkillDef
     Skill3 = 3,
     Skill4 = 4,
     Skill5 = 5,
+    Skill6 = 6,
 }
 
 public class SkillManager
@@ -40,7 +41,7 @@ public class SkillManager
         if (gid2skill_obj.ContainsKey(skill_gid))
         {
             Debug.Log("重复创建skill, gid:" + skill_gid);
-            return null;
+            return gid2skill_obj[skill_gid];
         }
         SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
         if (skill == null)
@@ -92,11 +93,11 @@ public class SkillManager
         MsgUseSkill.ResponsePos resp_msg = (MsgUseSkill.ResponsePos)msg;
         Int64 uid = resp_msg.resp.Uid;
         Int64 global_skill_id = resp_msg.resp.GlobalSkillId;
-        if (IsExistSkill(global_skill_id))
-        {
-            Debug.Log("skill obj is already exist, gid:" + global_skill_id);
-            return;
-        }
+        //if (IsExistSkill(global_skill_id))
+        //{
+        //    Debug.Log("skill obj is already exist, gid:" + global_skill_id);
+        //    return;
+        //}
 
         bool is_main_player = MainPlayer.GetUid() == uid;
         PlayerInfo player = SceneManager.FindPlayer(uid);

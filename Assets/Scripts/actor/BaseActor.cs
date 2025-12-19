@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class BaseActor : MonoBehaviour
@@ -35,11 +36,6 @@ public class BaseActor : MonoBehaviour
 
     public virtual bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
     {
-        if (skill_id == (Int32)SkillDef.Bullet)
-        {
-            return true;
-        }
-
         SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
         if (skill == null)
         {
@@ -51,8 +47,17 @@ public class BaseActor : MonoBehaviour
         {
             return false;
         }
-        ActiveSkillActor actor = skill_obj.AddComponent<ActiveSkillActor>();
-        actor.Init(skill.skill_id_, skill_gid, gameObject);
+
+        ActiveSkillActor actor = skill_obj.GetComponent<ActiveSkillActor>();
+        if (actor == null)
+        {
+            actor = skill_obj.AddComponent<ActiveSkillActor>();
+            actor.Init(skill.skill_id_, skill_gid, gameObject, position, direction);
+        }
+        else
+        {
+            actor.SyncPos(position);
+        }
 
         return true;
     }
