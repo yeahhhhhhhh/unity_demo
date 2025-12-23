@@ -276,6 +276,21 @@ namespace service.scene
     }
 
     [global::ProtoBuf.ProtoContract()]
+    public partial class RequestPathFind : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"x")]
+        public int X { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"z")]
+        public int Z { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
     public partial class ResponseUpdateView : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;

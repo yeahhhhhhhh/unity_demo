@@ -39,3 +39,22 @@ public class MsgMove: MsgBase
         return req;
     }
 }
+
+public class MsgPathFind: MsgBase
+{
+    public service.scene.RequestPathFind req = new();
+    public MsgPathFind()
+    {
+        cmd_id_ = (short)MsgPbType.PATH_FIND;
+    }
+
+    public void SetSendData(Int32 x, Int32 z)
+    {
+        req.X = x;
+        req.Z = z;
+    }
+    public override IExtensible GetSendData()
+    {
+        return req;
+    }
+}

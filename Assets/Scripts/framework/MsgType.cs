@@ -23,6 +23,7 @@ public enum MsgPbType
     GET_SCENE_PLAYERS = 9,
     LEAVE_SCENE = 10,
     GET_FIGHT_INFO = 11,
+    PATH_FIND = 12,
 }
 
 public enum MsgRespPbType
@@ -71,6 +72,7 @@ public static class MsgTypeRegister
         RegisterRequestPbMsg((short)MsgPbType.USE_SKILL, "service.scene.RequestUseSkill", "MsgUseSkill");
         RegisterRequestPbMsg((short)MsgPbType.MOVE, "service.scene.RequestMove", "MsgNewMove");
         RegisterRequestPbMsg((short)MsgPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo", "MsgGetFightInfo");
+        RegisterRequestPbMsg((short)MsgPbType.PATH_FIND, "service.scene.RequestPathFind", "MsgPathFind");
 
 
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
@@ -80,11 +82,9 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.MOVE_UPDATE_POS, "service.scene.RequestUpdatePos+Response", "MsgMove+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.USE_SKILL_RESPONSE, "service.scene.RequestUseSkill+Response", "MsgUseSkill+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.MOVE, "service.scene.RequestMove+Response", "MsgNewMove+Response");
-
         RegisterResponsePbMsg((short)MsgRespPbType.UPDATE_VIEW, "service.scene.ResponseUpdateView", "MsgResponseUpdateView");
         RegisterResponsePbMsg((short)MsgRespPbType.LEAVE_VIEW, "service.scene.ResponseLeaveView", "MsgResponseLeaveView");
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_VIEW, "service.scene.ResponseEnterView", "MsgResponseEnterView");
-
         RegisterResponsePbMsg((short)MsgRespPbType.SKILL_RESPONSE_POS, "service.scene.RequestUseSkill+ResponsePos", "MsgUseSkill+ResponsePos");
         RegisterResponsePbMsg((short)MsgRespPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo+Response", "MsgGetFightInfo+Response");
     }

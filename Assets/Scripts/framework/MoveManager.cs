@@ -189,7 +189,7 @@ public class MoveManager
             case (Int32)DirectionType.LEFT:
                 return new Vector3(0, -90, 0);
             case (Int32)DirectionType.RIGHT:
-                return new Vector3(0, 90, 0);;
+                return new Vector3(0, 90, 0);
             default:
                 return new Vector3(0, 0, 0);
         }
