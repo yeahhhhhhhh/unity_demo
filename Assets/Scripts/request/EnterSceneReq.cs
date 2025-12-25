@@ -105,5 +105,29 @@ public class EnterSceneReq : MonoBehaviour
             Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
             SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
         }
+
+        List<attributes.scene.NpcSceneInfo> npc_list = resp_msg.resp.Npcs;
+        for (int i = 0; i < npc_list.Count; ++i)
+        {
+            attributes.scene.NpcSceneInfo npc_scene_info = npc_list[i];
+            Int64 npc_gid = npc_scene_info.NpcGid;
+            Int32 npc_id = npc_scene_info.NpcId;
+            Vector3 pos = new()
+            {
+                x = npc_scene_info.Position.X,
+                y = npc_scene_info.Position.Y,
+                z = npc_scene_info.Position.Z,
+            };
+            Int32 direction = npc_scene_info.Position.Direction;
+            Vector3 rotation = MoveManager.GetRotaionByDirection(direction);
+            NpcInfo npc = SceneManager.CreateNpc(pos, rotation, npc_id, npc_gid);
+            npc.cur_hp_ = npc_scene_info.CurHp;
+            HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
+            if (hud_mgr != null)
+            {
+                hud_mgr.UpdateNickname(npc.name_);
+                hud_mgr.UpdateHealth(npc.cur_hp_, npc.max_hp_);
+            }
+        }
     }
 }

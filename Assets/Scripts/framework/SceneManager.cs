@@ -10,6 +10,7 @@ public static class SceneManager
     public static bool is_in_scene_ = false;
     
     public static Dictionary<Int64, PlayerInfo> scene_players = new();
+    public static Dictionary<Int64, NpcInfo> scene_npcs = new();
 
     public static void Init(Int32 scene_id, Int32 scene_gid)
     {
@@ -46,9 +47,35 @@ public static class SceneManager
         scene_players[uid] = player;
     }
 
+    public static void AddNpc(NpcInfo npc)
+    {
+        Int64 npc_gid = npc.npc_gid_;
+        if (scene_npcs.ContainsKey(npc_gid))
+        {
+            return;
+        }
+
+        scene_npcs[npc_gid] = npc;
+    }
+
+    public static void RemoveNpc(Int64 npc_gid)
+    {
+        scene_npcs.Remove(npc_gid);
+    }
+
     public static void RemovePlayer(Int64 uid)
     {
         scene_players.Remove(uid);
+    }
+
+    public static NpcInfo FindNpc(Int64 npc_gid)
+    {
+        if (scene_npcs.ContainsKey(npc_gid))
+        {
+            return scene_npcs[npc_gid];
+        }
+
+        return null;
     }
 
     public static PlayerInfo FindPlayer(Int64 uid)
@@ -59,6 +86,38 @@ public static class SceneManager
         }
 
         return null;
+    }
+
+    public static NpcInfo CreateNpc(Vector3 pos, Vector3 rotation, Int32 npc_id, Int64 npc_gid)
+    {
+        if (SceneManager.FindNpc(npc_gid) != null)
+        {
+            Debug.Log("already npc, npc_gid:" + npc_gid);
+            return null;
+        }
+
+        GameObject prefab = ResManager.LoadPrefab("NpcPrefab");
+        if (prefab == null)
+        {
+            Debug.Log("NpcPrefab is null");
+            return null;
+        }
+
+        NpcInfo npc = new();
+        npc.CopyNpcConfig(npc_id);
+        Debug.Log("create player, npc_gid:" + npc_gid.ToString() + ", x:" + pos.x + " y:" + pos.y + " z:" + pos.z);
+        GameObject instance = UnityEngine.GameObject.Instantiate(prefab, pos, Quaternion.Euler(rotation));
+        if (instance == null)
+        {
+            return null;
+        }
+
+        instance.name = npc.name_;
+        npc.skin_ = instance;
+        npc.npc_gid_ = npc_gid;
+        SceneManager.AddNpc(npc);
+
+        return npc;
     }
 
     public static PlayerInfo CreatePlayer(Vector3 pos, Vector3 rotation, Int64 uid, Int32 scene_id, Int32 scene_gid, String nickname)
@@ -130,6 +189,16 @@ public static class SceneManager
         {
             SceneManager.RemovePlayer(uid);
             GameObject.Destroy(leave_player.skin_);
+        }
+    }
+
+    public static void DeleteNpc(Int64 npc_gid)
+    {
+        NpcInfo npc = SceneManager.FindNpc(npc_gid);
+        if (npc != null)
+        {
+            SceneManager.RemoveNpc(npc_gid);
+            GameObject.Destroy(npc.skin_);
         }
     }
 

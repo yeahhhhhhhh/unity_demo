@@ -41,3 +41,16 @@ public class MsgResponseEnterView : MsgBase
         resp = (service.scene.ResponseEnterView)data;
     }
 }
+
+public class MsgResponseNpcView: MsgBase
+{
+    public service.scene.ResponseUpdateNpcView resp;
+    public MsgResponseNpcView()
+    {
+        base.cmd_id_ = (short)MsgRespPbType.UPDATE_NPC_VIEW;
+    }
+    public override void SetResponseData(IExtensible data)
+    {
+        resp = (service.scene.ResponseUpdateNpcView)data;
+    }
+}

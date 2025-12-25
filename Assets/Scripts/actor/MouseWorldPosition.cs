@@ -40,7 +40,7 @@ public class MouseWorldPosition : MonoBehaviour
                 NetManager.Send(msg);
 
                 // 生成特效
-                GameObject prefab_obj = ResManager.LoadPrefab("Prefabs/Slash effects/Snow slash");
+                GameObject prefab_obj = ResManager.LoadPrefab("Prefabs/Hits and explosions/Green hit");
                 if (prefab_obj != null)
                 {
                     GameObject click_obj = GameObject.Instantiate(prefab_obj, position, Quaternion.Euler(Vector3.zero));

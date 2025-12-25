@@ -213,6 +213,9 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(4, Name = @"players")]
             public global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo> Players { get; } = new global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo>();
 
+            [global::ProtoBuf.ProtoMember(5, Name = @"npcs")]
+            public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> Npcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
+
         }
 
     }
@@ -342,6 +345,24 @@ namespace service.scene
 
         [global::ProtoBuf.ProtoMember(3, Name = @"scene_info")]
         public global::attributes.scene.SceneInfo SceneInfo { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class ResponseUpdateNpcView : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"leave_npcs")]
+        public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> LeaveNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"enter_npcs")]
+        public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> EnterNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"update_npcs")]
+        public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> UpdateNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
 
     }
 

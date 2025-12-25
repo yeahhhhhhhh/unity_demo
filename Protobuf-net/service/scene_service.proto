@@ -66,6 +66,7 @@ message RequestGetScenePlayers{
     int32 scene_gid = 2;
     int32 player_count = 3;
     repeated attributes.scene.PlayerSceneInfo players = 4;
+    repeated attributes.scene.NpcSceneInfo npcs = 5;
   }
 }
 
@@ -108,4 +109,10 @@ message ResponseEnterView{
   int64 uid = 1;
   string nickname = 2;
   attributes.scene.SceneInfo scene_info = 3;
+}
+
+message ResponseUpdateNpcView{
+  repeated attributes.scene.NpcSceneInfo leave_npcs = 1;
+  repeated attributes.scene.NpcSceneInfo enter_npcs = 2;
+  repeated attributes.scene.NpcSceneInfo update_npcs = 3;
 }

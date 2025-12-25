@@ -43,6 +43,7 @@ public enum MsgRespPbType
     ENTER_VIEW = 13,
     SKILL_RESPONSE_POS = 14,
     GET_FIGHT_INFO = 15,
+    UPDATE_NPC_VIEW = 16,
 }
 
 public static class MsgTypeRegister
@@ -87,6 +88,8 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_VIEW, "service.scene.ResponseEnterView", "MsgResponseEnterView");
         RegisterResponsePbMsg((short)MsgRespPbType.SKILL_RESPONSE_POS, "service.scene.RequestUseSkill+ResponsePos", "MsgUseSkill+ResponsePos");
         RegisterResponsePbMsg((short)MsgRespPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo+Response", "MsgGetFightInfo+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.UPDATE_NPC_VIEW, "service.scene.ResponseUpdateNpcView", "MsgResponseNpcView");
+        
     }
 
     static public string GetStringTypeByID(short id)

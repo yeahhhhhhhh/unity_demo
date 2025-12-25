@@ -74,6 +74,30 @@ namespace attributes.scene
 
     }
 
+    [global::ProtoBuf.ProtoContract()]
+    public partial class NpcSceneInfo : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"npc_id")]
+        public int NpcId { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"npc_gid")]
+        public long NpcGid { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"position")]
+        public Position Position { get; set; }
+
+        [global::ProtoBuf.ProtoMember(4, Name = @"max_hp")]
+        public int MaxHp { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5, Name = @"cur_hp")]
+        public int CurHp { get; set; }
+
+    }
+
 }
 
 #pragma warning restore CS0612, CS0618, CS1591, CS3021, CS8981, IDE0079, IDE1006, RCS1036, RCS1057, RCS1085, RCS1192

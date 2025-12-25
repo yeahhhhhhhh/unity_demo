@@ -49,6 +49,7 @@ public class GameMain : MonoBehaviour
         MoveManager.Instance.Init();
 
         SkillConfig.Init();
+        NpcConfig.Init();
         SkillManager.Instance.Init();
         FightManager.Instance.Init();
 

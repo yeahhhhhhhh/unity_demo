@@ -30,14 +30,14 @@ public class SyncActor : BaseActor
         ForecastUpdate();
     }
 
-    public void ForecastUpdate()
+    public virtual void ForecastUpdate()
     {
         float t = (Time.time - forcast_time_) / frame_interval_;
         t = Mathf.Clamp01(t);
         transform.position = Vector3.Lerp(start_pos_, last_pos_, t);
     }
 
-    public void SyncPos(Vector3 pos, Int32 direction)
+    public virtual void SyncPos(Vector3 pos, Int32 direction)
     {
         start_pos_ = transform.position;
         forcast_pos_ = pos + 2 * (pos - last_pos_);  // √ª”√µΩ
