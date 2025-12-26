@@ -137,7 +137,6 @@ public class SkillManager
             Int64 target_uid = one_res.Uid;
             Int32 damage = one_res.Damage;
             Int32 cur_hp = one_res.CurHp;
-            Int32 max_hp = one_res.MaxHp;
             Debug.Log("OnUseSkill, target_uid:" + target_uid);
             PlayerInfo player = SceneManager.FindPlayer(target_uid);
             if (player != null)
@@ -148,12 +147,36 @@ public class SkillManager
                 }
                 CreateHurtText(player.skin_, damage);
                 player.fight_info_.cur_hp_ = cur_hp;
-                player.fight_info_.max_hp_ = max_hp;
-                UpdateHpUI(player.skin_, cur_hp, max_hp);
+                UpdateHpUI(player.skin_, cur_hp, player.fight_info_.max_hp_);
             }
             else
             {
                 Debug.Log("Player not fount, target_uid:" + target_uid);
+            }
+        }
+
+        List<attributes.combat.FightResult> npc_result_list = resp_msg.resp.NpcResults;
+        for (int i = 0; i < npc_result_list.Count; ++i)
+        {
+            attributes.combat.FightResult one_res = npc_result_list[i];
+            Int64 target_npc_gid = one_res.Uid;
+            Int32 damage = one_res.Damage;
+            Int32 cur_hp = one_res.CurHp;
+            Debug.Log("OnUseSkill, target_npc_gid:" + target_npc_gid);
+            NpcInfo npc = SceneManager.FindNpc(target_npc_gid);
+            if (npc != null)
+            {
+                if (damage > 0)
+                {
+                    CreateBlood(npc.skin_);
+                }
+                CreateHurtText(npc.skin_, damage);
+                npc.cur_hp_ = cur_hp;
+                UpdateHpUI(npc.skin_, cur_hp, npc.max_hp_);
+            }
+            else
+            {
+                Debug.Log("npc not found, target_npc_gid:" + target_npc_gid);
             }
         }
     }

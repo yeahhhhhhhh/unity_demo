@@ -49,6 +49,7 @@ message RequestUseSkill {
     int64 uid = 2;
     int32 skill_id = 3;
     repeated attributes.combat.FightResult result = 4;
+    repeated attributes.combat.FightResult npc_result = 5;
   }
 
   message ResponsePos{

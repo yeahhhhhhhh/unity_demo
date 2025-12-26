@@ -83,6 +83,12 @@ public class MoveManager
             Vector3 rotation = MoveManager.GetRotaionByDirection(direction);
             NpcInfo npc = SceneManager.CreateNpc(pos, rotation, npc_id, npc_gid);
             npc.cur_hp_ = npc_scene_info.CurHp;
+            HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
+            if (hud_mgr != null)
+            {
+                hud_mgr.UpdateNickname(npc.name_);
+                hud_mgr.UpdateHealth(npc.cur_hp_, npc.max_hp_);
+            }
         }
 
         for (int i = 0; i < update_npcs.Count; ++i)
@@ -106,6 +112,12 @@ public class MoveManager
                 if (sync_comp != null)
                 {
                     sync_comp.SyncPos(pos, direction);
+                }
+                HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
+                if (hud_mgr != null)
+                {
+                    hud_mgr.UpdateNickname(npc.name_);
+                    hud_mgr.UpdateHealth(npc.cur_hp_, npc.max_hp_);
                 }
             }
         }

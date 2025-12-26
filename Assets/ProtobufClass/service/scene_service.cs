@@ -159,6 +159,9 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(4, Name = @"result")]
             public global::System.Collections.Generic.List<global::attributes.combat.FightResult> Results { get; } = new global::System.Collections.Generic.List<global::attributes.combat.FightResult>();
 
+            [global::ProtoBuf.ProtoMember(5, Name = @"npc_result")]
+            public global::System.Collections.Generic.List<global::attributes.combat.FightResult> NpcResults { get; } = new global::System.Collections.Generic.List<global::attributes.combat.FightResult>();
+
         }
 
         [global::ProtoBuf.ProtoContract()]

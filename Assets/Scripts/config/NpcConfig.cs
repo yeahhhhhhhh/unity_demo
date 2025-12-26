@@ -12,7 +12,7 @@ public static class NpcConfig
             new(){
                 npc_id_ = 1,
                 name_ = "monster_1",
-                max_hp_ = 100,
+                max_hp_ = 10,
             },
         };
 
