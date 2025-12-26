@@ -17,6 +17,7 @@ public class NpcSyncActor : SyncActor
     public override void Start()
     {
         base.Start();
+        //frame_interval_ = 1f;
     }
 
     // Update is called once per frame
