@@ -36,11 +36,6 @@ public class FightManager
         MsgGetFightInfo.Response resp_msg = (MsgGetFightInfo.Response)msg;
         Int64 uid = resp_msg.resp.Uid;
         attributes.combat.FightInfo fight_info = resp_msg.resp.FightInfo;
-        PlayerInfo player = SceneManager.FindPlayer(uid);
-        if (player != null)
-        {
-            player.fight_info_.Copy(fight_info);
-        }
 
         if (uid == MainPlayer.GetUid())
         {

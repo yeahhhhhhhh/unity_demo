@@ -41,8 +41,9 @@ public class MoveManager
     public void Init()
     {
         Debug.Log("MoveManager init");
-        // 注册位置同步
+        // 注册位置同步(客户端为准)
         NetManager.AddMsgListener((short)MsgRespPbType.MOVE_UPDATE_POS, OnPlayerPosUpdate);
+        // 服务端为准
         NetManager.AddMsgListener((short)MsgRespPbType.MOVE, OnPlayerMove);
 
         // 视野更新
@@ -126,124 +127,98 @@ public class MoveManager
     public void OnLeaveView(MsgBase msg)
     {
         MsgResponseLeaveView resp_msg = (MsgResponseLeaveView)msg;
-        Int64 uid = resp_msg.resp.Uid;
-        SceneManager.DeletePlayer(uid);
+        SceneManager.DeleteEntity(resp_msg.resp.GlobalId);
     }
 
     public void OnEnterView(MsgBase msg)
     {
         MsgResponseEnterView resp_msg = (MsgResponseEnterView)msg;
-        Int64 uid = resp_msg.resp.Uid;
-        String nickname = resp_msg.resp.Nickname;
-        attributes.scene.SceneInfo scene_info = resp_msg.resp.SceneInfo;
-        Int32 scene_id = scene_info.SceneId;
-        Int32 scene_gid = scene_info.SceneGid;
-        Vector3 pos = new()
-        {
-            x = scene_info.Position.X,
-            y = scene_info.Position.Y,
-            z = scene_info.Position.Z
-        };
-        Vector3 rotation = MoveManager.GetRotaionByDirection(scene_info.Position.Direction);
-        SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
+        attributes.scene.EntitySceneInfo entity_info = resp_msg.resp.InViewEntity;
+        EntitySimpleInfo entity = new();
+        entity.Copy(entity_info);
+        SceneManager.CreateEntity(entity);
     }
 
     public void OnUpdateView(MsgBase msg)
     {
         MsgResponseUpdateView resp_msg = (MsgResponseUpdateView)msg;
-        Int64 uid = resp_msg.resp.Uid;
-        Int32 scene_id = resp_msg.resp.SceneInfo.SceneId;
-        Int32 scene_gid = resp_msg.resp.SceneInfo.SceneGid;
-        if (scene_id != SceneManager.scene_id_ || scene_gid != SceneManager.scene_gid_)
-        {
-            Debug.Log("OnUpdateView, scene id or scene gid is not same, scene id:" + scene_id + " scene id:" + SceneManager.scene_id_);
-            return;
-        }
-        List <attributes.scene.PlayerSceneInfo> leave_view_player_list = resp_msg.resp.LeavePlayers;
-        List<attributes.scene.PlayerSceneInfo> enter_view_player_list = resp_msg.resp.EnterPlayers;
+        List <attributes.scene.EntitySceneInfo> leave_view_entity_list = resp_msg.resp.OutViewEntities;
+        List<attributes.scene.EntitySceneInfo> enter_view_entity_list = resp_msg.resp.InViewEntities;
 
-        for (int i = 0; i < leave_view_player_list.Count; ++i)
+        for (int i = 0; i < leave_view_entity_list.Count; ++i)
         {
-            attributes.scene.PlayerSceneInfo player_info = leave_view_player_list[i];
-            Int64 leave_uid = player_info.Uid;
-            SceneManager.DeletePlayer(leave_uid);
+            attributes.scene.EntitySceneInfo entity_info = leave_view_entity_list[i];
+            SceneManager.DeleteEntity(entity_info.GlobalId);
         }
 
-        
-        for (int i = 0; i < enter_view_player_list.Count; ++i)
+        for (int i = 0; i < enter_view_entity_list.Count; ++i)
         {
-            attributes.scene.PlayerSceneInfo player_info = enter_view_player_list[i];
-            Int64 enter_uid = player_info.Uid;
-            String nickname = player_info.Nickname;
-            Vector3 pos = new()
-            {
-                x = player_info.Position.X,
-                y = player_info.Position.Y,
-                z = player_info.Position.Z
-            };
-            Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
-            SceneManager.CreatePlayer(pos, rotation, enter_uid, scene_id, scene_gid, nickname);
+            attributes.scene.EntitySceneInfo entity_info = enter_view_entity_list[i];
+            EntitySimpleInfo entity = new();
+            entity.Copy(entity_info);
+            SceneManager.CreateEntity(entity);
         }
     }
 
     public void OnPlayerPosUpdate(MsgBase msg)
     {
-        MsgMove.Response resp_msg = (MsgMove.Response)msg;
-        Int64 uid = resp_msg.resp.Uid;
-        Int32 scene_id = resp_msg.resp.SceneInfo.SceneId;
-        Int32 scene_gid = resp_msg.resp.SceneInfo.SceneGid;
-        float x = resp_msg.resp.SceneInfo.Position.X;
-        float y = resp_msg.resp.SceneInfo.Position.Y;
-        float z = resp_msg.resp.SceneInfo.Position.Z;
-        Int32 direction = resp_msg.resp.SceneInfo.Position.Direction;
-        Vector3 pos = new Vector3(x, y, z);
-        // 判断是否在场景
-        if (scene_id != SceneManager.scene_id_ || scene_gid != SceneManager.scene_gid_)
-        {
-            Debug.Log("OnPlayerPosUpdate scene id is error, scene id:" + scene_id.ToString());
-            return;
-        }
-        var player_info = SceneManager.FindPlayer(uid);
-        if(player_info == null)
-        {
-            Debug.Log("OnPlayerPosUpdate player is not in scene, uid:" + uid);
-            return;
-        }
-        // 判断是否是主角色
-        bool is_main_player = uid == MainPlayer.GetUid();
-        if (is_main_player)
-        {
-            Debug.Log("OnPlayerPosUpdate main player");
-        }
-        else
-        {
-            Debug.Log("OnPlayerPosUpdate player, uid:" + uid.ToString());
-            SyncPlayerActor actor = player_info.skin_.GetComponent<SyncPlayerActor>();
-            if (actor != null)
-            {
-                actor.SyncPos(pos, direction);
-            }
-        }
+        //MsgMove.Response resp_msg = (MsgMove.Response)msg;
+        //Int64 uid = resp_msg.resp.Uid;
+        //Int32 scene_id = resp_msg.resp.SceneInfo.SceneId;
+        //Int32 scene_gid = resp_msg.resp.SceneInfo.SceneGid;
+        //float x = resp_msg.resp.SceneInfo.Position.X;
+        //float y = resp_msg.resp.SceneInfo.Position.Y;
+        //float z = resp_msg.resp.SceneInfo.Position.Z;
+        //Int32 direction = resp_msg.resp.SceneInfo.Position.Direction;
+        //Vector3 pos = new Vector3(x, y, z);
+        //// 判断是否在场景
+        //if (scene_id != SceneManager.scene_id_ || scene_gid != SceneManager.scene_gid_)
+        //{
+        //    Debug.Log("OnPlayerPosUpdate scene id is error, scene id:" + scene_id.ToString());
+        //    return;
+        //}
+        //var player_info = SceneManager.FindEntity(uid);
+        //if(player_info == null)
+        //{
+        //    Debug.Log("OnPlayerPosUpdate player is not in scene, uid:" + uid);
+        //    return;
+        //}
+        //// 判断是否是主角色
+        //bool is_main_player = uid == MainPlayer.GetUid();
+        //if (is_main_player)
+        //{
+        //    Debug.Log("OnPlayerPosUpdate main player");
+        //}
+        //else
+        //{
+        //    Debug.Log("OnPlayerPosUpdate player, uid:" + uid.ToString());
+        //    SyncPlayerActor actor = player_info.skin_.GetComponent<SyncPlayerActor>();
+        //    if (actor != null)
+        //    {
+        //        actor.SyncPos(pos, direction);
+        //    }
+        //}
     }
 
     public void OnPlayerMove(MsgBase msg)
     {
         MsgNewMove.Response resp_msg = (MsgNewMove.Response)msg;
-        Int64 uid = resp_msg.resp.Uid;
+        Int64 global_id = resp_msg.resp.GlobalId;
         Vector3 pos = new(
-            resp_msg.resp.SceneInfo.Position.X, 
-            resp_msg.resp.SceneInfo.Position.Y, 
-            resp_msg.resp.SceneInfo.Position.Z);
-        Int32 direction = resp_msg.resp.SceneInfo.Position.Direction;
+            resp_msg.resp.Position.X, 
+            resp_msg.resp.Position.Y, 
+            resp_msg.resp.Position.Z);
+        Int32 direction = resp_msg.resp.Position.Direction;
 
-        PlayerInfo player = SceneManager.FindPlayer(uid);
-        if (player == null)
+        EntitySimpleInfo entity = SceneManager.FindEntity(global_id);
+        if (entity == null)
         {
-            Debug.Log("OnPlayerMove player is null, uid:" + uid.ToString());
+            Debug.Log("entity is null, global_id:" + global_id.ToString());
             return;
         }
 
-        SyncPlayerActor actor = player.skin_.GetComponent<SyncPlayerActor>();
+        
+        SyncPlayerActor actor = entity.skin_.GetComponent<SyncPlayerActor>();
         if (actor != null)
         {
             actor.SyncPos(pos, direction);

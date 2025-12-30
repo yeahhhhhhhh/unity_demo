@@ -43,10 +43,9 @@ public class LoginReq : MonoBehaviour
         MsgLogin.Response resp_msg = (MsgLogin.Response)msg;
         Debug.Log("errorcode:" + resp_msg.resp.ErrorCode + " uid:" + resp_msg.resp.PlayerBaseInfo.Uid + " username:" + resp_msg.resp.PlayerBaseInfo.Username);
 
-        Int64 uid = resp_msg.resp.PlayerBaseInfo.Uid;
-        string username = resp_msg.resp.PlayerBaseInfo.Username;
-        string nickname = resp_msg.resp.PlayerBaseInfo.Nickname;
-        MainPlayer.SetPlayerBaseInfo(uid, username, nickname);
+        PlayerBaseInfo player_base_info = new();
+        player_base_info.Copy(resp_msg.resp.PlayerBaseInfo);
+        MainPlayer.SetPlayerBaseInfo(player_base_info);
 
         NetManager.RemoveMsgListener((short)MsgRespPbType.LOGIN_RESPONSE, OnLoginResp);
     }

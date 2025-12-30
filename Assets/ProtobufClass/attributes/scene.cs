@@ -43,12 +43,6 @@ namespace attributes.scene
         [global::ProtoBuf.ProtoMember(2, Name = @"scene_gid")]
         public int SceneGid { get; set; }
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"position")]
-        public Position Position { get; set; }
-
-        [global::ProtoBuf.ProtoMember(4, Name = @"scene_node")]
-        public int SceneNode { get; set; }
-
     }
 
     [global::ProtoBuf.ProtoContract()]
@@ -61,16 +55,42 @@ namespace attributes.scene
         [global::ProtoBuf.ProtoMember(1, Name = @"uid")]
         public long Uid { get; set; }
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"username")]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string Username { get; set; } = "";
+        [global::ProtoBuf.ProtoMember(2, Name = @"scene_info")]
+        public SceneInfo SceneInfo { get; set; }
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"nickname")]
+        [global::ProtoBuf.ProtoMember(3, Name = @"position")]
+        public Position Position { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class EntitySceneInfo : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"type")]
+        public int Type { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"id")]
+        public long Id { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"global_id")]
+        public long GlobalId { get; set; }
+
+        [global::ProtoBuf.ProtoMember(4, Name = @"nickname")]
         [global::System.ComponentModel.DefaultValue("")]
         public string Nickname { get; set; } = "";
 
-        [global::ProtoBuf.ProtoMember(4, Name = @"position")]
+        [global::ProtoBuf.ProtoMember(5, Name = @"position")]
         public Position Position { get; set; }
+
+        [global::ProtoBuf.ProtoMember(6, Name = @"max_hp")]
+        public int MaxHp { get; set; }
+
+        [global::ProtoBuf.ProtoMember(7, Name = @"cur_hp")]
+        public int CurHp { get; set; }
 
     }
 

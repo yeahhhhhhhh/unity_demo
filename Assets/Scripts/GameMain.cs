@@ -14,13 +14,10 @@ public static class App {
 public static class MainPlayer
 {
     public static PlayerInfo player_ = new();
-    public static FightInfo fight_info_ = new();
 
-    public static void SetPlayerBaseInfo(Int64 uid, string username, string nickname)
+    public static void SetPlayerBaseInfo(PlayerBaseInfo player_base_info)
     {
-        player_.base_info_.uid = uid;
-        player_.base_info_.username = username;
-        player_.base_info_.nickname = nickname;
+        player_.base_info_ = player_base_info;
     }
 
     public static void SetPlayerSceneInfo(Int32 scene_id, Int32 scene_gid, Vector3 pos)
@@ -32,10 +29,11 @@ public static class MainPlayer
 
     public static void SetPlayerFightInfo(attributes.combat.FightInfo fight_info)
     {
-        fight_info_.Copy(fight_info);
+        player_.fight_info_.Copy(fight_info);
     }
 
     public static Int64 GetUid() {  return player_.base_info_.uid; }
+    public static Int64 GetGlobalID() { return player_.entity_.entity_info_.id_; }
 }
 
 public class GameMain : MonoBehaviour

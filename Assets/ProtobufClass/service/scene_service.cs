@@ -26,14 +26,10 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(1, Name = @"error_code")]
             public int ErrorCode { get; set; }
 
-            [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
-            public long Uid { get; set; }
+            [global::ProtoBuf.ProtoMember(2, Name = @"entity_scene_info")]
+            public global::attributes.scene.EntitySceneInfo EntitySceneInfo { get; set; }
 
-            [global::ProtoBuf.ProtoMember(3, Name = @"nickname")]
-            [global::System.ComponentModel.DefaultValue("")]
-            public string Nickname { get; set; } = "";
-
-            [global::ProtoBuf.ProtoMember(4, Name = @"scene_info")]
+            [global::ProtoBuf.ProtoMember(3, Name = @"scene_info")]
             public global::attributes.scene.SceneInfo SceneInfo { get; set; }
 
         }
@@ -93,11 +89,11 @@ namespace service.scene
             global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
                 => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-            [global::ProtoBuf.ProtoMember(1, Name = @"scene_info")]
-            public global::attributes.scene.SceneInfo SceneInfo { get; set; }
+            [global::ProtoBuf.ProtoMember(1, Name = @"global_id")]
+            public long GlobalId { get; set; }
 
-            [global::ProtoBuf.ProtoMember(2, Name = @"uid")]
-            public long Uid { get; set; }
+            [global::ProtoBuf.ProtoMember(2, Name = @"position")]
+            public global::attributes.scene.Position Position { get; set; }
 
         }
 
@@ -216,9 +212,6 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(4, Name = @"players")]
             public global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo> Players { get; } = new global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo>();
 
-            [global::ProtoBuf.ProtoMember(5, Name = @"npcs")]
-            public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> Npcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
-
         }
 
     }
@@ -236,19 +229,6 @@ namespace service.scene
             private global::ProtoBuf.IExtension __pbn__extensionData;
             global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
                 => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
-
-            [global::ProtoBuf.ProtoMember(1, Name = @"scene_id")]
-            public int SceneId { get; set; }
-
-            [global::ProtoBuf.ProtoMember(2, Name = @"scene_gid")]
-            public int SceneGid { get; set; }
-
-            [global::ProtoBuf.ProtoMember(3, Name = @"uid")]
-            public long Uid { get; set; }
-
-            [global::ProtoBuf.ProtoMember(4, Name = @"nickname")]
-            [global::System.ComponentModel.DefaultValue("")]
-            public string Nickname { get; set; } = "";
 
         }
 
@@ -303,17 +283,11 @@ namespace service.scene
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name = @"uid")]
-        public long Uid { get; set; }
+        [global::ProtoBuf.ProtoMember(1, Name = @"in_view_entities")]
+        public global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo> InViewEntities { get; } = new global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo>();
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"scene_info")]
-        public global::attributes.scene.SceneInfo SceneInfo { get; set; }
-
-        [global::ProtoBuf.ProtoMember(3, Name = @"leave_players")]
-        public global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo> LeavePlayers { get; } = new global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo>();
-
-        [global::ProtoBuf.ProtoMember(4, Name = @"enter_players")]
-        public global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo> EnterPlayers { get; } = new global::System.Collections.Generic.List<global::attributes.scene.PlayerSceneInfo>();
+        [global::ProtoBuf.ProtoMember(2, Name = @"out_view_entities")]
+        public global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo> OutViewEntities { get; } = new global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo>();
 
     }
 
@@ -324,11 +298,8 @@ namespace service.scene
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name = @"uid")]
-        public long Uid { get; set; }
-
-        [global::ProtoBuf.ProtoMember(2, Name = @"scene_info")]
-        public global::attributes.scene.SceneInfo SceneInfo { get; set; }
+        [global::ProtoBuf.ProtoMember(1, Name = @"global_id")]
+        public long GlobalId { get; set; }
 
     }
 
@@ -339,15 +310,8 @@ namespace service.scene
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
-        [global::ProtoBuf.ProtoMember(1, Name = @"uid")]
-        public long Uid { get; set; }
-
-        [global::ProtoBuf.ProtoMember(2, Name = @"nickname")]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string Nickname { get; set; } = "";
-
-        [global::ProtoBuf.ProtoMember(3, Name = @"scene_info")]
-        public global::attributes.scene.SceneInfo SceneInfo { get; set; }
+        [global::ProtoBuf.ProtoMember(1, Name = @"in_view_entity")]
+        public global::attributes.scene.EntitySceneInfo InViewEntity { get; set; }
 
     }
 

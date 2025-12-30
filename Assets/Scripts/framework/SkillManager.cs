@@ -100,8 +100,8 @@ public class SkillManager
         //}
 
         bool is_main_player = MainPlayer.GetUid() == uid;
-        PlayerInfo player = SceneManager.FindPlayer(uid);
-        if (player != null)
+        EntitySimpleInfo entity = SceneManager.FindEntity(uid);
+        if (entity != null)
         {
             Int32 skill_id = resp_msg.resp.SkillId;
             Vector3 position = new()
@@ -113,12 +113,12 @@ public class SkillManager
             Vector3 direction = MoveManager.GetRotaionByDirection(resp_msg.resp.Pos.Direction);
             if (is_main_player)
             {
-                MainPlayerActor player_actor = player.skin_.GetComponent<MainPlayerActor>();
+                MainPlayerActor player_actor = entity.skin_.GetComponent<MainPlayerActor>();
                 player_actor.OnUsedSkill(skill_id, global_skill_id, position, direction);
             }
             else
             {
-                SyncPlayerActor player_actor = player.skin_.GetComponent<SyncPlayerActor>();
+                SyncPlayerActor player_actor = entity.skin_.GetComponent<SyncPlayerActor>();
                 player_actor.OnUsedSkill(skill_id, global_skill_id, position, direction);
             }
         }
@@ -138,16 +138,16 @@ public class SkillManager
             Int32 damage = one_res.Damage;
             Int32 cur_hp = one_res.CurHp;
             Debug.Log("OnUseSkill, target_uid:" + target_uid);
-            PlayerInfo player = SceneManager.FindPlayer(target_uid);
-            if (player != null)
+            EntitySimpleInfo entity = SceneManager.FindEntity(target_uid);
+            if (entity != null)
             {
                 if (damage > 0)
                 {
-                    CreateBlood(player.skin_);
+                    CreateBlood(entity.skin_);
                 }
-                CreateHurtText(player.skin_, damage);
-                player.fight_info_.cur_hp_ = cur_hp;
-                UpdateHpUI(player.skin_, cur_hp, player.fight_info_.max_hp_);
+                CreateHurtText(entity.skin_, damage);
+                entity.cur_hp_ = cur_hp;
+                UpdateHpUI(entity.skin_, cur_hp, entity.max_hp_);
             }
             else
             {

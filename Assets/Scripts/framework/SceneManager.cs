@@ -1,4 +1,5 @@
-﻿using System;
+﻿using attributes.scene;
+using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -9,20 +10,20 @@ public static class SceneManager
     public static Int32 scene_gid_ = 0;
     public static bool is_in_scene_ = false;
     
-    public static Dictionary<Int64, PlayerInfo> scene_players = new();
+    public static Dictionary<Int64, EntitySimpleInfo> scene_entities = new();
     public static Dictionary<Int64, NpcInfo> scene_npcs = new();
 
     public static void Init(Int32 scene_id, Int32 scene_gid)
     {
-        foreach (var item in scene_players)
+        foreach (var item in scene_entities)
         {
-            PlayerInfo info = item.Value;
+            EntitySimpleInfo info = item.Value;
             if(info.skin_ != null && !info.skin_.IsDestroyed())
             {
                 GameObject.Destroy(info.skin_);
             }
         }
-        scene_players.Clear();
+        scene_entities.Clear();
         scene_id_ = scene_id;
         scene_gid_ = scene_gid;
 
@@ -36,15 +37,15 @@ public static class SceneManager
         }
     }
 
-    public static void AddPlayer(PlayerInfo player)
+    public static void AddEntity(EntitySimpleInfo entity)
     {
-        Int64 uid = player.base_info_.uid;
-        if (scene_players.ContainsKey(uid))
+        Int64 global_id = entity.global_id_;
+        if (scene_entities.ContainsKey(global_id))
         {
             return;
         }
 
-        scene_players[uid] = player;
+        scene_entities[global_id] = entity;
     }
 
     public static void AddNpc(NpcInfo npc)
@@ -63,9 +64,9 @@ public static class SceneManager
         scene_npcs.Remove(npc_gid);
     }
 
-    public static void RemovePlayer(Int64 uid)
+    public static void RemoveEntity(Int64 global_id)
     {
-        scene_players.Remove(uid);
+        scene_entities.Remove(global_id);
     }
 
     public static NpcInfo FindNpc(Int64 npc_gid)
@@ -78,11 +79,11 @@ public static class SceneManager
         return null;
     }
 
-    public static PlayerInfo FindPlayer(Int64 uid)
+    public static EntitySimpleInfo FindEntity(Int64 global_id)
     {
-        if (scene_players.ContainsKey(uid))
+        if (scene_entities.ContainsKey(global_id))
         {
-            return scene_players[uid];
+            return scene_entities[global_id];
         }
 
         return null;
@@ -120,75 +121,83 @@ public static class SceneManager
         return npc;
     }
 
-    public static PlayerInfo CreatePlayer(Vector3 pos, Vector3 rotation, Int64 uid, Int32 scene_id, Int32 scene_gid, String nickname)
+    public static GameObject GetEntityPrefab(Int32 type, Int64 id)
     {
-        if (SceneManager.scene_id_ != scene_id || SceneManager.scene_gid_ != scene_gid)
+        GameObject prefab = null;
+        switch (type)
         {
-            Debug.Log("CreatePlayer error, not same scene, scene id:" + scene_id.ToString());
+            case (Int32)EntityTypes.PLAYER:
+                {
+                    prefab = ResManager.LoadPrefab("PlayerPrefab");
+                    break;
+                }
+            case (Int32)EntityTypes.NPC:
+                {
+                    // TODO: 根据id选择不同prefab
+                    prefab = ResManager.LoadPrefab("NpcPrefab");
+                    break;
+                }
+            default:
+                {
+                    break;
+                }
+        }
+        return prefab;
+    }
+
+    public static EntitySimpleInfo CreateEntity(EntitySimpleInfo entity)
+    {
+        Int64 global_id = entity.global_id_;
+        if (SceneManager.FindEntity(global_id) != null)
+        {
+            Debug.Log("already_player, global_id:" + global_id);
             return null;
         }
 
-        PlayerInfo already_player = SceneManager.FindPlayer(uid);
-        if (already_player != null)
-        {
-            Debug.Log("already_player, uid:" + uid);
-            return null;
-        }
+        // 根据类型和id选中prefab
 
-        GameObject prefab = ResManager.LoadPrefab("PlayerPrefab");
+        GameObject prefab = GetEntityPrefab(entity.type_, entity.id_);
         if (prefab == null)
         {
-            Debug.Log("PlayerPrefab is null");
+            Debug.Log("PlayerPrefab is null， type:" + entity.type_ + " id:" + entity.id_);
             return null;
         }
 
-        bool is_main_player = MainPlayer.GetUid() == uid;
-
-        Debug.Log("create player, uid:" + uid.ToString() + ", x:" + pos.x + " y:" + pos.y + " z:" + pos.z);
+        Vector3 pos = entity.position_;
+        Vector3 rotation = MoveManager.GetRotaionByDirection(entity.direction_);
         GameObject instance = UnityEngine.GameObject.Instantiate(prefab, pos, Quaternion.Euler(rotation));
-        //instance.transform.eulerAngles = rotation;
-        //instance.transform.position = pos;
-        PlayerInfo player;
-        if (is_main_player)
-        {
-            instance.name = "MainPlayer" + uid.ToString();
-            player = MainPlayer.player_;
-            // 挂上控制脚本
-            instance.AddComponent<MainPlayerActor>();
-        }
-        else
-        {
-            instance.name = "OtherPlayer" + uid.ToString();
-            player = new();
-        }
+        entity.skin_ = instance;
+        instance.name = "entity" + global_id.ToString();
+        
         // 挂上同步脚本
-        instance.AddComponent<SyncPlayerActor>();
-        instance.SetActive(true);
+        if (entity.type_ == (Int32)EntityTypes.PLAYER)
+        {
+            instance.AddComponent<SyncPlayerActor>();
+            instance.SetActive(true);
+        }else if (entity.type_ == (Int32)EntityTypes.NPC)
+        {
+
+        }
 
         // 显示昵称UI
         HUDManager hud_manager = instance.transform.GetComponentInChildren<HUDManager>();
         if (hud_manager != null)
         {
-            hud_manager.UpdateNickname(nickname);
+            hud_manager.UpdateNickname(entity.nickname_);
         }
 
-        player.base_info_.uid = uid;
-        player.scene_info_.pos_ = pos;
-        player.scene_info_.scene_id_ = scene_id;
-        player.scene_info_.scene_gid_ = scene_gid;
-        player.skin_ = instance;
-        SceneManager.AddPlayer(player);
+        SceneManager.AddEntity(entity);
 
-        return player;
+        return entity;
     }
 
-    public static void DeletePlayer(Int64 uid)
+    public static void DeleteEntity(Int64 global_id)
     {
-        PlayerInfo leave_player = SceneManager.FindPlayer(uid);
-        if (leave_player != null)
+        EntitySimpleInfo entity = FindEntity(global_id);
+        if (entity != null)
         {
-            SceneManager.RemovePlayer(uid);
-            GameObject.Destroy(leave_player.skin_);
+            RemoveEntity(global_id);
+            GameObject.Destroy(entity.skin_);
         }
     }
 

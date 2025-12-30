@@ -8,9 +8,8 @@ import "attributes/combat.proto";
 message RequestEnterDefaultScene {
   message Response {
     int32 error_code = 1;
-    int64 uid = 2;
-    string nickname = 3;
-    attributes.scene.SceneInfo scene_info = 4;
+    attributes.scene.EntitySceneInfo entity_scene_info = 2;
+    attributes.scene.SceneInfo scene_info = 3;
   }
 }
 
@@ -29,8 +28,8 @@ message RequestMove {
   int32 direction = 1;
   bool stop_move = 2;
   message Response {
-    attributes.scene.SceneInfo scene_info = 1;
-    int64 uid = 2;
+    int64 global_id = 1;
+    attributes.scene.Position position = 2;
   }
 }
 
@@ -67,16 +66,11 @@ message RequestGetScenePlayers{
     int32 scene_gid = 2;
     int32 player_count = 3;
     repeated attributes.scene.PlayerSceneInfo players = 4;
-    repeated attributes.scene.NpcSceneInfo npcs = 5;
   }
 }
 
 message RequestLeaveScene{
   message Response{
-    int32 scene_id = 1;
-    int32 scene_gid = 2;
-    int64 uid = 3;
-    string nickname = 4;
   }
 }
 
@@ -95,21 +89,16 @@ message RequestPathFind{
 
 
 message ResponseUpdateView{
-  int64 uid = 1;
-  attributes.scene.SceneInfo scene_info = 2;
-  repeated attributes.scene.PlayerSceneInfo leave_players = 3;
-  repeated attributes.scene.PlayerSceneInfo enter_players = 4;
+  repeated attributes.scene.EntitySceneInfo in_view_entities = 1;
+  repeated attributes.scene.EntitySceneInfo out_view_entities = 2;
 }
 
 message ResponseLeaveView{
-  int64 uid = 1;
-  attributes.scene.SceneInfo scene_info = 2;
+  int64 global_id = 1;
 }
 
 message ResponseEnterView{
-  int64 uid = 1;
-  string nickname = 2;
-  attributes.scene.SceneInfo scene_info = 3;
+  attributes.scene.EntitySceneInfo in_view_entity = 1;
 }
 
 message ResponseUpdateNpcView{
