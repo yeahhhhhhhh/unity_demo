@@ -323,13 +323,13 @@ namespace service.scene
             => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
 
         [global::ProtoBuf.ProtoMember(1, Name = @"leave_npcs")]
-        public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> LeaveNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
+        public global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo> LeaveNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo>();
 
         [global::ProtoBuf.ProtoMember(2, Name = @"enter_npcs")]
-        public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> EnterNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
+        public global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo> EnterNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo>();
 
         [global::ProtoBuf.ProtoMember(3, Name = @"update_npcs")]
-        public global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo> UpdateNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.NpcSceneInfo>();
+        public global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo> UpdateNpcs { get; } = new global::System.Collections.Generic.List<global::attributes.scene.EntitySceneInfo>();
 
     }
 

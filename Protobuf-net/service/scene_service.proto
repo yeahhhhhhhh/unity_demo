@@ -102,7 +102,7 @@ message ResponseEnterView{
 }
 
 message ResponseUpdateNpcView{
-  repeated attributes.scene.NpcSceneInfo leave_npcs = 1;
-  repeated attributes.scene.NpcSceneInfo enter_npcs = 2;
-  repeated attributes.scene.NpcSceneInfo update_npcs = 3;
+  repeated attributes.scene.EntitySceneInfo leave_npcs = 1;
+  repeated attributes.scene.EntitySceneInfo enter_npcs = 2;
+  repeated attributes.scene.EntitySceneInfo update_npcs = 3;
 }

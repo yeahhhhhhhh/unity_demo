@@ -184,6 +184,7 @@ public static class SceneManager
         if (hud_manager != null)
         {
             hud_manager.UpdateNickname(entity.nickname_);
+            hud_manager.UpdateHealth(entity.cur_hp_, entity.max_hp_);
         }
 
         SceneManager.AddEntity(entity);
