@@ -137,6 +137,15 @@ public static class SceneManager
                     prefab = ResManager.LoadPrefab("NpcPrefab");
                     break;
                 }
+            case (Int32)EntityTypes.FIGHT:
+                {
+                    SkillBaseInfo skill = SkillConfig.GetSkillInfo((Int32)id);
+                    if (skill != null)
+                    {
+                        return skill.skill_prefab_;
+                    }
+                    break;
+                }
             default:
                 {
                     break;
@@ -155,7 +164,6 @@ public static class SceneManager
         }
 
         // 根据类型和id选中prefab
-
         GameObject prefab = GetEntityPrefab(entity.type_, entity.id_);
         if (prefab == null)
         {
@@ -177,6 +185,11 @@ public static class SceneManager
         }else if (entity.type_ == (Int32)EntityTypes.NPC)
         {
 
+        }else if(entity.type_ == (Int32) EntityTypes.FIGHT)
+        {
+            ActiveSkillActor actor = instance.AddComponent<ActiveSkillActor>();
+            actor.Init((Int32)entity.id_, global_id, pos, rotation);
+            instance.SetActive(true);
         }
 
         // 显示昵称UI

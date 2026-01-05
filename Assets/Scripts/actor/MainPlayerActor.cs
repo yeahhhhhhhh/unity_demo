@@ -97,11 +97,6 @@ public class MainPlayerActor : CtrlActor
         NetManager.Send(msg);
     }
 
-    public override bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
-    {
-        return base.OnUsedSkill(skill_id, skill_gid, position, direction);
-    }
-
     public void NotifiedBulletCreate()
     {
         cur_bullet_count_++;

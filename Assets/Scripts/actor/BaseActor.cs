@@ -36,27 +36,10 @@ public class BaseActor : MonoBehaviour
 
     public virtual bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
     {
-        SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
-        if (skill == null)
-        {
-            return false;
-        }
-
         GameObject skill_obj = SkillManager.Instance.CreateSkill(skill_id, skill_gid, position, direction);
         if (skill_obj == null)
         {
             return false;
-        }
-
-        ActiveSkillActor actor = skill_obj.GetComponent<ActiveSkillActor>();
-        if (actor == null)
-        {
-            actor = skill_obj.AddComponent<ActiveSkillActor>();
-            actor.Init(skill.skill_id_, skill_gid, gameObject, position, direction);
-        }
-        else
-        {
-            actor.SyncPos(position);
         }
 
         return true;

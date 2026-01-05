@@ -225,7 +225,7 @@ public class MoveManager
                 actor.SyncPos(pos, direction);
             }
         }
-        if (entity.type_ == (Int32)EntityTypes.NPC)
+        else if (entity.type_ == (Int32)EntityTypes.NPC)
         {
             NpcSyncActor actor = entity.skin_.GetComponent<NpcSyncActor>();
             if (actor != null)
@@ -233,6 +233,15 @@ public class MoveManager
                 actor.SyncPos(pos, direction);
             }
         }
+        else if (entity.type_ == (Int32)EntityTypes.FIGHT)
+        {
+            ActiveSkillActor actor = entity.skin_.GetComponent<ActiveSkillActor>();
+            if (actor != null)
+            {
+                actor.SyncPos(pos);
+            }
+        }
+
     }
 
     public static Vector3 GetRotaionByDirection(Int32 direction)

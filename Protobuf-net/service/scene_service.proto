@@ -44,19 +44,19 @@ message RequestUpdatePos{
 message RequestUseSkill {
   int32 skill_id = 1;
   message Response {
-    int32 error_code = 1;
-    int64 uid = 2;
+    int64 dest_gid = 1;
+    int64 target_gid = 2;
     int32 skill_id = 3;
-    repeated attributes.combat.FightResult result = 4;
-    repeated attributes.combat.FightResult npc_result = 5;
+    int32 damage = 4;
+    bool is_critical = 5;
+    int32 cur_hp = 6;
   }
 
   message ResponsePos{
-    int32 error_code = 1;
-    int64 uid = 2;
-    int32 skill_id = 3;
-    int64 global_skill_id = 4;
-    attributes.scene.Position pos = 5;
+    int64 global_id = 1;
+    int32 skill_id = 2;
+    int64 global_skill_id = 3;
+    attributes.scene.Position pos = 4;
   }
 }
 

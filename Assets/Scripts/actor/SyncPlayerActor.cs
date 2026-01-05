@@ -40,9 +40,4 @@ public class SyncPlayerActor : SyncActor
     {
         base.Update();
     }
-
-    public override bool OnUsedSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
-    {
-        return base.OnUsedSkill(skill_id, skill_gid, position, direction);
-    }
 }

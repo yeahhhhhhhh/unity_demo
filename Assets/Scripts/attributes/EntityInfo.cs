@@ -12,7 +12,8 @@ public enum EntityTypes
     FOLLOWER = 3,  // 跟随物
     BLOCK = 4,   // 阻挡物
     PROP = 5,    // 道具
-    END = 6
+    FIGHT = 6,   // 攻击物，可由技能发出
+    END = 7
 }
 
 public class EntitySimpleInfo
@@ -54,6 +55,15 @@ public class PlayerEntitySimpleInfo
     public void Copy(attributes.scene.EntitySceneInfo data)
     {
         uid_ = data.Id;
+        entity_info_.Copy(data);
+    }
+}
+
+public class FightEntitySimpleInfo
+{
+    public EntitySimpleInfo entity_info_ = new();
+    public void Copy(attributes.scene.EntitySceneInfo data)
+    {
         entity_info_.Copy(data);
     }
 }

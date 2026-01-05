@@ -7,11 +7,11 @@ public class SkillBaseActor : MonoBehaviour
 {
     public SkillDynamicInfo skill_info_ = new();
 
-    public virtual void Init(Int32 skill_id, Int64 skill_gid, GameObject owner, Vector3 position, Vector3 direction)
+    public virtual void Init(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
     {
         SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
         skill_info_.skill_gid_ = skill_gid;
-        skill_info_.owner_ = owner;
+        //skill_info_.owner_ = owner;
         skill_info_.pos_ = position;
         skill_info_.direction_ = direction;
         skill_info_.CopyBaseInfo(skill);

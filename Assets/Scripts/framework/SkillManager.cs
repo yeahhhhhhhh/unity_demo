@@ -38,23 +38,48 @@ public class SkillManager
 
     public GameObject CreateSkill(Int32 skill_id, Int64 skill_gid, Vector3 position, Vector3 direction)
     {
-        if (gid2skill_obj.ContainsKey(skill_gid))
+        SkillBaseInfo skill_conf = SkillConfig.GetSkillInfo(skill_id);
+        if (skill_conf == null)
         {
-            Debug.Log("重复创建skill, gid:" + skill_gid);
-            return gid2skill_obj[skill_gid];
+            return null;
         }
+
+        if (skill_gid > 0)
+        {
+            if (gid2skill_obj.ContainsKey(skill_gid))
+            {
+                Debug.Log("重复创建skill, gid:" + skill_gid);
+                return gid2skill_obj[skill_gid];
+            }
+        }
+
         SkillBaseInfo skill = SkillConfig.GetSkillInfo(skill_id);
         if (skill == null)
         {
             return null;
         }
+
         GameObject skill_obj = GameObject.Instantiate(skill.skill_prefab_, position, Quaternion.Euler(direction));
         if (skill_obj != null)
         {
             skill_obj.transform.localScale = new Vector3(skill.range_x_, skill.range_y_, skill.range_z_);
             skill_obj.name = skill.skill_name_;
-            gid2skill_obj[skill_gid] = skill_obj;
+            if (skill_gid > 0)
+            {
+                gid2skill_obj[skill_gid] = skill_obj;
+            }
             Debug.Log("CreateSkill当前技能对象数量：" + gid2skill_obj.Count);
+
+            ActiveSkillActor actor = skill_obj.GetComponent<ActiveSkillActor>();
+            if (actor == null)
+            {
+                actor = skill_obj.AddComponent<ActiveSkillActor>();
+                actor.Init(skill.skill_id_, skill_gid, position, direction);
+            }
+            else
+            {
+                actor.SyncPos(position);
+            }
         }
 
         return skill_obj;
@@ -84,14 +109,14 @@ public class SkillManager
     {
         Debug.Log("SkillManager init");
         // 注册位置同步
-        NetManager.AddMsgListener((short)MsgRespPbType.USE_SKILL_RESPONSE, OnUseSkill);
+        NetManager.AddMsgListener((short)MsgRespPbType.USE_SKILL_RESPONSE, OnUseSkillResponse);
         NetManager.AddMsgListener((short)MsgRespPbType.SKILL_RESPONSE_POS, OnUpdateSkillPos);
     }
 
     public void OnUpdateSkillPos(MsgBase msg)
     {
         MsgUseSkill.ResponsePos resp_msg = (MsgUseSkill.ResponsePos)msg;
-        Int64 uid = resp_msg.resp.Uid;
+        Int64 global_id = resp_msg.resp.GlobalId;
         Int64 global_skill_id = resp_msg.resp.GlobalSkillId;
         //if (IsExistSkill(global_skill_id))
         //{
@@ -99,8 +124,8 @@ public class SkillManager
         //    return;
         //}
 
-        bool is_main_player = MainPlayer.GetUid() == uid;
-        EntitySimpleInfo entity = SceneManager.FindEntity(uid);
+        bool is_main_player = MainPlayer.GetGlobalID() == global_id;
+        EntitySimpleInfo entity = SceneManager.FindEntity(global_id);
         if (entity != null)
         {
             Int32 skill_id = resp_msg.resp.SkillId;
@@ -111,73 +136,45 @@ public class SkillManager
                 z = resp_msg.resp.Pos.Z,
             };
             Vector3 direction = MoveManager.GetRotaionByDirection(resp_msg.resp.Pos.Direction);
-            if (is_main_player)
-            {
-                MainPlayerActor player_actor = entity.skin_.GetComponent<MainPlayerActor>();
-                player_actor.OnUsedSkill(skill_id, global_skill_id, position, direction);
-            }
-            else
-            {
-                SyncPlayerActor player_actor = entity.skin_.GetComponent<SyncPlayerActor>();
-                player_actor.OnUsedSkill(skill_id, global_skill_id, position, direction);
-            }
+
+            SkillManager.Instance.CreateSkill(skill_id, global_skill_id, position, direction);
+            //if (is_main_player)
+            //{
+            //    MainPlayerActor player_actor = entity.skin_.GetComponent<MainPlayerActor>();
+            //    player_actor.OnUsedSkill(skill_id, global_skill_id, position, direction);
+            //}
+            //else
+            //{
+            //    SyncPlayerActor player_actor = entity.skin_.GetComponent<SyncPlayerActor>();
+            //    player_actor.OnUsedSkill(skill_id, global_skill_id, position, direction);
+            //}
         }
     }
 
-    public void OnUseSkill(MsgBase msg)
+    public void OnUseSkillResponse(MsgBase msg)
     {
         MsgUseSkill.Response resp_msg = (MsgUseSkill.Response)msg;
-        Int64 uid = resp_msg.resp.Uid;
+        Int64 dest_gid = resp_msg.resp.DestGid;
+        Int64 target_gid = resp_msg.resp.TargetGid;
+        Int32 skill_id = resp_msg.resp.SkillId;
+        Int32 damage = resp_msg.resp.Damage;
+        bool is_critical = resp_msg.resp.IsCritical;
+        Int32 cur_hp = resp_msg.resp.CurHp;
 
-        List<attributes.combat.FightResult> result_list = resp_msg.resp.Results;
-        Debug.Log("OnUseSkill, uid:" + uid);
-        for (int i = 0; i < result_list.Count; ++i)
+        EntitySimpleInfo entity = SceneManager.FindEntity(target_gid);
+        if (entity != null)
         {
-            attributes.combat.FightResult one_res = result_list[i];
-            Int64 target_uid = one_res.Uid;
-            Int32 damage = one_res.Damage;
-            Int32 cur_hp = one_res.CurHp;
-            Debug.Log("OnUseSkill, target_uid:" + target_uid);
-            EntitySimpleInfo entity = SceneManager.FindEntity(target_uid);
-            if (entity != null)
+            if (damage > 0)
             {
-                if (damage > 0)
-                {
-                    CreateBlood(entity.skin_);
-                }
-                CreateHurtText(entity.skin_, damage);
-                entity.cur_hp_ = cur_hp;
-                UpdateHpUI(entity.skin_, cur_hp, entity.max_hp_);
+                CreateBlood(entity.skin_);
             }
-            else
-            {
-                Debug.Log("Player not fount, target_uid:" + target_uid);
-            }
+            CreateHurtText(entity.skin_, damage, is_critical);
+            entity.cur_hp_ = cur_hp;
+            UpdateHpUI(entity.skin_, cur_hp, entity.max_hp_);
         }
-
-        List<attributes.combat.FightResult> npc_result_list = resp_msg.resp.NpcResults;
-        for (int i = 0; i < npc_result_list.Count; ++i)
+        else
         {
-            attributes.combat.FightResult one_res = npc_result_list[i];
-            Int64 target_npc_gid = one_res.Uid;
-            Int32 damage = one_res.Damage;
-            Int32 cur_hp = one_res.CurHp;
-            Debug.Log("OnUseSkill, target_npc_gid:" + target_npc_gid);
-            NpcInfo npc = SceneManager.FindNpc(target_npc_gid);
-            if (npc != null)
-            {
-                if (damage > 0)
-                {
-                    CreateBlood(npc.skin_);
-                }
-                CreateHurtText(npc.skin_, damage);
-                npc.cur_hp_ = cur_hp;
-                UpdateHpUI(npc.skin_, cur_hp, npc.max_hp_);
-            }
-            else
-            {
-                Debug.Log("npc not found, target_npc_gid:" + target_npc_gid);
-            }
+            Debug.Log("Player not fount, target_gid:" + target_gid);
         }
     }
 
@@ -185,13 +182,10 @@ public class SkillManager
     {
         Debug.Log("UpdateHpUI cur hp:" + cur_hp.ToString() + " max hp:" + max_hp.ToString());
         HUDManager hud_manager = player_obj.transform.GetComponentInChildren<HUDManager>();
-        if (hud_manager == null)
+        if (hud_manager != null)
         {
-            Debug.LogError("hud_manager is null");
-            return;
+            hud_manager.UpdateHealth(cur_hp, max_hp);
         }
-
-        hud_manager.UpdateHealth(cur_hp, max_hp);
     }
 
     public void CreateBlood(GameObject player_obj)
@@ -212,10 +206,13 @@ public class SkillManager
         }
     }
 
-    public void CreateHurtText(GameObject player_obj, Int32 damage)
+    public void CreateHurtText(GameObject player_obj, Int32 damage, bool is_critical = false)
     {
         DamageTextController damage_text = player_obj.transform.GetComponentInChildren<DamageTextController>();
-        damage_text.CreateDamageText(damage);
+        if (damage_text != null)
+        {
+            damage_text.CreateDamageText(damage, is_critical);
+        }
     }
 
     public void HandleSkills()
