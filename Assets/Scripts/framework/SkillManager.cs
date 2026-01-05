@@ -171,6 +171,14 @@ public class SkillManager
             CreateHurtText(entity.skin_, damage, is_critical);
             entity.cur_hp_ = cur_hp;
             UpdateHpUI(entity.skin_, cur_hp, entity.max_hp_);
+
+            if (target_gid == MainPlayer.GetGlobalID() && cur_hp <= 0)
+            {
+                Debug.Log("main player dead");
+                MainPlayer.SetDead(true);
+                // 死亡弹窗
+                GameMain.SetRebornBtnActive(true);
+            }
         }
         else
         {

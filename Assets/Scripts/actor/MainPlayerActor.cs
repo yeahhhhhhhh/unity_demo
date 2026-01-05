@@ -45,9 +45,11 @@ public class MainPlayerActor : CtrlActor
     // Update is called once per frame
     public override void Update()
     {
-        base.Update();
-        Fire();
-
+        if (!MainPlayer.IsDead())
+        {
+            base.Update();
+            Fire();
+        }
     }
 
     public void Fire()

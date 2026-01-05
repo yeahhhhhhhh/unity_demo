@@ -35,9 +35,12 @@ public class MouseWorldPosition : MonoBehaviour
         {
             if (position.x > 0f && position.z > 0f)
             {
-                MsgPathFind msg = new();
-                msg.SetSendData((Int32)position.x, (Int32)position.z);
-                NetManager.Send(msg);
+                if (MainPlayer.IsValid())
+                {
+                    MsgPathFind msg = new(); 
+                    msg.SetSendData((Int32)position.x, (Int32)position.z);
+                    NetManager.Send(msg);
+                }
 
                 // 生成特效
                 GameObject prefab_obj = ResManager.LoadPrefab("Prefabs/Hits and explosions/Green hit");

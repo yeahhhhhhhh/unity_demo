@@ -24,6 +24,7 @@ public enum MsgPbType
     LEAVE_SCENE = 10,
     GET_FIGHT_INFO = 11,
     PATH_FIND = 12,
+    REBORN = 13,
 }
 
 public enum MsgRespPbType
@@ -44,6 +45,7 @@ public enum MsgRespPbType
     SKILL_RESPONSE_POS = 14,
     GET_FIGHT_INFO = 15,
     UPDATE_NPC_VIEW = 16,
+    REBORN = 17,
 }
 
 public static class MsgTypeRegister
@@ -74,6 +76,7 @@ public static class MsgTypeRegister
         RegisterRequestPbMsg((short)MsgPbType.MOVE, "service.scene.RequestMove", "MsgNewMove");
         RegisterRequestPbMsg((short)MsgPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo", "MsgGetFightInfo");
         RegisterRequestPbMsg((short)MsgPbType.PATH_FIND, "service.scene.RequestPathFind", "MsgPathFind");
+        RegisterRequestPbMsg((short)MsgPbType.REBORN, "service.scene.RequestReborn", "MsgReborn");
 
 
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
@@ -89,7 +92,8 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.SKILL_RESPONSE_POS, "service.scene.RequestUseSkill+ResponsePos", "MsgUseSkill+ResponsePos");
         RegisterResponsePbMsg((short)MsgRespPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo+Response", "MsgGetFightInfo+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.UPDATE_NPC_VIEW, "service.scene.ResponseUpdateNpcView", "MsgResponseNpcView");
-        
+        RegisterResponsePbMsg((short)MsgRespPbType.REBORN, "service.scene.RequestReborn+Response", "MsgReborn+Response");
+
     }
 
     static public string GetStringTypeByID(short id)

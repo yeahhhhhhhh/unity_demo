@@ -106,3 +106,11 @@ message ResponseUpdateNpcView{
   repeated attributes.scene.EntitySceneInfo enter_npcs = 2;
   repeated attributes.scene.EntitySceneInfo update_npcs = 3;
 }
+
+message RequestReborn{
+  int32 type = 1;
+  message Response{
+    int32 error_code = 1;
+    int32 cur_hp = 2;
+  }
+}

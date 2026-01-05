@@ -333,6 +333,33 @@ namespace service.scene
 
     }
 
+    [global::ProtoBuf.ProtoContract()]
+    public partial class RequestReborn : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"type")]
+        public int Type { get; set; }
+
+        [global::ProtoBuf.ProtoContract()]
+        public partial class Response : global::ProtoBuf.IExtensible
+        {
+            private global::ProtoBuf.IExtension __pbn__extensionData;
+            global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+                => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+            [global::ProtoBuf.ProtoMember(1, Name = @"error_code")]
+            public int ErrorCode { get; set; }
+
+            [global::ProtoBuf.ProtoMember(2, Name = @"cur_hp")]
+            public int CurHp { get; set; }
+
+        }
+
+    }
+
 }
 
 #pragma warning restore CS0612, CS0618, CS1591, CS3021, CS8981, IDE0079, IDE1006, RCS1036, RCS1057, RCS1085, RCS1192

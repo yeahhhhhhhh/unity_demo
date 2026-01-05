@@ -65,6 +65,8 @@ public class EnterSceneReq : MonoBehaviour
             entity.skin_.name = "MainPlayer" + uid.ToString();
             // π“…œøÿ÷∆Ω≈±æ
             entity.skin_.AddComponent<MainPlayerActor>();
+
+            MainPlayer.SetPlayerEntity(entity);
         }
     }
 
