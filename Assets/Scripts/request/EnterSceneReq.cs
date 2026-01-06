@@ -42,8 +42,8 @@ public class EnterSceneReq : MonoBehaviour
 
         // 生成主玩家
         // 进入场景，生成模型
-        SceneManager.Init(scene_id, scene_gid);
-        entity = SceneManager.CreateEntity(entity);
+        SceneMgr.Init(scene_id, scene_gid);
+        entity = SceneMgr.CreateEntity(entity);
         if (entity != null)
         {
             Debug.Log("create main player success, uid:" + uid.ToString());
@@ -91,7 +91,7 @@ public class EnterSceneReq : MonoBehaviour
     //            z = player_info.Position.Z
     //        };
     //        Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
-    //        SceneManager.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
+    //        SceneMgr.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
     //    }
 
     //    List<attributes.scene.NpcSceneInfo> npc_list = resp_msg.resp.Npcs;
@@ -108,7 +108,7 @@ public class EnterSceneReq : MonoBehaviour
     //        };
     //        Int32 direction = npc_scene_info.Position.Direction;
     //        Vector3 rotation = MoveManager.GetRotaionByDirection(direction);
-    //        NpcInfo npc = SceneManager.CreateNpc(pos, rotation, npc_id, npc_gid);
+    //        NpcInfo npc = SceneMgr.CreateNpc(pos, rotation, npc_id, npc_gid);
     //        npc.cur_hp_ = npc_scene_info.CurHp;
     //        HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
     //        if (hud_mgr != null)

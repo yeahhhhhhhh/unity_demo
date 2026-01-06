@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public static class SceneManager
+public static class SceneMgr
 {
     public static Int32 scene_id_ = 0;
     public static Int32 scene_gid_ = 0;
@@ -91,7 +92,7 @@ public static class SceneManager
 
     public static NpcInfo CreateNpc(Vector3 pos, Vector3 rotation, Int32 npc_id, Int64 npc_gid)
     {
-        if (SceneManager.FindNpc(npc_gid) != null)
+        if (SceneMgr.FindNpc(npc_gid) != null)
         {
             Debug.Log("already npc, npc_gid:" + npc_gid);
             return null;
@@ -116,7 +117,7 @@ public static class SceneManager
         instance.name = npc.name_;
         npc.skin_ = instance;
         npc.npc_gid_ = npc_gid;
-        SceneManager.AddNpc(npc);
+        SceneMgr.AddNpc(npc);
 
         return npc;
     }
@@ -157,7 +158,7 @@ public static class SceneManager
     public static EntitySimpleInfo CreateEntity(EntitySimpleInfo entity)
     {
         Int64 global_id = entity.global_id_;
-        if (SceneManager.FindEntity(global_id) != null)
+        if (SceneMgr.FindEntity(global_id) != null)
         {
             Debug.Log("already_player, global_id:" + global_id);
             return null;
@@ -200,7 +201,7 @@ public static class SceneManager
             hud_manager.UpdateHealth(entity.cur_hp_, entity.max_hp_);
         }
 
-        SceneManager.AddEntity(entity);
+        SceneMgr.AddEntity(entity);
 
         return entity;
     }
@@ -217,10 +218,10 @@ public static class SceneManager
 
     public static void DeleteNpc(Int64 npc_gid)
     {
-        NpcInfo npc = SceneManager.FindNpc(npc_gid);
+        NpcInfo npc = SceneMgr.FindNpc(npc_gid);
         if (npc != null)
         {
-            SceneManager.RemoveNpc(npc_gid);
+            SceneMgr.RemoveNpc(npc_gid);
             GameObject.Destroy(npc.skin_);
         }
     }

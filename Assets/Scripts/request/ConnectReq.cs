@@ -45,7 +45,7 @@ public class ConnectReq : MonoBehaviour
         Debug.Log("OnConnectClose");
         //TODO:弹出提示框(网络断开)
         //TODO:弹出按钮(重新连接)
-        SceneManager.Init(0, 0);
+        SceneMgr.Init(0, 0);
         // 重置玩家场景数据
         MainPlayer.player_.scene_info_ = new();
         GameMain.SetMainCanvasActive(true);

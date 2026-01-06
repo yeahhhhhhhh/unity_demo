@@ -125,7 +125,7 @@ public class SkillManager
         //}
 
         bool is_main_player = MainPlayer.GetGlobalID() == global_id;
-        EntitySimpleInfo entity = SceneManager.FindEntity(global_id);
+        EntitySimpleInfo entity = SceneMgr.FindEntity(global_id);
         if (entity != null)
         {
             Int32 skill_id = resp_msg.resp.SkillId;
@@ -161,7 +161,7 @@ public class SkillManager
         bool is_critical = resp_msg.resp.IsCritical;
         Int32 cur_hp = resp_msg.resp.CurHp;
 
-        EntitySimpleInfo entity = SceneManager.FindEntity(target_gid);
+        EntitySimpleInfo entity = SceneMgr.FindEntity(target_gid);
         if (entity != null)
         {
             if (damage > 0)
@@ -194,6 +194,8 @@ public class SkillManager
         {
             hud_manager.UpdateHealth(cur_hp, max_hp);
         }
+
+
     }
 
     public void CreateBlood(GameObject player_obj)

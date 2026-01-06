@@ -31,7 +31,7 @@ public class LeaveSceneReq : MonoBehaviour
         Debug.Log("main player leave scene");
 
         // 销毁场景，弹出窗口
-        SceneManager.Init(0, 0);
+        SceneMgr.Init(0, 0);
         // 重置玩家场景数据
         MainPlayer.player_.scene_info_ = new();
         GameMain.SetMainCanvasActive(true);

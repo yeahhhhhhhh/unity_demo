@@ -66,7 +66,7 @@ public class MoveManager
         //for (int i = 0; i < leave_npcs.Count; ++i)
         //{
         //    Int64 npc_gid = leave_npcs[i].NpcGid;
-        //    SceneManager.DeleteNpc(npc_gid);
+        //    SceneMgr.DeleteNpc(npc_gid);
         //}
 
         //for (int i = 0; i < enter_npcs.Count; ++i)
@@ -82,7 +82,7 @@ public class MoveManager
         //    };
         //    Int32 direction = npc_scene_info.Position.Direction;
         //    Vector3 rotation = MoveManager.GetRotaionByDirection(direction);
-        //    NpcInfo npc = SceneManager.CreateNpc(pos, rotation, npc_id, npc_gid);
+        //    NpcInfo npc = SceneMgr.CreateNpc(pos, rotation, npc_id, npc_gid);
         //    npc.cur_hp_ = npc_scene_info.CurHp;
         //    HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
         //    if (hud_mgr != null)
@@ -97,7 +97,7 @@ public class MoveManager
         //    attributes.scene.NpcSceneInfo npc_scene_info = update_npcs[i];
         //    Int64 npc_gid = npc_scene_info.NpcGid;
 
-        //    NpcInfo npc = SceneManager.FindNpc(npc_gid);
+        //    NpcInfo npc = SceneMgr.FindNpc(npc_gid);
         //    if (npc != null)
         //    {
         //        Int32 npc_id = npc_scene_info.NpcId;
@@ -127,7 +127,7 @@ public class MoveManager
     public void OnLeaveView(MsgBase msg)
     {
         MsgResponseLeaveView resp_msg = (MsgResponseLeaveView)msg;
-        SceneManager.DeleteEntity(resp_msg.resp.GlobalId);
+        SceneMgr.DeleteEntity(resp_msg.resp.GlobalId);
     }
 
     public void OnEnterView(MsgBase msg)
@@ -136,7 +136,7 @@ public class MoveManager
         attributes.scene.EntitySceneInfo entity_info = resp_msg.resp.InViewEntity;
         EntitySimpleInfo entity = new();
         entity.Copy(entity_info);
-        SceneManager.CreateEntity(entity);
+        SceneMgr.CreateEntity(entity);
     }
 
     public void OnUpdateView(MsgBase msg)
@@ -148,7 +148,7 @@ public class MoveManager
         for (int i = 0; i < leave_view_entity_list.Count; ++i)
         {
             attributes.scene.EntitySceneInfo entity_info = leave_view_entity_list[i];
-            SceneManager.DeleteEntity(entity_info.GlobalId);
+            SceneMgr.DeleteEntity(entity_info.GlobalId);
         }
 
         for (int i = 0; i < enter_view_entity_list.Count; ++i)
@@ -156,7 +156,7 @@ public class MoveManager
             attributes.scene.EntitySceneInfo entity_info = enter_view_entity_list[i];
             EntitySimpleInfo entity = new();
             entity.Copy(entity_info);
-            SceneManager.CreateEntity(entity);
+            SceneMgr.CreateEntity(entity);
         }
     }
 
@@ -172,12 +172,12 @@ public class MoveManager
         //Int32 direction = resp_msg.resp.SceneInfo.Position.Direction;
         //Vector3 pos = new Vector3(x, y, z);
         //// 判断是否在场景
-        //if (scene_id != SceneManager.scene_id_ || scene_gid != SceneManager.scene_gid_)
+        //if (scene_id != SceneMgr.scene_id_ || scene_gid != SceneMgr.scene_gid_)
         //{
         //    Debug.Log("OnPlayerPosUpdate scene id is error, scene id:" + scene_id.ToString());
         //    return;
         //}
-        //var player_info = SceneManager.FindEntity(uid);
+        //var player_info = SceneMgr.FindEntity(uid);
         //if(player_info == null)
         //{
         //    Debug.Log("OnPlayerPosUpdate player is not in scene, uid:" + uid);
@@ -210,7 +210,7 @@ public class MoveManager
             resp_msg.resp.Position.Z);
         Int32 direction = resp_msg.resp.Position.Direction;
 
-        EntitySimpleInfo entity = SceneManager.FindEntity(global_id);
+        EntitySimpleInfo entity = SceneMgr.FindEntity(global_id);
         if (entity == null)
         {
             Debug.Log("entity is null, global_id:" + global_id.ToString());

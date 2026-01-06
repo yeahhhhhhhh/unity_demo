@@ -35,7 +35,7 @@ public class RebornReq : MonoBehaviour
         EntitySimpleInfo entity = MainPlayer.GetEntity();
         entity.cur_hp_ = cur_hp;
         SkillManager.Instance.UpdateHpUI(entity.skin_, cur_hp, entity.max_hp_);
-        
+
         GameMain.SetRebornBtnActive(false);
         MainPlayer.SetDead(false);
     }
