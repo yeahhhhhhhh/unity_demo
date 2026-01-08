@@ -1,5 +1,4 @@
-﻿using attributes.scene;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,6 +12,11 @@ public static class SceneMgr
     
     public static Dictionary<Int64, EntitySimpleInfo> scene_entities = new();
     public static Dictionary<Int64, NpcInfo> scene_npcs = new();
+
+    public static void LoadScene(string scene_name)
+    {
+        SceneManager.LoadScene(scene_name);
+    }
 
     public static void Init(Int32 scene_id, Int32 scene_gid)
     {

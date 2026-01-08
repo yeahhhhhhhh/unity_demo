@@ -177,7 +177,7 @@ public class SkillManager
                 Debug.Log("main player dead");
                 MainPlayer.SetDead(true);
                 // 死亡弹窗
-                GameMain.SetRebornBtnActive(true);
+                UIManager.Instance.OpenUI("Reborn");
             }
         }
         else

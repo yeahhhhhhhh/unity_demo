@@ -67,6 +67,7 @@ public static class MsgTypeRegister
     static public void InitPbRegister()
     {
         Debug.Log("InitPbRegister");
+        // 请求
         RegisterRequestPbMsg((short)MsgPbType.LOGIN, "service.account.LoginRequest", "MsgLogin");
         RegisterRequestPbMsg((short)MsgPbType.ENTER_DEFAULT_SCENE, "service.scene.RequestEnterDefaultScene", "MsgEnterScene");
         RegisterRequestPbMsg((short)MsgPbType.GET_SCENE_PLAYERS, "service.scene.RequestGetScenePlayers", "MsgGetScenePlayers");
@@ -77,8 +78,10 @@ public static class MsgTypeRegister
         RegisterRequestPbMsg((short)MsgPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo", "MsgGetFightInfo");
         RegisterRequestPbMsg((short)MsgPbType.PATH_FIND, "service.scene.RequestPathFind", "MsgPathFind");
         RegisterRequestPbMsg((short)MsgPbType.REBORN, "service.scene.RequestReborn", "MsgReborn");
+        RegisterRequestPbMsg((short)MsgPbType.REGIST, "service.account.RegisterRequest", "MsgRegister");
+        
 
-
+        // 响应
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, "service.scene.RequestEnterDefaultScene+Response", "MsgEnterScene+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.GET_SCENE_PLAYERS, "service.scene.RequestGetScenePlayers+Response", "MsgGetScenePlayers+Response");
@@ -93,6 +96,7 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.GET_FIGHT_INFO, "service.scene.RequestFightInfo+Response", "MsgGetFightInfo+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.UPDATE_NPC_VIEW, "service.scene.ResponseUpdateNpcView", "MsgResponseNpcView");
         RegisterResponsePbMsg((short)MsgRespPbType.REBORN, "service.scene.RequestReborn+Response", "MsgReborn+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.REGIST_RESPONSE, "service.account.RegisterRequest+Response", "MsgRegister+Response");
 
     }
 

@@ -34,7 +34,6 @@ public class LeaveSceneReq : MonoBehaviour
         SceneMgr.Init(0, 0);
         // 重置玩家场景数据
         MainPlayer.player_.scene_info_ = new();
-        GameMain.SetMainCanvasActive(true);
         CameraFollower actor = Camera.main.GetComponent<CameraFollower>();
         if (actor != null)
         {

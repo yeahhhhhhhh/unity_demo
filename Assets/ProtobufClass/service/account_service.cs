@@ -24,6 +24,10 @@ namespace service.account
         [global::System.ComponentModel.DefaultValue("")]
         public string Password { get; set; } = "";
 
+        [global::ProtoBuf.ProtoMember(3, Name = @"device_id")]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string DeviceId { get; set; } = "";
+
         [global::ProtoBuf.ProtoContract()]
         public partial class Response : global::ProtoBuf.IExtensible
         {
@@ -59,6 +63,13 @@ namespace service.account
         [global::ProtoBuf.ProtoMember(3, Name = @"password2")]
         [global::System.ComponentModel.DefaultValue("")]
         public string Password2 { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(4, Name = @"is_visitor")]
+        public bool IsVisitor { get; set; }
+
+        [global::ProtoBuf.ProtoMember(5, Name = @"device_id")]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string DeviceId { get; set; } = "";
 
         [global::ProtoBuf.ProtoContract()]
         public partial class Response : global::ProtoBuf.IExtensible

@@ -57,8 +57,28 @@ public static class MainPlayer
 
 public class GameMain : MonoBehaviour
 {
-    public static GameObject main_ctl_canvas_;
-    public static GameObject reborn_btn_;
+    private static GameMain _instance;
+    public static GameMain Instance => _instance;
+
+    public string ip_ = "172.20.131.148";
+    public int port_ = 8002;
+    public string device_id;
+    public float connect_check_interval_ = 5f;
+
+    void Awake()
+    {
+        device_id = SystemInfo.deviceUniqueIdentifier;
+        Debug.Log("device_id:" + device_id);
+        if (_instance == null)
+        {
+            _instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -72,28 +92,62 @@ public class GameMain : MonoBehaviour
         SkillManager.Instance.Init();
         FightManager.Instance.Init();
 
-        main_ctl_canvas_ = GameObject.Find("CtlText");
-        reborn_btn_ = GameObject.Find("RebornBtn");
-        reborn_btn_.SetActive(false);
+        UIManager.Instance.OpenUI("Login");
 
-        // 测试ResManager
-        //GameObject skinRes = ResManager.LoadPrefab("RobotPrefab");
-        //GameObject skin = (GameObject)Instantiate(skinRes);
+        NetManager.AddEventListener(NetManager.NetEvent.ConnectSucc, OnConnectSucc);
+        NetManager.AddEventListener(NetManager.NetEvent.ConnectFail, OnConnectFail);
+        NetManager.AddEventListener(NetManager.NetEvent.Close, OnConnectClose);
+
+        NetManager.Connect(ip_, port_);
+    }
+
+    // 连接成功回调
+    void OnConnectSucc(string err)
+    {
+        Debug.Log("OnConnectSucc");
+        //TODO:进入游戏
+    }
+    // 连接失败回调
+    void OnConnectFail(string err)
+    {
+        Debug.Log("OnConnectFail" + err);
+        //TODO:弹出提示框(连接失败,请重试)
+    }
+
+    // 关闭连接
+    void OnConnectClose(string err)
+    {
+        Debug.Log("OnConnectClose");
+        //TODO:弹出提示框(网络断开)
+        //TODO:弹出按钮(重新连接)
+        SceneMgr.Init(0, 0);
+        // 重置玩家场景数据
+        MainPlayer.player_.scene_info_ = new();
+        CameraFollower actor = Camera.main.GetComponent<CameraFollower>();
+        if (actor != null)
+        {
+            Destroy(actor);
+        }
+    }
+
+    public void ConnectCheck()
+    {
+        connect_check_interval_ -= Time.deltaTime;
+        if (connect_check_interval_ <= 0f)
+        {
+            connect_check_interval_ = 5f;
+            if (!NetManager.IsConnected())
+            {
+                NetManager.Connect(ip_, port_);
+            }
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        // 5s尝试连接一次
+        ConnectCheck();
         NetManager.Update();
-    }
-
-    public static void SetMainCanvasActive(bool active)
-    {
-        main_ctl_canvas_.SetActive(active);
-    }
-
-    public static void SetRebornBtnActive(bool active)
-    {
-        reborn_btn_.SetActive(active);
     }
 }

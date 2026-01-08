@@ -95,12 +95,16 @@ public static class NetManager {
 		}
 	}
 
+	public static bool IsConnected()
+	{
+		return socket != null && socket.Connected;
+    }
 
 	//连接
 	public static void Connect(string ip, int port)
 	{
 		//状态判断
-		if(socket!=null && socket.Connected){
+		if(IsConnected()){
 			Debug.Log("Connect fail, already connected!");
 			return;
 		}

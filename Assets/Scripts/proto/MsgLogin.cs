@@ -25,6 +25,11 @@ public class MsgLogin: MsgBase
     public MsgLogin() {
         base.cmd_id_ = (short)MsgPbType.LOGIN;
     }
+
+    public void SetVisitorData(string device_id)
+    {
+        req.DeviceId = device_id;
+    }
     public void SetSendData(string username, string password)
     {
         req.Username = username;

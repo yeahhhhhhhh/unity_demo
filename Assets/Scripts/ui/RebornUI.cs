@@ -2,20 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.EventSystems.EventTrigger;
+using UnityEngine.UI;
 
-public class RebornReq : MonoBehaviour
+public class RebornUI : UIBase
 {
+    public Button reborn_btn_;
+
     // Start is called before the first frame update
     void Start()
     {
         NetManager.AddMsgListener((short)MsgRespPbType.REBORN, OnReborn);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void OnClickReborn()

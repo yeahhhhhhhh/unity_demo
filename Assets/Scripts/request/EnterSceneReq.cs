@@ -47,7 +47,6 @@ public class EnterSceneReq : MonoBehaviour
         if (entity != null)
         {
             Debug.Log("create main player success, uid:" + uid.ToString());
-            GameMain.SetMainCanvasActive(false);
             // 第一次进入获取战斗信息
             MsgGetFightInfo get_fight_info_msg = new();
             get_fight_info_msg.SetSendData(uid);
@@ -69,53 +68,4 @@ public class EnterSceneReq : MonoBehaviour
             MainPlayer.SetPlayerEntity(entity);
         }
     }
-
-    //public void OnGetScenePlayers(MsgBase msg)
-    //{
-    //    MsgGetScenePlayers.Response resp_msg = (MsgGetScenePlayers.Response)msg;
-    //    Int32 scene_id = resp_msg.resp.SceneId;
-    //    Int32 scene_gid = resp_msg.resp.SceneGid;
-    //    Int32 player_count = resp_msg.resp.PlayerCount;
-    //    Debug.Log("OnGetScenePlayers, player_count:" + player_count.ToString());
-
-    //    List<attributes.scene.PlayerSceneInfo> player_list = resp_msg.resp.Players;
-    //    for (int i = 0; i < player_list.Count; ++i)
-    //    {
-    //        attributes.scene.PlayerSceneInfo player_info = player_list[i];
-    //        Int64 uid = player_info.Uid;
-    //        String nickname = player_info.Nickname;
-    //        Vector3 pos = new()
-    //        {
-    //            x = player_info.Position.X,
-    //            y = player_info.Position.Y,
-    //            z = player_info.Position.Z
-    //        };
-    //        Vector3 rotation = MoveManager.GetRotaionByDirection(player_info.Position.Direction);
-    //        SceneMgr.CreatePlayer(pos, rotation, uid, scene_id, scene_gid, nickname);
-    //    }
-
-    //    List<attributes.scene.NpcSceneInfo> npc_list = resp_msg.resp.Npcs;
-    //    for (int i = 0; i < npc_list.Count; ++i)
-    //    {
-    //        attributes.scene.NpcSceneInfo npc_scene_info = npc_list[i];
-    //        Int64 npc_gid = npc_scene_info.NpcGid;
-    //        Int32 npc_id = npc_scene_info.NpcId;
-    //        Vector3 pos = new()
-    //        {
-    //            x = npc_scene_info.Position.X,
-    //            y = npc_scene_info.Position.Y,
-    //            z = npc_scene_info.Position.Z,
-    //        };
-    //        Int32 direction = npc_scene_info.Position.Direction;
-    //        Vector3 rotation = MoveManager.GetRotaionByDirection(direction);
-    //        NpcInfo npc = SceneMgr.CreateNpc(pos, rotation, npc_id, npc_gid);
-    //        npc.cur_hp_ = npc_scene_info.CurHp;
-    //        HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
-    //        if (hud_mgr != null)
-    //        {
-    //            hud_mgr.UpdateNickname(npc.name_);
-    //            hud_mgr.UpdateHealth(npc.cur_hp_, npc.max_hp_);
-    //        }
-    //    }
-    //}
 }
