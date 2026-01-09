@@ -25,6 +25,7 @@ public enum MsgPbType
     GET_FIGHT_INFO = 11,
     PATH_FIND = 12,
     REBORN = 13,
+    PRE_ENTER_DEFAULT_SCENE = 14,
 }
 
 public enum MsgRespPbType
@@ -46,6 +47,7 @@ public enum MsgRespPbType
     GET_FIGHT_INFO = 15,
     UPDATE_NPC_VIEW = 16,
     REBORN = 17,
+    PRE_ENTER_DEFAULT_SCENE = 18,
 }
 
 public static class MsgTypeRegister
@@ -79,7 +81,8 @@ public static class MsgTypeRegister
         RegisterRequestPbMsg((short)MsgPbType.PATH_FIND, "service.scene.RequestPathFind", "MsgPathFind");
         RegisterRequestPbMsg((short)MsgPbType.REBORN, "service.scene.RequestReborn", "MsgReborn");
         RegisterRequestPbMsg((short)MsgPbType.REGIST, "service.account.RegisterRequest", "MsgRegister");
-        
+        RegisterRequestPbMsg((short)MsgPbType.PRE_ENTER_DEFAULT_SCENE, "service.scene.RequestPreEnterScene", "MsgPreEnterScene");
+
 
         // 响应
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
@@ -97,6 +100,7 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.UPDATE_NPC_VIEW, "service.scene.ResponseUpdateNpcView", "MsgResponseNpcView");
         RegisterResponsePbMsg((short)MsgRespPbType.REBORN, "service.scene.RequestReborn+Response", "MsgReborn+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.REGIST_RESPONSE, "service.account.RegisterRequest+Response", "MsgRegister+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.PRE_ENTER_DEFAULT_SCENE, "service.scene.RequestPreEnterScene+Response", "MsgPreEnterScene+Response");
 
     }
 

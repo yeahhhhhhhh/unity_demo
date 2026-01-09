@@ -5,6 +5,14 @@ package service.scene;
 import "attributes/scene.proto";
 import "attributes/combat.proto";
 
+
+message RequestPreEnterScene{
+  message Response{
+    int32 error_code = 1;
+    attributes.scene.SceneInfo scene_info = 2;
+  }
+}
+
 message RequestEnterDefaultScene {
   message Response {
     int32 error_code = 1;

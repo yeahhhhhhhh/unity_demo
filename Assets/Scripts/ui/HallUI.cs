@@ -15,38 +15,25 @@ public class HallUI: UIBase
     {
         ShowPlayerInfo(MainPlayer.GetUid().ToString());
 
-        NetManager.AddMsgListener((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, OnEnterDefaultScene);
-        enter_scene_btn_.onClick.AddListener(OnEnterSceneClick);
+        NetManager.AddMsgListener((short)MsgRespPbType.PRE_ENTER_DEFAULT_SCENE, OnPreEnterDefaultScene);
+        enter_scene_btn_.onClick.AddListener(OnPreEnterSceneClick);
     }
 
-    public void OnEnterSceneClick()
+    public void OnPreEnterSceneClick()
     {
-        Debug.Log("OnEnterSceneClick");
-        MsgEnterScene enter_scene_msg = new();
-        NetManager.Send(enter_scene_msg);
+        MsgPreEnterScene msg = new();
+        NetManager.Send(msg);
     }
     public void ShowPlayerInfo(string player_info)
     {
         player_info_text_.text = player_info;
     }
 
-    public void OnEnterDefaultScene(MsgBase msg)
+    public void OnPreEnterDefaultScene(MsgBase msg)
     {
-        MsgEnterScene.Response resp_msg = (MsgEnterScene.Response)msg;
-        attributes.scene.EntitySceneInfo entity_scene_info = resp_msg.resp.EntitySceneInfo;
-        attributes.scene.SceneInfo scene_info = resp_msg.resp.SceneInfo;
-        Debug.Log("OnEnterScene, error_code:" + resp_msg.resp.ErrorCode + " uid:" + entity_scene_info.Id);
-        Int64 uid = entity_scene_info.Id;
-        Int32 scene_id = scene_info.SceneId;
-        Int32 scene_gid = scene_info.SceneGid;
-
-        EntitySimpleInfo entity = new();
-        entity.Copy(entity_scene_info);
-        MainPlayer.SetPlayerEntity(entity);
-        SceneMgr.Init(scene_id, scene_gid);
-
         UIManager.Instance.CloseUI("Hall");
+        UIManager.Instance.OpenUI("Loading");
         // 切换场景
-        SceneMgr.LoadScene("FightScene");
+        SceneTransitionManager.Instance.LoadScene("FightScene");
     }
 }

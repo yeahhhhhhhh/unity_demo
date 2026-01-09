@@ -28,11 +28,32 @@ public class LoginUI : UIBase
         testLogin2.onClick.AddListener(OnTestLogin2Click);
         //closeButton.onClick.AddListener(OnCloseClick);
         //volumeSlider.onValueChanged.AddListener(OnVolumeChanged);
+
+        // 为不需要射线检测的UI元素禁用raycastTarget
+        // 例如，纯装饰性的Text或Image可以取消勾选Raycast Target
+
+        // 检查并优化所有UI元素的射线检测设置
+        OptimizeRaycastTargets();
+    }
+
+    void OptimizeRaycastTargets()
+    {
+        // 获取所有UI元素
+        Graphic[] graphics = GetComponentsInChildren<Graphic>();
+        foreach (Graphic graphic in graphics)
+        {
+            // 对于纯装饰性元素，禁用射线检测
+            if (graphic.GetComponent<Button>() == null &&
+                graphic.GetComponent<InputField>() == null)
+            {
+                graphic.raycastTarget = false;
+            }
+        }
     }
 
     public void OnVisitorLoginClick()
     {
-        Debug.Log("OnVisitorLoginClick");
+        UIManager.Instance.OpenUI("Loading");
         NetManager.RemoveMsgListener((short)MsgRespPbType.LOGIN_RESPONSE, OnLoginResp);
         NetManager.AddMsgListener((short)MsgRespPbType.LOGIN_RESPONSE, OnLoginResp);
         MsgLogin login_msg = new();
@@ -108,7 +129,7 @@ public class LoginUI : UIBase
         if (resp_msg.resp.ErrorCode == 0)
         {
             UIManager.Instance.CloseUI("Login");
-            SceneMgr.LoadScene("HallScene");
+            SceneTransitionManager.Instance.LoadScene("HallScene");
         }
     }
 }

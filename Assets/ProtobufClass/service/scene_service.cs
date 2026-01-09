@@ -10,6 +10,30 @@ namespace service.scene
 {
 
     [global::ProtoBuf.ProtoContract()]
+    public partial class RequestPreEnterScene : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoContract()]
+        public partial class Response : global::ProtoBuf.IExtensible
+        {
+            private global::ProtoBuf.IExtension __pbn__extensionData;
+            global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+                => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+            [global::ProtoBuf.ProtoMember(1, Name = @"error_code")]
+            public int ErrorCode { get; set; }
+
+            [global::ProtoBuf.ProtoMember(2, Name = @"scene_info")]
+            public global::attributes.scene.SceneInfo SceneInfo { get; set; }
+
+        }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
     public partial class RequestEnterDefaultScene : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;

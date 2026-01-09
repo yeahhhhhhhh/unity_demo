@@ -50,78 +50,7 @@ public class MoveManager
         NetManager.AddMsgListener((short)MsgRespPbType.UPDATE_VIEW, OnUpdateView);
         NetManager.AddMsgListener((short)MsgRespPbType.LEAVE_VIEW, OnLeaveView);
         NetManager.AddMsgListener((short)MsgRespPbType.ENTER_VIEW, OnEnterView);
-        //NetManager.RemoveMsgListener((short)MsgRespPbType.GET_SCENE_PLAYERS, OnGetScenePlayers);
 
-        // NPC视野更新
-        NetManager.AddMsgListener((short)MsgRespPbType.UPDATE_NPC_VIEW, OnUpdateNpcView);
-    }
-
-    public void OnUpdateNpcView(MsgBase msg)
-    {
-        //MsgResponseNpcView resp_msg = (MsgResponseNpcView)msg;
-        //List<attributes.scene.NpcSceneInfo> leave_npcs = resp_msg.resp.LeaveNpcs;
-        //List<attributes.scene.NpcSceneInfo> enter_npcs = resp_msg.resp.EnterNpcs;
-        //List<attributes.scene.NpcSceneInfo> update_npcs = resp_msg.resp.UpdateNpcs;
-
-        //for (int i = 0; i < leave_npcs.Count; ++i)
-        //{
-        //    Int64 npc_gid = leave_npcs[i].NpcGid;
-        //    SceneMgr.DeleteNpc(npc_gid);
-        //}
-
-        //for (int i = 0; i < enter_npcs.Count; ++i)
-        //{
-        //    attributes.scene.NpcSceneInfo npc_scene_info = enter_npcs[i];
-        //    Int64 npc_gid = npc_scene_info.NpcGid;
-        //    Int32 npc_id = npc_scene_info.NpcId;
-        //    Vector3 pos = new()
-        //    {
-        //        x = npc_scene_info.Position.X,
-        //        y = npc_scene_info.Position.Y,
-        //        z = npc_scene_info.Position.Z,
-        //    };
-        //    Int32 direction = npc_scene_info.Position.Direction;
-        //    Vector3 rotation = MoveManager.GetRotaionByDirection(direction);
-        //    NpcInfo npc = SceneMgr.CreateNpc(pos, rotation, npc_id, npc_gid);
-        //    npc.cur_hp_ = npc_scene_info.CurHp;
-        //    HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
-        //    if (hud_mgr != null)
-        //    {
-        //        hud_mgr.UpdateNickname(npc.name_);
-        //        hud_mgr.UpdateHealth(npc.cur_hp_, npc.max_hp_);
-        //    }
-        //}
-
-        //for (int i = 0; i < update_npcs.Count; ++i)
-        //{
-        //    attributes.scene.NpcSceneInfo npc_scene_info = update_npcs[i];
-        //    Int64 npc_gid = npc_scene_info.NpcGid;
-
-        //    NpcInfo npc = SceneMgr.FindNpc(npc_gid);
-        //    if (npc != null)
-        //    {
-        //        Int32 npc_id = npc_scene_info.NpcId;
-        //        Vector3 pos = new()
-        //        {
-        //            x = npc_scene_info.Position.X,
-        //            y = npc_scene_info.Position.Y,
-        //            z = npc_scene_info.Position.Z,
-        //        };
-        //        Int32 direction = npc_scene_info.Position.Direction;
-        //        npc.cur_hp_ = npc_scene_info.CurHp;
-        //        NpcSyncActor sync_comp = npc.skin_.transform.GetComponent<NpcSyncActor>();
-        //        if (sync_comp != null)
-        //        {
-        //            sync_comp.SyncPos(pos, direction);
-        //        }
-        //        HUDManager hud_mgr = npc.skin_.transform.GetComponentInChildren<HUDManager>();
-        //        if (hud_mgr != null)
-        //        {
-        //            hud_mgr.UpdateNickname(npc.name_);
-        //            hud_mgr.UpdateHealth(npc.cur_hp_, npc.max_hp_);
-        //        }
-        //    }
-        //}
     }
 
     public void OnLeaveView(MsgBase msg)

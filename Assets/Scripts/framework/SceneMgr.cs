@@ -50,6 +50,7 @@ public static class SceneMgr
             return;
         }
 
+        Debug.Log("AddEntity, global_id:" + global_id);
         scene_entities[global_id] = entity;
     }
 
@@ -72,6 +73,7 @@ public static class SceneMgr
     public static void RemoveEntity(Int64 global_id)
     {
         scene_entities.Remove(global_id);
+        Debug.Log("RemoveEntity, global_id:" + global_id);
     }
 
     public static NpcInfo FindNpc(Int64 npc_gid)

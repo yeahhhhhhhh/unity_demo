@@ -29,3 +29,32 @@ public class MsgEnterScene: MsgBase
     }
 
 }
+
+
+public class MsgPreEnterScene : MsgBase
+{
+    public service.scene.RequestPreEnterScene req = new();
+
+    public class Response : MsgBase
+    {
+        public service.scene.RequestPreEnterScene.Response resp;
+        public Response()
+        {
+            base.cmd_id_ = (short)MsgRespPbType.PRE_ENTER_DEFAULT_SCENE;
+        }
+        public override void SetResponseData(IExtensible data)
+        {
+            resp = (service.scene.RequestPreEnterScene.Response)data;
+        }
+    }
+
+    public MsgPreEnterScene()
+    {
+        base.cmd_id_ = (short)MsgPbType.PRE_ENTER_DEFAULT_SCENE;
+    }
+    public override IExtensible GetSendData()
+    {
+        return req;
+    }
+
+}

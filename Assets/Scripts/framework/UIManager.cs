@@ -73,6 +73,7 @@ public class UIManager : MonoBehaviour
             {
                 // 预加载全局UI但不立即显示
                 PreloadUI(uiInfo.uiName);
+                Debug.Log("PreloadGlobalUIs:" + uiInfo.uiName);
             }
         }
     }
@@ -124,5 +125,15 @@ public class UIManager : MonoBehaviour
     {
         string layerName = level.ToString() + "Layer";
         return _uiRoot.Find(layerName);
+    }
+
+    public UIBase GetUI(string uiName)
+    {
+        if (_uiDict.ContainsKey(uiName))
+        {
+            return _uiDict[uiName];
+        }
+
+        return null;
     }
 }
