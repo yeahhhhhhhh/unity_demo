@@ -3,14 +3,44 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using static UnityEditor.PlayerSettings;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class FightScene : MonoBehaviour
 {
+    private void Awake()
+    {
+        GameObject parent = GameObject.Find("NewFloor");
+        // 生成地图
+        int width = 20;
+        int height = 20;
+        GameObject grid_prefab = ResManager.LoadPrefab("Map/Grid");
+        if (grid_prefab == null)
+        {
+            Debug.LogError("load prefab error path:" + "Map/Grid");
+            return;
+        }
+        Int32 scene_id = SceneMgr.scene_id_;
+        // 根据scene_id获取场景配置
+
+        for (int i = 0; i < width; i++)
+        {
+            for (int j = 0; j < height; j++)
+            {
+                Vector3 pos = new() {
+                    x = i, y = 0, z = j
+                };
+                GameObject instance = Instantiate(grid_prefab);
+                instance.transform.parent = parent.transform;
+                instance.transform.localPosition = pos;
+                instance.transform.localRotation = Quaternion.Euler(Vector3.zero);
+            }
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
-        NetManager.AddMsgListener((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, OnEnterDefaultScene);
+        NetManager.AddMsgListener((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, OnEnterScene);
         MsgEnterScene enter_scene_msg = new();
         NetManager.Send(enter_scene_msg);
     }
@@ -21,7 +51,7 @@ public class FightScene : MonoBehaviour
         
     }
 
-    public void OnEnterDefaultScene(MsgBase msg)
+    public void OnEnterScene(MsgBase msg)
     {
         MsgEnterScene.Response resp_msg = (MsgEnterScene.Response)msg;
         attributes.scene.EntitySceneInfo entity_scene_info = resp_msg.resp.EntitySceneInfo;

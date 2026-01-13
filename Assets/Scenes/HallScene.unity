@@ -539,10 +539,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: HallPanel
       objectReference: {fileID: 0}
-    - target: {fileID: 1062777695494526050, guid: 401709430b8b7194495901372a4611ca, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 9125182089208947922, guid: 401709430b8b7194495901372a4611ca, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

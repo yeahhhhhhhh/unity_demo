@@ -30,8 +30,8 @@ public class MouseWorldPosition : MonoBehaviour
     private void OnPositionClicked(Vector3 position, GameObject clickedObject)
     {
         // 示例：在点击位置生成特效或移动物体
-        Debug.Log($"在位置 {position} 点击了物体 {clickedObject.name}");
-        if (string.Equals(clickedObject.name, "Floor"))
+        Debug.Log($"在位置 {position} 点击了物体 {clickedObject.name},tag:{clickedObject.tag}");
+        if (string.Equals(clickedObject.tag, "Floor"))
         {
             if (position.x > 0f && position.z > 0f)
             {
