@@ -416,6 +416,7 @@ GameObject:
   - component: {fileID: 606236671}
   - component: {fileID: 606236670}
   - component: {fileID: 606236669}
+  - component: {fileID: 606236672}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -497,6 +498,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!114 &606236672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 606236668}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c30ece3fbc13aeb42adbb436967ba9e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragSpeed: 40
+  scrollSpeed: 15
 --- !u!1 &628749518
 GameObject:
   m_ObjectHideFlags: 0
@@ -778,8 +793,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72c2d4fa31e94434088ed7b77e4faee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapWidth: 10
-  mapHeight: 10
+  mapWidth: 50
+  mapHeight: 50
   tileSize: 1
   startPosition: {x: 0, y: 0}
   saveBtn: {fileID: 504610595}

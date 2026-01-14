@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.IO;
 
 // 格子类型枚举
 public enum TileType
@@ -329,14 +330,14 @@ public class GridMapManager : MonoBehaviour
         }
 
         string jsonData = JsonUtility.ToJson(mapData);
-        System.IO.File.WriteAllText(Application.dataPath + "/" + fileName + ".json", jsonData);
+        System.IO.File.WriteAllText(Directory.GetParent(Application.dataPath).FullName + "/GameConfig/json/map/" + fileName + ".json", jsonData);
         Debug.Log("地图配置已保存: " + fileName + " data:" + jsonData);
     }
 
     // 加载地图配置
     public void LoadMapConfiguration(string fileName)
     {
-        string filePath = Application.dataPath + "/" + fileName + ".json";
+        string filePath = Directory.GetParent(Application.dataPath).FullName + "/GameConfig/json/map/" + fileName + ".json";
         if (System.IO.File.Exists(filePath))
         {
             string jsonData = System.IO.File.ReadAllText(filePath);
