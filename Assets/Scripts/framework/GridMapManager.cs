@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.IO;
+using TMPro;
+using System;
 
 // 格子类型枚举
 public enum TileType
@@ -108,6 +110,10 @@ public class GridMapManager : MonoBehaviour
     public Vector2 startPosition = Vector2.zero;
     public Button saveBtn;
     public Button loadBtn;
+    public TMP_InputField saveID;
+    public TMP_InputField loadID;
+    public bool isCreator = false;
+    public Int32 id = 1001;
 
     [Header("预制体")]
     public GameObject tilePrefab;
@@ -130,10 +136,19 @@ public class GridMapManager : MonoBehaviour
 
     void Start()
     {
-        saveBtn.onClick.AddListener(OnClickSaveMap);
-        loadBtn.onClick.AddListener(OnClickLoadMap);
         InitializeTileMaterials();
-        GenerateMapFromArray(CreateSampleMapArray());
+        if (isCreator)
+        {
+            saveBtn.onClick.AddListener(OnClickSaveMap);
+            loadBtn.onClick.AddListener(OnClickLoadMap);
+            LoadMapConfiguration(id);
+            saveID.text = id.ToString();
+            //GenerateMapFromArray(CreateSampleMapArray());
+        }
+        else
+        {
+            LoadMapConfiguration(id);
+        }
     }
 
     // 初始化材质字典
@@ -180,6 +195,7 @@ public class GridMapManager : MonoBehaviour
                 );
 
                 GameObject tileObj = Instantiate(tilePrefab, tilePosition, Quaternion.identity, mapParent.transform);
+                tileObj.transform.localPosition = tilePosition;
                 tileObj.name = $"Tile_{x}_{y}";
 
                 // 创建格子数据
@@ -250,7 +266,7 @@ public class GridMapManager : MonoBehaviour
                 else
                 {
                     // 随机生成内部格子
-                    int randomValue = Random.Range(0, 100);
+                    int randomValue = UnityEngine.Random.Range(0, 100);
                     if (randomValue < 60) mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Grass;      // 60% 草地
                     else if (randomValue < 80) mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Forest; // 20% 森林
                     else if (randomValue < 90) mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Water; // 10% 水
@@ -306,26 +322,44 @@ public class GridMapManager : MonoBehaviour
 
     public void OnClickSaveMap()
     {
-        string fileName = "test_map";
-        SaveMapConfiguration(fileName);
+        if (saveID.text == "")
+        {
+            Debug.Log("saveID.text == null");
+            return;
+        }
+        int id = System.Convert.ToInt32(saveID.text);
+        SaveMapConfiguration(id);
     }
 
     public void OnClickLoadMap()
     {
-        string fileName = "test_map";
-        LoadMapConfiguration(fileName);
+        if (loadID.text == "")
+        {
+            Debug.Log("loadID.text == null");
+            return;
+        }
+        int id = System.Convert.ToInt32(loadID.text);
+        LoadMapConfiguration(id);
     }
 
     // 保存地图配置[3](@ref)
-    public void SaveMapConfiguration(string fileName)
+    public void SaveMapConfiguration(int id)
     {
+        string fileName = "map_" + id.ToString();
         MapData mapData = new MapData(mapWidth, mapHeight);
+        mapData.id = id;
 
         for (int x = 0; x < mapWidth; x++)
         {
             for (int y = 0; y < mapHeight; y++)
             {
-                mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)mapGrid[x, y].tileType;
+                int type = (int)mapGrid[x, y].tileType;
+                mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = type;
+                if (type == (int)TileType.Path)
+                {
+                    mapData.bornX = x;
+                    mapData.bornY = y;
+                }
             }
         }
 
@@ -335,8 +369,9 @@ public class GridMapManager : MonoBehaviour
     }
 
     // 加载地图配置
-    public void LoadMapConfiguration(string fileName)
+    public void LoadMapConfiguration(int id)
     {
+        string fileName = "map_" + id.ToString();
         string filePath = Directory.GetParent(Application.dataPath).FullName + "/GameConfig/json/map/" + fileName + ".json";
         if (System.IO.File.Exists(filePath))
         {
@@ -353,10 +388,13 @@ public class GridMapManager : MonoBehaviour
 [System.Serializable]
 public class MapData
 {
+    public int id;
     public int width;
     public int height;
     public int[] tileTypesFlat; // 改为一维数组
     public int version = 1; // 添加版本控制，便于后续格式升级
+    public int bornX;
+    public int bornY;
 
     public MapData(int w, int h)
     {

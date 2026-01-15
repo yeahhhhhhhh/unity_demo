@@ -10,32 +10,32 @@ public class FightScene : MonoBehaviour
 {
     private void Awake()
     {
-        GameObject parent = GameObject.Find("NewFloor");
-        // 生成地图
-        int width = 20;
-        int height = 20;
-        GameObject grid_prefab = ResManager.LoadPrefab("Map/Grid");
-        if (grid_prefab == null)
-        {
-            Debug.LogError("load prefab error path:" + "Map/Grid");
-            return;
-        }
-        Int32 scene_id = SceneMgr.scene_id_;
-        // 根据scene_id获取场景配置
+        //GameObject parent = GameObject.Find("NewFloor");
+        //// 生成地图
+        //int width = 20;
+        //int height = 20;
+        //GameObject grid_prefab = ResManager.LoadPrefab("Map/Grid");
+        //if (grid_prefab == null)
+        //{
+        //    Debug.LogError("load prefab error path:" + "Map/Grid");
+        //    return;
+        //}
+        //Int32 scene_id = SceneMgr.scene_id_;
+        //// 根据scene_id获取场景配置
 
-        for (int i = 0; i < width; i++)
-        {
-            for (int j = 0; j < height; j++)
-            {
-                Vector3 pos = new() {
-                    x = i, y = 0, z = j
-                };
-                GameObject instance = Instantiate(grid_prefab);
-                instance.transform.parent = parent.transform;
-                instance.transform.localPosition = pos;
-                instance.transform.localRotation = Quaternion.Euler(Vector3.zero);
-            }
-        }
+        //for (int i = 0; i < width; i++)
+        //{
+        //    for (int j = 0; j < height; j++)
+        //    {
+        //        Vector3 pos = new() {
+        //            x = i, y = 0, z = j
+        //        };
+        //        GameObject instance = Instantiate(grid_prefab);
+        //        instance.transform.parent = parent.transform;
+        //        instance.transform.localPosition = pos;
+        //        instance.transform.localRotation = Quaternion.Euler(Vector3.zero);
+        //    }
+        //}
     }
     // Start is called before the first frame update
     void Start()

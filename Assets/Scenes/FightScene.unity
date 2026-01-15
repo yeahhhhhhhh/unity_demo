@@ -1465,6 +1465,7 @@ GameObject:
   - component: {fileID: 888504460}
   - component: {fileID: 888504459}
   - component: {fileID: 888504461}
+  - component: {fileID: 888504462}
   m_Layer: 0
   m_Name: FightMain
   m_TagString: Untagged
@@ -1514,6 +1515,36 @@ MonoBehaviour:
   mouseColliderLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &888504462
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 888504458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72c2d4fa31e94434088ed7b77e4faee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mapWidth: 10
+  mapHeight: 10
+  tileSize: 1
+  startPosition: {x: 0, y: 0}
+  saveBtn: {fileID: 0}
+  loadBtn: {fileID: 0}
+  saveID: {fileID: 0}
+  loadID: {fileID: 0}
+  isCreator: 0
+  id: 1001
+  tilePrefab: {fileID: 7917737629587253024, guid: c3d4e136c78b17c4b81a9aca3d7684e8, type: 3}
+  tileMaterials:
+  - {fileID: 2100000, guid: cd04a4fd44f15ab49ab65f6d7c619bd4, type: 2}
+  - {fileID: 2100000, guid: 9f221cb4cea7802479ce162612a88302, type: 2}
+  - {fileID: 2100000, guid: b045bd78bdf070d449ac6618b6708e60, type: 2}
+  - {fileID: 2100000, guid: 5182cf974a4640847a4bd45ec7941a50, type: 2}
+  - {fileID: 2100000, guid: f5d621c881ede6d4ea80c6f759495251, type: 2}
+  - {fileID: 2100000, guid: b59dce05f4a510c4da231520cfccabaa, type: 2}
 --- !u!1 &938226273
 GameObject:
   m_ObjectHideFlags: 0
@@ -1973,7 +2004,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1233769409}
   m_Layer: 0
-  m_Name: NewFloor
+  m_Name: MapGrid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
