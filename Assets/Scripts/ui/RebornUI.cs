@@ -34,5 +34,11 @@ public class RebornUI : UIBase
 
         UIManager.Instance.CloseUI("Reborn");
         MainPlayer.SetDead(false);
+
+        Animator ani = entity.skin_.transform.GetComponent<Animator>();
+        if (ani)
+        {
+            ani.SetInteger("status", (int)EntityStatus.IDLE);
+        }
     }
 }

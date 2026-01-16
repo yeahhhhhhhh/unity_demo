@@ -35,6 +35,21 @@ public class SyncActor : BaseActor
         float t = (Time.time - forcast_time_) / frame_interval_;
         t = Mathf.Clamp01(t);
         transform.position = Vector3.Lerp(start_pos_, last_pos_, t);
+
+        if (transform.position.Equals(last_pos_))
+        {
+            if (base.animator_ && base.animator_.GetInteger("status") == (int)EntityStatus.RUN)
+            {
+                base.animator_.SetInteger("status", (int)EntityStatus.IDLE);
+            }
+        }
+        else
+        {
+            if (base.animator_ && base.animator_.GetInteger("status") == (int)EntityStatus.IDLE)
+            {
+                base.animator_.SetInteger("status", (int)EntityStatus.RUN);
+            }
+        }
     }
 
     public virtual void SyncPos(Vector3 pos, Int32 direction)

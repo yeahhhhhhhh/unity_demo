@@ -178,6 +178,11 @@ public class SkillManager
                 MainPlayer.SetDead(true);
                 // 死亡弹窗
                 UIManager.Instance.OpenUI("Reborn");
+                Animator ani = entity.skin_.transform.GetComponent<Animator>();
+                if (ani)
+                {
+                    ani.SetInteger("status", (int)EntityStatus.DEAD);
+                }
             }
         }
         else

@@ -12,10 +12,16 @@ public class BaseActor : MonoBehaviour
     // ÒÆ¶¯ËÙ¶È
     public float speed_ = 3f;
 
+    public Animator animator_;
+
     // Start is called before the first frame update
     public virtual void Start()
     {
-        
+        animator_ = GetComponent<Animator>();
+        if (animator_ == null)
+        {
+            Debug.Log("animator_ is null");
+        }
     }
 
     // Update is called once per frame

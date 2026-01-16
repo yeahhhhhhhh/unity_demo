@@ -4,6 +4,14 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 
 
+public enum EntityStatus
+{
+    IDLE = 0,
+    RUN = 1,
+    ATTACK = 2,
+    DEAD = 3,
+}
+
 public enum EntityTypes
 {
     BEGIN = 0,
