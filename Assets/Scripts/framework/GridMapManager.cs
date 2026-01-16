@@ -10,10 +10,7 @@ public enum TileType
 {
     Grass = 0,    // 草地 - 可通行
     Water = 1,    // 湖泊 - 不可通行
-    Forest = 2,   // 森林 - 减速
-    Mountain = 3, // 山地 - 障碍
-    Path = 4,    // 路径
-    Desert = 5   // 沙漠
+    Path = 2,    // 路径
 }
 
 // 单个格子数据类
@@ -45,14 +42,6 @@ public class MapTile
                 movementCost = 1.0f;
                 break;
             case TileType.Water:
-                isWalkable = false;
-                movementCost = Mathf.Infinity;
-                break;
-            case TileType.Forest:
-                isWalkable = true;
-                movementCost = 1.5f;
-                break;
-            case TileType.Mountain:
                 isWalkable = false;
                 movementCost = Mathf.Infinity;
                 break;
@@ -92,10 +81,7 @@ public class MapTile
         {
             case TileType.Grass: return Color.green;
             case TileType.Water: return Color.blue;
-            case TileType.Forest: return new Color(0, 0.5f, 0);
-            case TileType.Mountain: return Color.gray;
             case TileType.Path: return Color.yellow;
-            case TileType.Desert: return new Color(1, 0.8f, 0.6f);
             default: return Color.white;
         }
     }
@@ -128,10 +114,7 @@ public class GridMapManager : MonoBehaviour
     {
         {TileType.Grass, Color.green},
         {TileType.Water, Color.blue},
-        {TileType.Forest, new Color(0, 0.5f, 0)},
-        {TileType.Mountain, Color.gray},
         {TileType.Path, Color.yellow},
-        {TileType.Desert, new Color(1, 0.8f, 0.6f)}
     };
 
     void Start()
@@ -208,8 +191,11 @@ public class GridMapManager : MonoBehaviour
                 // 设置视觉表现
                 SetupTileVisual(tileObj, tileType);
 
-                // 添加点击交互
-                SetupTileInteraction(tileObj, x, y);
+                if (isCreator)
+                {
+                    // 添加点击交互
+                    SetupTileInteraction(tileObj, x, y);
+                }
             }
         }
     }
@@ -261,16 +247,14 @@ public class GridMapManager : MonoBehaviour
                 if (x == 0 || y == 0 || x == mapWidth - 1 || y == mapHeight - 1)
                 {
 
-                    mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Mountain; // 边界为山地
+                    mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Water; // 边界为山地
                 }
                 else
                 {
                     // 随机生成内部格子
                     int randomValue = UnityEngine.Random.Range(0, 100);
-                    if (randomValue < 60) mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Grass;      // 60% 草地
-                    else if (randomValue < 80) mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Forest; // 20% 森林
-                    else if (randomValue < 90) mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Water; // 10% 水
-                    else mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Mountain;                     // 10% 山地
+                    if (randomValue < 80) mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Grass;      // 60% 草地
+                    else mapData.tileTypesFlat[mapData.GetFlatIndex(x, y)] = (int)TileType.Water; // 10% 水
                 }
             }
         }
@@ -380,6 +364,10 @@ public class GridMapManager : MonoBehaviour
 
             // 重新生成地图
             GenerateMapFromArray(mapData);
+        }
+        else
+        {
+            GenerateMapFromArray(CreateSampleMapArray());
         }
     }
 }

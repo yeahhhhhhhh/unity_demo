@@ -78,12 +78,7 @@ public class FightScene : MonoBehaviour
 
             // 设置摄像头
             CameraFollower follower = Camera.main.AddComponent<CameraFollower>();
-            follower.Init(entity.skin_.transform, new Vector3()
-            {
-                x = 0,
-                y = 12,
-                z = -10
-            });
+            follower.Init(entity.skin_.transform);
 
             entity.skin_.name = "MainPlayer" + uid.ToString();
             // 挂上控制脚本
