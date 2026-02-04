@@ -48,6 +48,7 @@ public enum MsgRespPbType
     UPDATE_NPC_VIEW = 16,
     REBORN = 17,
     PRE_ENTER_DEFAULT_SCENE = 18,
+    BUFF_UPDATE = 19,
 }
 
 public static class MsgTypeRegister
@@ -101,6 +102,7 @@ public static class MsgTypeRegister
         RegisterResponsePbMsg((short)MsgRespPbType.REBORN, "service.scene.RequestReborn+Response", "MsgReborn+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.REGIST_RESPONSE, "service.account.RegisterRequest+Response", "MsgRegister+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.PRE_ENTER_DEFAULT_SCENE, "service.scene.RequestPreEnterScene+Response", "MsgPreEnterScene+Response");
+        RegisterResponsePbMsg((short)MsgRespPbType.BUFF_UPDATE, "service.scene.ResponseUpdateBuff", "MsgResponseBuff");
 
     }
 

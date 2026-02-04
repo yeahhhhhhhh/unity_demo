@@ -384,6 +384,24 @@ namespace service.scene
 
     }
 
+    [global::ProtoBuf.ProtoContract()]
+    public partial class ResponseUpdateBuff : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"buff_id")]
+        public int BuffId { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"is_add")]
+        public bool IsAdd { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"global_id")]
+        public long GlobalId { get; set; }
+
+    }
+
 }
 
 #pragma warning restore CS0612, CS0618, CS1591, CS3021, CS8981, IDE0079, IDE1006, RCS1036, RCS1057, RCS1085, RCS1192

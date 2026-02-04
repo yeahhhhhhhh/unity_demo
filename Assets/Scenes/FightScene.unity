@@ -1186,7 +1186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &806226632
 Transform:
   m_ObjectHideFlags: 0
@@ -2464,75 +2464,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc9a47b518fbfa84b8bfea04758e63fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1001 &1378821184
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 5.6578803
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 10.261711
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2410662502198154070, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6387135482204228274, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6387135482204228274, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798977637373417583, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_Name
-      value: NpcPrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 8798977637373417583, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 37ccae627fe08534e90ae9b0e38e931e, type: 3}
 --- !u!1 &1412117906
 GameObject:
   m_ObjectHideFlags: 0
@@ -3919,6 +3850,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefab
       objectReference: {fileID: 0}
+    - target: {fileID: 3370177910670854938, guid: 1b15085b8ac271b4c82ff4a97ef4e189, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3770402088732875914, guid: 1b15085b8ac271b4c82ff4a97ef4e189, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -4089,7 +4024,6 @@ SceneRoots:
   - {fileID: 76424298}
   - {fileID: 806226632}
   - {fileID: 938226277}
-  - {fileID: 1378821184}
   - {fileID: 888504460}
   - {fileID: 1233769409}
   - {fileID: 4376563749609049354}

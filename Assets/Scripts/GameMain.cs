@@ -91,6 +91,7 @@ public class GameMain : MonoBehaviour
         NpcConfig.Init();
         SkillManager.Instance.Init();
         FightManager.Instance.Init();
+        BuffManager.Instance.Init();
 
         UIManager.Instance.OpenUI("Login");
 

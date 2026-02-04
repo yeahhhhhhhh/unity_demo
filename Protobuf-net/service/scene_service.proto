@@ -122,3 +122,10 @@ message RequestReborn{
     int32 cur_hp = 2;
   }
 }
+
+
+message ResponseUpdateBuff{
+  int32 buff_id = 1;
+  bool is_add = 2;
+  int64 global_id = 3;
+}
