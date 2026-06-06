@@ -172,17 +172,20 @@ public class SkillManager
             entity.cur_hp_ = cur_hp;
             UpdateHpUI(entity.skin_, cur_hp, entity.max_hp_);
 
-            if (target_gid == MainPlayer.GetGlobalID() && cur_hp <= 0)
+            if (cur_hp <= 0)
             {
-                Debug.Log("main player dead");
-                MainPlayer.SetDead(true);
-                // 死亡弹窗
-                UIManager.Instance.OpenUI("Reborn");
-            }
-            Animator ani = entity.skin_.transform.GetComponent<Animator>();
-            if (ani)
-            {
-                ani.SetInteger("status", (int)EntityStatus.DEAD);
+                if (target_gid == MainPlayer.GetGlobalID())
+                {
+                    Debug.Log("main player dead");
+                    MainPlayer.SetDead(true);
+                    // 死亡弹窗
+                    UIManager.Instance.OpenUI("Reborn");
+                }
+                Animator ani = entity.skin_.transform.GetComponent<Animator>();
+                if (ani)
+                {
+                    ani.SetInteger("status", (int)EntityStatus.DEAD);
+                }
             }
         }
         else
