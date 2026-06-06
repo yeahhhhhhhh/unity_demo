@@ -54,11 +54,11 @@ public class MainPlayerActor : CtrlActor
 
     public void Fire()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.Alpha2))
         {
             if (cur_bullet_count_ >= max_bullet_count_)
             {
-                Debug.Log("ÒÑ·¢Éä×î´óÊıÁ¿bullet:" + max_bullet_count_.ToString());
+                Debug.Log("å·²å‘å°„æœ€å¤§æ•°é‡bullet:" + max_bullet_count_.ToString());
                 return;
             }
             Debug.Log("fire!!!!");
@@ -93,7 +93,7 @@ public class MainPlayerActor : CtrlActor
     public void SendSkillMsg(SkillDef skill_id)
     {
         Debug.Log("use skill:" + skill_id.ToString());
-        // Ê¹ÓÃ¼¼ÄÜÇëÇó
+        // ä½¿ç”¨æŠ€èƒ½è¯·æ±‚
         MsgUseSkill msg = new();
         msg.SetSendData((Int32)skill_id);
         NetManager.Send(msg);

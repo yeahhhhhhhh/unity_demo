@@ -119,7 +119,8 @@ message RequestReborn{
   int32 type = 1;
   message Response{
     int32 error_code = 1;
-    int32 cur_hp = 2;
+    int64 global_id = 2;
+    int32 cur_hp = 3;
   }
 }
 

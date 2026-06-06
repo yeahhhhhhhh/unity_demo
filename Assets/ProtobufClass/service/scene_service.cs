@@ -377,7 +377,10 @@ namespace service.scene
             [global::ProtoBuf.ProtoMember(1, Name = @"error_code")]
             public int ErrorCode { get; set; }
 
-            [global::ProtoBuf.ProtoMember(2, Name = @"cur_hp")]
+            [global::ProtoBuf.ProtoMember(2, Name = @"global_id")]
+            public long GlobalId { get; set; }
+
+            [global::ProtoBuf.ProtoMember(3, Name = @"cur_hp")]
             public int CurHp { get; set; }
 
         }
