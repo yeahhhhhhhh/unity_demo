@@ -1,15 +1,12 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class BaseActor : MonoBehaviour
 {
     private GameObject skin_;
-    // 转向速度
+    // 杞悜閫熷害
     public float steer_ = 20;
-    // 移动速度
+    // 绉诲姩閫熷害
     public float speed_ = 3f;
 
     public Animator animator_;

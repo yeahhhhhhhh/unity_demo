@@ -1,17 +1,13 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
-using static UnityEngine.EventSystems.EventTrigger;
 
 public class FightScene : MonoBehaviour
 {
     private void Awake()
     {
         //GameObject parent = GameObject.Find("NewFloor");
-        //// Éú³ÉµØÍ¼
+        //// ç”Ÿæˆåœ°å›¾
         //int width = 20;
         //int height = 20;
         //GameObject grid_prefab = ResManager.LoadPrefab("Map/Grid");
@@ -21,7 +17,7 @@ public class FightScene : MonoBehaviour
         //    return;
         //}
         //Int32 scene_id = SceneMgr.scene_id_;
-        //// ¸ù¾İscene_id»ñÈ¡³¡¾°ÅäÖÃ
+        //// æ ¹æ®scene_idè·å–åœºæ™¯é…ç½®
 
         //for (int i = 0; i < width; i++)
         //{
@@ -66,22 +62,22 @@ public class FightScene : MonoBehaviour
         MainPlayer.SetPlayerEntity(entity);
         SceneMgr.Init(scene_id, scene_gid);
 
-        // Éú³ÉÖ÷Íæ¼Ò
-        // ½øÈë³¡¾°£¬Éú³ÉÄ£ĞÍ
+        // ç”Ÿæˆä¸»ç©å®¶
+        // è¿›å…¥åœºæ™¯ï¼Œç”Ÿæˆæ¨¡å‹
         entity = SceneMgr.CreateEntity(entity);
         if (entity != null)
         {
-            // µÚÒ»´Î½øÈë»ñÈ¡Õ½¶·ĞÅÏ¢
+            // ç¬¬ä¸€æ¬¡è¿›å…¥è·å–æˆ˜æ–—ä¿¡æ¯
             MsgGetFightInfo get_fight_info_msg = new();
             get_fight_info_msg.SetSendData(uid);
             NetManager.Send(get_fight_info_msg);
 
-            // ÉèÖÃÉãÏñÍ·
+            // è®¾ç½®æ‘„åƒå¤´
             CameraFollower follower = Camera.main.AddComponent<CameraFollower>();
             follower.Init(entity.skin_.transform);
 
             entity.skin_.name = "MainPlayer" + uid.ToString();
-            // ¹ÒÉÏ¿ØÖÆ½Å±¾
+            // æŒ‚ä¸Šæ§åˆ¶è„šæœ¬
             entity.skin_.AddComponent<MainPlayerActor>();
 
             MainPlayer.SetPlayerEntity(entity);

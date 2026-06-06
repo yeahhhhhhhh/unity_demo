@@ -1,8 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
 
 public class SyncActor : BaseActor
 {
@@ -55,7 +52,7 @@ public class SyncActor : BaseActor
     public virtual void SyncPos(Vector3 pos, Int32 direction)
     {
         start_pos_ = transform.position;
-        forcast_pos_ = pos + 2 * (pos - last_pos_);  // û�õ�
+        forcast_pos_ = pos + 2 * (pos - last_pos_);  // 没用到
         last_pos_ = pos;
         forcast_time_ = Time.time;
         direction_ = direction;

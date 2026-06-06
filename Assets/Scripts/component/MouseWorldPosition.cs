@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 public class MouseWorldPosition : MonoBehaviour
@@ -8,20 +7,20 @@ public class MouseWorldPosition : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // ×ó¼üµã»÷
+        if (Input.GetMouseButtonDown(0)) // å·¦é”®ç‚¹å‡»
         {
-            // ´´½¨´ÓÉãÏñ»úµ½Êó±êÎ»ÖÃµÄÉäÏß
+            // åˆ›å»ºä»æ‘„åƒæœºåˆ°é¼ æ ‡ä½ç½®çš„å°„çº¿
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            // ·¢ÉäÉäÏß¼ì²âÅö×²
+            // å‘å°„å°„çº¿æ£€æµ‹ç¢°æ’
             if (Physics.Raycast(ray, out hit, float.MaxValue, mouseColliderLayerMask))
             {
                 Vector3 worldPosition = hit.point;
-                Debug.Log("Êó±êµã»÷ÊÀ½ç×ø±ê: " + worldPosition);
-                Debug.Log("µã»÷µÄÎïÌå: " + hit.collider.gameObject.name);
+                Debug.Log("é¼ æ ‡ç‚¹å‡»ä¸–ç•Œåæ ‡: " + worldPosition);
+                Debug.Log("ç‚¹å‡»çš„ç‰©ä½“: " + hit.collider.gameObject.name);
 
-                // ÔÚÕâÀïÌí¼ÓÄãµÄµã»÷´¦ÀíÂß¼­
+                // åœ¨è¿™é‡Œæ·»åŠ ä½ çš„ç‚¹å‡»å¤„ç†é€»è¾‘
                 OnPositionClicked(worldPosition, hit.collider.gameObject);
             }
         }
@@ -29,8 +28,8 @@ public class MouseWorldPosition : MonoBehaviour
 
     private void OnPositionClicked(Vector3 position, GameObject clickedObject)
     {
-        // Ê¾Àı£ºÔÚµã»÷Î»ÖÃÉú³ÉÌØĞ§»òÒÆ¶¯ÎïÌå
-        Debug.Log($"ÔÚÎ»ÖÃ {position} µã»÷ÁËÎïÌå {clickedObject.name},tag:{clickedObject.tag}");
+        // ç¤ºä¾‹ï¼šåœ¨ç‚¹å‡»ä½ç½®ç”Ÿæˆç‰¹æ•ˆæˆ–ç§»åŠ¨ç‰©ä½“
+        Debug.Log($"åœ¨ä½ç½® {position} ç‚¹å‡»äº†ç‰©ä½“ {clickedObject.name},tag:{clickedObject.tag}");
         if (string.Equals(clickedObject.tag, "Floor"))
         {
             if (position.x > 0f && position.z > 0f)
@@ -42,7 +41,7 @@ public class MouseWorldPosition : MonoBehaviour
                     NetManager.Send(msg);
                 }
 
-                // Éú³ÉÌØĞ§
+                // ç”Ÿæˆç‰¹æ•ˆ
                 GameObject prefab_obj = ResManager.LoadPrefab("Prefabs/Hits and explosions/Green hit");
                 if (prefab_obj != null)
                 {

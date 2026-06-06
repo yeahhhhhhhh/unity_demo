@@ -3852,15 +3852,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3370177910670854938, guid: 1b15085b8ac271b4c82ff4a97ef4e189, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3770402088732875914, guid: 1b15085b8ac271b4c82ff4a97ef4e189, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3770402088732875914, guid: 1b15085b8ac271b4c82ff4a97ef4e189, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3772083604738960614, guid: 1b15085b8ac271b4c82ff4a97ef4e189, type: 3}
       propertyPath: m_Camera

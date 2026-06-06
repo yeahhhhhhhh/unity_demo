@@ -331,7 +331,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2bc099659512dc4399b476c1050296a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ip_: 172.20.131.148
+  ip_: 8.138.204.217
   port_: 8002
   device_id: 
   connect_check_interval_: 5
@@ -847,6 +847,10 @@ PrefabInstance:
     - target: {fileID: 5009945653960858536, guid: 402bafe209fd175428c8abadd98a924d, type: 3}
       propertyPath: m_Name
       value: LoginPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 5009945653960858536, guid: 402bafe209fd175428c8abadd98a924d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
