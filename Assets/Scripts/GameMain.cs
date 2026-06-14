@@ -98,31 +98,32 @@ public class GameMain : MonoBehaviour
         NetManager.AddEventListener(NetManager.NetEvent.ConnectSucc, OnConnectSucc);
         NetManager.AddEventListener(NetManager.NetEvent.ConnectFail, OnConnectFail);
         NetManager.AddEventListener(NetManager.NetEvent.Close, OnConnectClose);
+        NetManager.AddMsgListener((short)MsgRespPbType.COMMON, OnCommonResp);
 
         NetManager.Connect(ip_, port_);
     }
 
-    // Á¬½Ó³É¹¦»Øµ÷
+    // è¿æ¥æˆåŠŸå›è°ƒ
     void OnConnectSucc(string err)
     {
         Debug.Log("OnConnectSucc");
-        //TODO:½øÈëÓÎÏ·
+        //TODO:è¿›å…¥æ¸¸æˆ
     }
-    // Á¬½ÓÊ§°Ü»Øµ÷
+    // è¿æ¥å¤±è´¥å›è°ƒ
     void OnConnectFail(string err)
     {
         Debug.Log("OnConnectFail" + err);
-        //TODO:µ¯³öÌáÊ¾¿ò(Á¬½ÓÊ§°Ü,ÇëÖØÊÔ)
+        //TODO:å¼¹å‡ºæç¤ºæ¡†(è¿æ¥å¤±è´¥,è¯·é‡è¯•)
     }
 
-    // ¹Ø±ÕÁ¬½Ó
+    // å…³é—­è¿æ¥
     void OnConnectClose(string err)
     {
         Debug.Log("OnConnectClose");
-        //TODO:µ¯³öÌáÊ¾¿ò(ÍøÂç¶Ï¿ª)
-        //TODO:µ¯³ö°´Å¥(ÖØĞÂÁ¬½Ó)
+        //TODO:å¼¹å‡ºæç¤ºæ¡†(ç½‘ç»œæ–­å¼€)
+        //TODO:å¼¹å‡ºæŒ‰é’®(é‡æ–°è¿æ¥)
         SceneMgr.Init(0, 0);
-        // ÖØÖÃÍæ¼Ò³¡¾°Êı¾İ
+        // é‡ç½®ç©å®¶åœºæ™¯æ•°æ®
         MainPlayer.player_.scene_info_ = new();
         CameraFollower actor = Camera.main.GetComponent<CameraFollower>();
         if (actor != null)
@@ -144,11 +145,32 @@ public class GameMain : MonoBehaviour
         }
     }
 
+    public void OnCommonResp(MsgBase msg)
+    {
+        MsgCommonResponse resp_msg = (MsgCommonResponse)msg;
+        Int32 error_code = resp_msg.resp.ErrorCode;
+        UInt32 cmd = resp_msg.resp.Cmd;
+        string ret_msg = resp_msg.resp.Msg;
+
+        Debug.Log("errorcode:" + error_code + " cmd:" + cmd + " msg:" + ret_msg);
+
+        if (error_code == (Int32)ErrorCode.PERMISSION_DENIED)
+        {
+            if (cmd == (Int32)MsgPbType.LOGIN)
+            {
+                UIManager.Instance.CloseUI("Loading");
+                TipsUI tips_ui = (TipsUI)UIManager.Instance.OpenUI("Tips");
+                tips_ui.SetTipsMsg(ret_msg);
+            }
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
-        // 5s³¢ÊÔÁ¬½ÓÒ»´Î
+        // 5så°è¯•è¿æ¥ä¸€æ¬¡
         ConnectCheck();
         NetManager.Update();
     }
+
 }

@@ -86,6 +86,7 @@ public static class MsgTypeRegister
 
 
         // 响应
+        RegisterResponsePbMsg((short)MsgRespPbType.COMMON, "service.common.CommonResponse", "MsgCommonResponse");
         RegisterResponsePbMsg((short)MsgRespPbType.LOGIN_RESPONSE, "service.account.LoginRequest+Response", "MsgLogin+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.ENTER_DEFAULT_SCENE_RESPONSE, "service.scene.RequestEnterDefaultScene+Response", "MsgEnterScene+Response");
         RegisterResponsePbMsg((short)MsgRespPbType.GET_SCENE_PLAYERS, "service.scene.RequestGetScenePlayers+Response", "MsgGetScenePlayers+Response");

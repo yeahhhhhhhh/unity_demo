@@ -131,5 +131,10 @@ public class LoginUI : UIBase
             UIManager.Instance.CloseUI("Login");
             SceneTransitionManager.Instance.LoadScene("HallScene");
         }
+        else
+        {
+            UIManager.Instance.CloseUI("Loading");
+
+        }
     }
 }

@@ -1,0 +1,8 @@
+﻿public enum ErrorCode
+{
+    SUCCESS = 0,
+    INVALID_PARAM = 1,
+    NOT_FOUND = 2,
+    PERMISSION_DENIED = 3,
+    SERVER_ERROR = 4,
+}
